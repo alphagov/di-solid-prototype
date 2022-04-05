@@ -216,3 +216,7 @@ Resources:
     Properties:
       SubnetId: !Ref Subnet2
       RouteTableId: !Ref PublicRouteTable
+
+Outputs:
+  ServiceAddress:
+    Value: !GetAtt LoadBalancer.DNSName
