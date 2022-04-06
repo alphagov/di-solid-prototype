@@ -6,7 +6,7 @@ Description: "A stack to run a demo container in Fargate"
 Parameters:
   ServiceName:
     Type: String
-    Default: hello-world-nginx
+    Default: hello-node-fargate
   ContainerPort:
     Type: Number
     Default: 3000

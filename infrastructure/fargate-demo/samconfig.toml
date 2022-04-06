@@ -2,7 +2,7 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "hello-world-nginx"
+stack_name = "hello-node-fargate"
 region = "eu-west-2"
 confirm_changeset = true
 capabilities = "CAPABILITY_NAMED_IAM"
