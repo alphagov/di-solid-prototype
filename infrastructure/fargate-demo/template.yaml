@@ -13,6 +13,9 @@ Parameters:
   LoadBalancerPort:
     Type: Number
     Default: 80
+  CommonStackName:
+    Type: String
+    Default: common
 
 Resources:
   HelloWorldECSCluster:
@@ -58,8 +61,10 @@ Resources:
           SecurityGroups:
             - !Ref ContainerSecurityGroup
           Subnets:
-            - !Ref Subnet1
-            - !Ref Subnet2
+            - Fn::ImportValue:
+                Fn::Sub: "${CommonStackName}-Subnet1ID"
+            - Fn::ImportValue:
+                Fn::Sub: "${CommonStackName}-Subnet2ID"
       TaskDefinition: !Ref HelloWorldTaskDefinition
       LoadBalancers:
         - ContainerName: !Ref ServiceName
@@ -78,7 +83,9 @@ Resources:
       Name: !Join ['', [!Ref ServiceName, TargetGroup]]
       Port: !Ref ContainerPort
       Protocol: HTTP
-      VpcId: !Ref VPC
+      VpcId: 
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
 
   HelloWorldLoadBalancerRule:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -120,7 +127,9 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Join ['', [!Ref ServiceName, ContainerSecurityGroup]]
-      VpcId: !Ref VPC
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref ContainerPort
@@ -131,7 +140,9 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Join ['', [!Ref ServiceName, LoadBalancerSecurityGroup]]
-      VpcId: !Ref VPC
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
           FromPort: !Ref LoadBalancerPort
@@ -146,8 +157,10 @@ Resources:
       SecurityGroups:
         - !Ref LoadBalancerSecurityGroup
       Subnets:
-        - !Ref Subnet1
-        - !Ref Subnet2
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-Subnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-Subnet2ID"
 
   LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
@@ -158,68 +171,6 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: !Ref LoadBalancerPort
       Protocol: HTTP
-
-  VPC:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: 10.0.0.0/16
-      EnableDnsSupport: true
-      EnableDnsHostnames: true
-
-  Subnet1:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: 10.0.1.0/24
-      AvailabilityZone: !Select 
-        - 0
-        - Fn::GetAZs: !Ref 'AWS::Region'
-
-  Subnet2:
-    Type: AWS::EC2::Subnet
-    Properties:
-      VpcId: !Ref VPC
-      CidrBlock: 10.0.2.0/24
-      AvailabilityZone: !Select 
-        - 1
-        - Fn::GetAZs: !Ref 'AWS::Region'
-
-  InternetGateway:
-    Type: AWS::EC2::InternetGateway
-
-  AttachGateway:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId: !Ref VPC
-      InternetGatewayId: !Ref InternetGateway
-
-  PublicRouteTable:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId: !Ref VPC
-      Tags:
-      - Key: Name
-        Value: Public
-
-  PublicRoute1:
-    Type: AWS::EC2::Route
-    DependsOn: AttachGateway
-    Properties:
-      RouteTableId: !Ref PublicRouteTable
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId: !Ref InternetGateway
-
-  PublicSubnet1RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref Subnet1
-      RouteTableId: !Ref PublicRouteTable
-      
-  PublicSubnet2RouteTableAssociation:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      SubnetId: !Ref Subnet2
-      RouteTableId: !Ref PublicRouteTable
 
 Outputs:
   ServiceAddress:
