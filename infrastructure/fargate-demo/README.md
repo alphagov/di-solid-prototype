@@ -29,6 +29,9 @@ From https://stackoverflow.com/questions/63241009/aws-sts-assume-role-in-one-com
 
 ## Deploy
 
+This stack depends on a common stack in the same region that defines and exports a VPC and two subnets in different 
+availability zones. You must deploy the stack at `infrastructure/common` before trying to deploy this one.
+
 ```bash
 sam deploy
 ```
