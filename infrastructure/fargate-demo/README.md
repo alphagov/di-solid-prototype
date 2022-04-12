@@ -4,28 +4,19 @@ Deploy a Hello World Node app as a container on ECS / Fargate.
 
 ## Getting AWS credentials
 
-At time of writing our new AWS account isn't in gds-cli yet so we have to do a bit of fiddling to get CLI credentials.
+Make sure you have at least version 5.22.0 of `gds-cli`. 
 
 ```bash
-aws-vault exec gds-users -- aws sts assume-role --role-arn arn:aws:iam::626456592666:role/FIRST_NAME.LAST_NAME-admin --role-session-name test --region eu-west-2 --serial-number arn:aws:iam::622626885786:mfa/FIRST_NAME.LAST_NAME@digital.cabinet-office.gov.uk --token-code YOUR_MFA_CODE_HERE
+gds-cli --version
 ```
 
-will print out the credentials (replacing `FIRST_NAME` and `LAST_NAME` with your details).
+If not, `brew upgrade gds-cli` will fetch it. 
+
+You can then prefix AWS CLI commands with `gds aws di-solid-prototype --` to fetch and inject credentials. Eg.
 
 ```bash
-export $(printf "AWS_ACCESS_KEY_ID=%s AWS_SECRET_ACCESS_KEY=%s AWS_SESSION_TOKEN=%s" \
-$(aws-vault exec gds-users -- aws sts assume-role \
---role-arn arn:aws:iam::626456592666:role/FIRST_NAME.LAST_NAME-admin \
---role-session-name test \
---region eu-west-2 \
---serial-number arn:aws:iam::622626885786:mfa/FIRST_NAME.LAST_NAME@digital.cabinet-office.gov.uk \
---token-code YOUR_MFA_CODE_HERE \
---query "Credentials.[AccessKeyId,SecretAccessKey,SessionToken]" \
---output text))
+gds aws di-solid-prototype -- aws s3 ls
 ```
-
-Sets these as environment variables for the shell session so you can then run commands with no prefixes eg. `aws s3 ls`
-From https://stackoverflow.com/questions/63241009/aws-sts-assume-role-in-one-command
 
 ## Deploy
 
@@ -33,11 +24,11 @@ This stack depends on a common stack in the same region that defines and exports
 availability zones. You must deploy the stack at `infrastructure/common` before trying to deploy this one.
 
 ```bash
-sam deploy
+gds aws di-solid-prototype -- sam deploy
 ```
 
 ## Teardown
 
 ```bash
-sam delete
+gds aws di-solid-prototype -- sam delete
 ```
