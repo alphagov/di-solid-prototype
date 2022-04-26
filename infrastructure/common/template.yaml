@@ -4,31 +4,56 @@ Transform: AWS::Serverless-2016-10-31
 Description: "A stack to define common infrastructure elements used across the whole account, such as VPC, routing, etc."
 
 Resources:
+  ## VPC
   VPC:
     Type: AWS::EC2::VPC
     Properties:
       CidrBlock: 10.0.0.0/16
       EnableDnsSupport: true
       EnableDnsHostnames: true
-  
-  Subnet1:
+
+  ## SUBNETS
+  PublicSubnet1:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.1.0/24
-      AvailabilityZone: !Select 
+      AvailabilityZone: !Select
         - 0
         - Fn::GetAZs: !Ref 'AWS::Region'
+      MapPublicIpOnLaunch: true
 
-  Subnet2:
+  PublicSubnet2:
     Type: AWS::EC2::Subnet
     Properties:
       VpcId: !Ref VPC
       CidrBlock: 10.0.2.0/24
-      AvailabilityZone: !Select 
+      AvailabilityZone: !Select
         - 1
         - Fn::GetAZs: !Ref 'AWS::Region'
+      MapPublicIpOnLaunch: true
 
+  PrivateSubnet1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.3.0/24
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      MapPublicIpOnLaunch: false
+
+  PrivateSubnet2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      VpcId: !Ref VPC
+      CidrBlock: 10.0.4.0/24
+      AvailabilityZone: !Select
+        - 1
+        - Fn::GetAZs: !Ref 'AWS::Region'
+      MapPublicIpOnLaunch: false
+
+  ## INTERNET GATEWAY
   InternetGateway:
     Type: AWS::EC2::InternetGateway
 
@@ -38,6 +63,7 @@ Resources:
       VpcId: !Ref VPC
       InternetGatewayId: !Ref InternetGateway
 
+  ## PUBLIC ROUTING
   PublicRouteTable:
     Type: AWS::EC2::RouteTable
     Properties:
@@ -57,14 +83,77 @@ Resources:
   PublicSubnet1RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref Subnet1
+      SubnetId: !Ref PublicSubnet1
       RouteTableId: !Ref PublicRouteTable
-      
+
   PublicSubnet2RouteTableAssociation:
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
-      SubnetId: !Ref Subnet2
+      SubnetId: !Ref PublicSubnet2
       RouteTableId: !Ref PublicRouteTable
+
+  ## NAT GATEWAY
+  NatGateway1:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId: !Ref PublicSubnet1
+      AllocationId: !GetAtt NatPublicIP1.AllocationId
+
+  NatGateway2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      SubnetId: !Ref PublicSubnet2
+      AllocationId: !GetAtt NatPublicIP2.AllocationId
+
+## ELASTIC IP
+  NatPublicIP1:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+  NatPublicIP2:
+    Type: AWS::EC2::EIP
+    DependsOn: VPC
+    Properties:
+      Domain: vpc
+
+## PRIVATE ROUTING
+  PrivateRouteTable1:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  PrivateRouteTable2:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId: !Ref VPC
+
+  PrivateRoute1:
+    Type: AWS::EC2::Route
+    Properties:
+      NatGatewayId: !Ref NatGateway1
+      RouteTableId: !Ref PrivateRouteTable1
+      DestinationCidrBlock: 0.0.0.0/0
+
+  PrivateRoute2:
+    Type: AWS::EC2::Route
+    Properties:
+      NatGatewayId: !Ref NatGateway2
+      RouteTableId: !Ref PrivateRouteTable2
+      DestinationCidrBlock: 0.0.0.0/0
+
+  PrivateSubnet1RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet1
+      RouteTableId: !Ref PrivateRouteTable1
+
+  PrivateSubnet2RouteTableAssociation:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      SubnetId: !Ref PrivateSubnet2
+      RouteTableId: !Ref PrivateRouteTable2
 
 Outputs:
   VpcId:
@@ -75,18 +164,34 @@ Outputs:
       Name:
         Fn::Sub: "${AWS::StackName}-VPCID"
 
-  Subnet1:
+  PublicSubnet1:
     Description: Public subnet 1
     Value:
-      Ref: Subnet1
+      Ref: PublicSubnet1
     Export:
       Name:
-        Fn::Sub: "${AWS::StackName}-Subnet1ID"
-  
-  Subnet2:
+        Fn::Sub: "${AWS::StackName}-PublicSubnet1ID"
+
+  PublicSubnet2:
     Description: Public subnet 2
     Value:
-      Ref: Subnet2
+      Ref: PublicSubnet2
     Export:
       Name:
-        Fn::Sub: "${AWS::StackName}-Subnet2ID"
+        Fn::Sub: "${AWS::StackName}-PublicSubnet2ID"
+
+  PrivateSubnet1:
+    Description: Private subnet 1
+    Value:
+      Ref: PrivateSubnet1
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}-PrivateSubnet1ID"
+
+  PrivateSubnet2:
+    Description: Private subnet 2
+    Value:
+      Ref: PrivateSubnet2
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}-PrivateSubnet2ID"

@@ -62,9 +62,9 @@ Resources:
             - !Ref ContainerSecurityGroup
           Subnets:
             - Fn::ImportValue:
-                Fn::Sub: "${CommonStackName}-Subnet1ID"
+                Fn::Sub: "${CommonStackName}-PublicSubnet1ID"
             - Fn::ImportValue:
-                Fn::Sub: "${CommonStackName}-Subnet2ID"
+                Fn::Sub: "${CommonStackName}-PublicSubnet2ID"
       TaskDefinition: !Ref HelloWorldTaskDefinition
       LoadBalancers:
         - ContainerName: !Ref ServiceName
@@ -83,7 +83,7 @@ Resources:
       Name: !Join ['', [!Ref ServiceName, TargetGroup]]
       Port: !Ref ContainerPort
       Protocol: HTTP
-      VpcId: 
+      VpcId:
         Fn::ImportValue:
           Fn::Sub: "${CommonStackName}-VPCID"
 
@@ -158,9 +158,9 @@ Resources:
         - !Ref LoadBalancerSecurityGroup
       Subnets:
         - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-Subnet1ID"
+            Fn::Sub: "${CommonStackName}-PublicSubnet1ID"
         - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-Subnet2ID"
+            Fn::Sub: "${CommonStackName}-PublicSubnet2ID"
 
   LoadBalancerListener:
     Type: AWS::ElasticLoadBalancingV2::Listener
