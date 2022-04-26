@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-deployment
+  namespace: hello-world
+  labels:
+    app: eks-hello-world-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: eks-hello-world-app
+  template:
+    metadata:
+      labels:
+        app: eks-hello-world-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+      containers:
+      - name: hello-world
+        image: docker.io/alexsmith11/hello-node:latest
+        ports:
+        - name: http
+          containerPort: 3000
+        imagePullPolicy: IfNotPresent
+      nodeSelector:
+        kubernetes.io/os: linux
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eks-hello-world-service
+  namespace: hello-world
+  labels:
+    app: eks-hello-world-app
+spec:
+  selector:
+    app: eks-hello-world-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hello-world-ingress
+  namespace: hello-world
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: eks-hello-world-service
+            port:
+              number: 80
