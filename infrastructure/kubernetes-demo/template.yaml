@@ -68,6 +68,14 @@ Resources:
             Principal:
               Service: eks-fargate-pods.amazonaws.com
             Action: 'sts:AssumeRole'
+          - Effect: Allow
+            Principal:
+              Federated: arn:aws:iam::626456592666:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:hello-world:hello-world"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
         - !Ref HelloWorldPodExecutionPolicy
