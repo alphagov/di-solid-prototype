@@ -44,6 +44,7 @@ spec:
               key: port
       nodeSelector:
         kubernetes.io/os: linux
+      serviceAccountName: hello-world
 ---
 apiVersion: v1
 kind: Service
@@ -80,3 +81,11 @@ spec:
             name: eks-hello-world-service
             port:
               number: 80
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: hello-world
+  namespace: hello-world
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::626456592666:role/hello-node-eksHelloWorldPodExecutionRole
