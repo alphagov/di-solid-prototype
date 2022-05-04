@@ -268,13 +268,24 @@ Resources:
           - elasticloadbalancing:ModifyRule
           Resource: "*"
 
+  HelloWorldDocumentDBCredentials:
+    Type: 'AWS::SecretsManager::Secret'
+    Properties:
+      Name: hello-world-document-db-credentials
+      Description: "Admin credentials for the Hello World DocumentDB cluster."
+      GenerateSecretString:
+        SecretStringTemplate: '{"username": "helloworld"}'
+        GenerateStringKey: "password"
+        PasswordLength: 30
+        ExcludeCharacters: '"@/\'
+
   HelloWorldDocumentDBCluster:
     Type: AWS::DocDB::DBCluster
     DeletionPolicy: Delete
     Properties:
       DBClusterIdentifier: !Join ['', [!Ref ServiceName, DocumentDBCluster]]
-      MasterUsername: "{{resolve:secretsmanager:hello-world-doc-db-credentials:SecretString:admin-user}}"
-      MasterUserPassword: "{{resolve:secretsmanager:hello-world-doc-db-credentials:SecretString:admin-password}}"
+      MasterUsername: "{{resolve:secretsmanager:hello-world-document-db-credentials:SecretString:username}}"
+      MasterUserPassword: "{{resolve:secretsmanager:hello-world-document-db-credentials:SecretString:password}}"
       EngineVersion: 4.0.0
       AvailabilityZones:
         - !Select
@@ -284,6 +295,8 @@ Resources:
           - 1
           - Fn::GetAZs: !Ref 'AWS::Region'
       DBSubnetGroupName: !Ref HelloWorldDocumentDBSubnetGroup
+    DependsOn:
+      - HelloWorldDocumentDBCredentials
 
   HelloWorldDocumentDBInstance:
     Type: "AWS::DocDB::DBInstance"
