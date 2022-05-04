@@ -115,7 +115,7 @@ Resources:
         - Effect: Allow
           Action:
           - secretsmanager:GetSecretValue
-          Resource: "*"
+          Resource: !Ref HelloWorldDocumentDBCredentials
 
   AWSLoadBalancerControllerIAMPolicy:
     Type: AWS::IAM::ManagedPolicy
