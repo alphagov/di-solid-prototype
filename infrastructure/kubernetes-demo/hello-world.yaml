@@ -31,6 +31,17 @@ spec:
         - name: http
           containerPort: 3000
         imagePullPolicy: IfNotPresent
+        env:
+        - name: DB_ENDPOINT
+          valueFrom:
+            secretKeyRef:
+              name: hello-world-db
+              key: endpoint
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: hello-world-db
+              key: port
       nodeSelector:
         kubernetes.io/os: linux
 ---
