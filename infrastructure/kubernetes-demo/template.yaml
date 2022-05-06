@@ -303,6 +303,8 @@ Resources:
           - 1
           - Fn::GetAZs: !Ref 'AWS::Region'
       DBSubnetGroupName: !Ref HelloWorldDocumentDBSubnetGroup
+      VpcSecurityGroupIds:
+        - !Ref HelloWorldDocumentDBSecurityGroup
     DependsOn:
       - HelloWorldDocumentDBCredentials
 
@@ -323,6 +325,19 @@ Resources:
             Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
         - Fn::ImportValue:
             Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  HelloWorldDocumentDBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Join ['', ['Security group for ', !Ref ServiceName, ' document DB']]
+      VpcId: 
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+      - IpProtocol: TCP
+        FromPort: 27017
+        ToPort: 27017
+        CidrIp: 10.0.0.0/16
 
 Outputs:
   DocumentDBClusterId:
