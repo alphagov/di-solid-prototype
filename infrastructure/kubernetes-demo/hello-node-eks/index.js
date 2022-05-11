@@ -1,5 +1,7 @@
 const {SecretsManagerClient, GetSecretValueCommand} = require('@aws-sdk/client-secrets-manager');
 const express = require('express')
+const mongo = require('./mongo-service')
+
 const app = express()
 const port = 3000
 
@@ -21,7 +23,21 @@ app.get('/check', async (req, res) => {
     var dBCreds = JSON.parse(data.SecretString);
   }
 
-  res.send(`Hello Node! Fetched credentials from Secrets Manager as ${dBCreds["username"]}`);
+  try {
+    var col = await mongo.getCollection(dBCreds);
+    var currentCount = await col.findOne({title: 'count'});
+
+    if(currentCount == null) {
+      col.insertOne({title: 'count', count: 1});
+    } else {
+      col.updateOne({title: 'count'}, {$inc: {count: 1}});
+    }
+  } catch (error) {
+    console.log(error);
+    res.send(error.toString());
+  }
+
+  res.send(`Hello Node!\n\n Fetched credentials from Secrets Manager as ${dBCreds["username"]}\n\nHit counter from DB: ${currentCount.count} views`);
 })
 
 app.listen(port, () => {
