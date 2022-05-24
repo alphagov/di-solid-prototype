@@ -167,6 +167,12 @@ Resources:
       SubnetId: !Ref PrivateSubnet2
       RouteTableId: !Ref PrivateRouteTable2
 
+  ## DNS
+  SolidRoute53:
+    Type: AWS::Route53::HostedZone
+    Properties:
+      Name: solid.integration.account.gov.uk
+
 Outputs:
   VpcId:
     Description: VPC ID
@@ -207,3 +213,11 @@ Outputs:
     Export:
       Name:
         Fn::Sub: "${AWS::StackName}-PrivateSubnet2ID"
+
+  Nameservers:
+    Description: Name servers for the Solid cluster
+    Value:
+      Ref: SolidRoute53
+    Export:
+      Name:
+        Fn::Sub: "${AWS::StackName}-SolidRoute53"
