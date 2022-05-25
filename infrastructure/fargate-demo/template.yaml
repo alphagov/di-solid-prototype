@@ -148,6 +148,10 @@ Resources:
           FromPort: !Ref LoadBalancerPort
           ToPort: !Ref LoadBalancerPort
           CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
 
   LoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
@@ -171,6 +175,41 @@ Resources:
       LoadBalancerArn: !Ref LoadBalancer
       Port: !Ref LoadBalancerPort
       Protocol: HTTP
+
+  HTTPSLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref HelloWorldTargetGroup
+          Type: forward
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+      - CertificateArn: !Ref HTTPSCertificate
+      
+  HTTPSCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: fargate-demo.solid.integration.account.gov.uk
+      DomainValidationOptions: 
+        - DomainName: fargate-demo.solid.integration.account.gov.uk
+          HostedZoneId: 
+            Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-SolidRoute53"
+      ValidationMethod: DNS
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name: fargate-demo.solid.integration.account.gov.uk
+      ResourceRecords:
+        - !GetAtt LoadBalancer.DNSName
+      HostedZoneId: 
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-SolidRoute53"
+      Type: CNAME
+      TTL: 3000
 
 Outputs:
   ServiceAddress:
