@@ -10,9 +10,6 @@ Parameters:
   ContainerPort:
     Type: Number
     Default: 3000
-  LoadBalancerPort:
-    Type: Number
-    Default: 80
   CommonStackName:
     Type: String
     Default: common
@@ -145,8 +142,8 @@ Resources:
           Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
         - IpProtocol: tcp
-          FromPort: !Ref LoadBalancerPort
-          ToPort: !Ref LoadBalancerPort
+          FromPort: 80
+          ToPort: 80
           CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 443
@@ -170,10 +167,16 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
-        - TargetGroupArn: !Ref HelloWorldTargetGroup
-          Type: forward
+        - Type: "redirect"
+          RedirectConfig:
+            Protocol: "HTTPS"
+            Port: 443
+            Host: "#{host}"
+            Path: "/#{path}"
+            Query: "#{query}"
+            StatusCode: "HTTP_301"
       LoadBalancerArn: !Ref LoadBalancer
-      Port: !Ref LoadBalancerPort
+      Port: 80
       Protocol: HTTP
 
   HTTPSLoadBalancerListener:
@@ -210,7 +213,3 @@ Resources:
           Fn::Sub: "${CommonStackName}-SolidRoute53"
       Type: CNAME
       TTL: 3000
-
-Outputs:
-  ServiceAddress:
-    Value: !GetAtt LoadBalancer.DNSName
