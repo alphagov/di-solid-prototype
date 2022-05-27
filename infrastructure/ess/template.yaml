@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: "A stack to run ESS in an EKS cluster"
+
+Parameters:
+  CommonStackName:
+    Type: String
+    Default: common
+  KubernetesStackName:
+    Type: String
+    Default: hello-node-eks
+  Namespace:
+    Type: String
+    Default: ess
+
+Resources:
+  FargateProfile:
+    Type: AWS::EKS::FargateProfile
+    Properties:
+      ClusterName: 
+        Fn::ImportValue:
+          Fn::Sub: "${KubernetesStackName}-KubernetesClusterId"
+      PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
+      Selectors:
+        - Namespace: !Ref Namespace
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  PodExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['', [!Ref Namespace, PodExecutionRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: eks-fargate-pods.amazonaws.com
+            Action: 'sts:AssumeRole'
+          - Effect: Allow
+            Principal:
+              Federated: arn:aws:iam::626456592666:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
