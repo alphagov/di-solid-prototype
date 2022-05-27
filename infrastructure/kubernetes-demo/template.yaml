@@ -346,3 +346,5 @@ Outputs:
     Value: !GetAtt HelloWorldDocumentDBCluster.Endpoint
   DocumentDBClusterPort:
     Value: !GetAtt HelloWorldDocumentDBCluster.Port
+  KubernetesClusterId:
+    Value: !Ref HelloWorldEKSCluster
