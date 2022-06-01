@@ -81,3 +81,20 @@ Resources:
           - logs:DescribeLogStreams
           - logs:PutLogEvents
           Resource: "*"
+
+  HTTPSCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: "*.ess.solid.integration.account.gov.uk"
+      DomainValidationOptions: 
+        - DomainName: "*.ess.solid.integration.account.gov.uk"
+          HostedZoneId: 
+            Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-SolidRoute53"
+      ValidationMethod: DNS
+
+Outputs:
+  HTTPSCertificate:
+    Description: ARN for the wildcard ACM TLS certificate used for the cluster
+    Value:
+      Ref: HTTPSCertificate
