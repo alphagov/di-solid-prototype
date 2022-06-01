@@ -50,3 +50,20 @@ Resources:
                 "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
+
+  ExternalDnsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: "Grants access to manage DNS records in Route53"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - route53:ChangeResourceRecordSets
+          Resource: "arn:aws:route53:::hostedzone/*"
+        - Effect: Allow
+          Action:
+          - route53:ListHostedZones
+          - route53:ListResourceRecordSets
+          Resource: "*"
