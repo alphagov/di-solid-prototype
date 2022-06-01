@@ -7,9 +7,9 @@ Parameters:
   CommonStackName:
     Type: String
     Default: common
-  KubernetesStackName:
+  KubernetesClusterName:
     Type: String
-    Default: hello-node-eks
+    Default: hello-node-eksCluster
   Namespace:
     Type: String
     Default: ess
@@ -18,9 +18,7 @@ Resources:
   FargateProfile:
     Type: AWS::EKS::FargateProfile
     Properties:
-      ClusterName: 
-        Fn::ImportValue:
-          Fn::Sub: "${KubernetesStackName}-KubernetesClusterId"
+      ClusterName: !Ref KubernetesClusterName
       PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
       Selectors:
         - Namespace: !Ref Namespace
@@ -50,6 +48,7 @@ Resources:
                 "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
+        - !Ref LoggingPolicy
 
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -66,4 +65,19 @@ Resources:
           Action:
           - route53:ListHostedZones
           - route53:ListResourceRecordSets
+          Resource: "*"
+
+  LoggingPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: "Allow resources to log to CloudWatch"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogStream
+          - logs:CreateLogGroup
+          - logs:DescribeLogStreams
+          - logs:PutLogEvents
           Resource: "*"
