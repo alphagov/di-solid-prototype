@@ -3,14 +3,11 @@ kind: Service
 metadata:
   name: nginx
   namespace: ess
-  annotations:
-    external-dns.alpha.kubernetes.io/hostname: nginx-demo.ess.solid.integration.account.gov.uk
 spec:
   ports:
     - port: 80
       targetPort: 80
       protocol: TCP
-  type: LoadBalancer
   selector:
     app: nginx
 
@@ -35,3 +32,25 @@ spec:
           ports:
             - containerPort: 80
               name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  namespace: ess
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+  - host: nginx-demo.ess.solid.integration.account.gov.uk
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 80
