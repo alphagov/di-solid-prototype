@@ -102,9 +102,9 @@ Resources:
     Type: AWS::CertificateManager::Certificate
     Properties:
       DomainName: "*.ess.solid.integration.account.gov.uk"
-      DomainValidationOptions: 
+      DomainValidationOptions:
         - DomainName: "*.ess.solid.integration.account.gov.uk"
-          HostedZoneId: 
+          HostedZoneId:
             Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-SolidRoute53"
       ValidationMethod: DNS
