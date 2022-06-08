@@ -13,6 +13,9 @@ Parameters:
   Namespace:
     Type: String
     Default: ess
+  CertManagerNamespace:
+    Type: String
+    Default: cert-manager
 
 Resources:
   FargateProfile:
@@ -22,6 +25,19 @@ Resources:
       PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
       Selectors:
         - Namespace: !Ref Namespace
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  CertManagerFargateProfile:
+    Type: AWS::EKS::FargateProfile
+    Properties:
+      ClusterName: !Ref KubernetesClusterName
+      PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
+      Selectors:
+        - Namespace: !Ref CertManagerNamespace
       Subnets:
         - Fn::ImportValue:
             Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
