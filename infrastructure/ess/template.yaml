@@ -19,6 +19,22 @@ Parameters:
   ESSBucketName:
     Type: String
     Default: ess.integration.storage
+  ESSDBUsername:
+    NoEcho: 'true'
+    Description: Username for PostgreSQL database access
+    Type: String
+    MinLength: '1'
+    MaxLength: '16'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
+  ESSDBPassword:
+    NoEcho: 'true'
+    Description: Password for PostgreSQL database access
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+    AllowedPattern: '[a-zA-Z0-9]*'
+    ConstraintDescription: must contain only alphanumeric characters.
 
 Resources:
   FargateProfile:
@@ -85,6 +101,24 @@ Resources:
         BlockPublicPolicy: true
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
+
+  EnterpriseSolidServerAurora:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      EnableCloudwatchLogsExports:
+        - postgresql
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
 
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
