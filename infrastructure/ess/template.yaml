@@ -16,6 +16,9 @@ Parameters:
   CertManagerNamespace:
     Type: String
     Default: cert-manager
+  ESSBucketName:
+    Type: String
+    Default: ess.integration.storage
 
 Resources:
   FargateProfile:
@@ -66,6 +69,23 @@ Resources:
         - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
         - !Ref LoggingPolicy
 
+  EnterpriseSolidServerS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ESSBucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'aws:kms'
+      VersioningConfiguration:
+        Status: Enabled
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
     Properties:
@@ -114,3 +134,7 @@ Outputs:
     Description: ARN for the wildcard ACM TLS certificate used for the cluster
     Value:
       Ref: HTTPSCertificate
+  EnterpriseSolidServerS3:
+    Description: S3 bucket for the Enterprise Solid Server
+    Value:
+      Ref: EnterpriseSolidServerS3
