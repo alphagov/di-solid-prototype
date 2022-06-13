@@ -129,7 +129,7 @@ Resources:
       KafkaVersion: 2.2.1
       NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
-        InstanceType: kafka.m5.large
+        InstanceType: kafka.t3.small
         ClientSubnets:
           - Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
