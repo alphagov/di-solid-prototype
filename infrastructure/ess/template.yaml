@@ -127,7 +127,7 @@ Resources:
     Properties:
       ClusterName: !Ref ESSMSKName
       KafkaVersion: 2.2.1
-      NumberOfBrokerNodes: 3
+      NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
         InstanceType: kafka.m5.large
         ClientSubnets:
