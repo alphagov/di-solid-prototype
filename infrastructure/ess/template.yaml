@@ -116,8 +116,6 @@ Resources:
       EngineVersion: '10.7'
       EngineMode: serverless
       DBClusterParameterGroupName: default.aurora-postgresql10
-      EnableCloudwatchLogsExports:
-        - postgresql
       ScalingConfiguration:
         AutoPause: true
         MinCapacity: 2
