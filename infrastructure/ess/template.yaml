@@ -35,6 +35,9 @@ Parameters:
     MaxLength: '41'
     AllowedPattern: '[a-zA-Z0-9]*'
     ConstraintDescription: must contain only alphanumeric characters.
+  ESSMSKName:
+    Type: String
+    Default: EnterpriseSolidServerMSK
 
 Resources:
   FargateProfile:
@@ -119,6 +122,20 @@ Resources:
         MinCapacity: 2
         MaxCapacity: 4
         SecondsUntilAutoPause: 1000
+
+  EnterpriseSolidServerMSK:
+    Type: 'AWS::MSK::Cluster'
+    Properties:
+      ClusterName: !Ref ESSMSKName
+      KafkaVersion: 2.2.1
+      NumberOfBrokerNodes: 3
+      BrokerNodeGroupInfo:
+        InstanceType: kafka.m5.large
+        ClientSubnets:
+          - Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+          - Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
 
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
