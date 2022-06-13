@@ -27,6 +27,7 @@ Parameters:
     MaxLength: '16'
     AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
     ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
+    Default: ess
   ESSDBPassword:
     NoEcho: 'true'
     Description: Password for PostgreSQL database access
