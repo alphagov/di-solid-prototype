@@ -106,6 +106,25 @@ Resources:
         IgnorePublicAcls: true
         RestrictPublicBuckets: true
 
+  S3BucketUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: bucket-access
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action:
+              - "s3:*"
+              Resource:
+                - !Sub arn:aws:s3:::${EnterpriseSolidServerS3}
+                - !Sub arn:aws:s3:::${EnterpriseSolidServerS3}/*
+
+  S3UserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref S3BucketUser
+
   EnterpriseSolidServerAurora:
     Type: "AWS::RDS::DBCluster"
     Properties:
@@ -188,3 +207,11 @@ Outputs:
     Description: S3 bucket for the Enterprise Solid Server
     Value:
       Ref: EnterpriseSolidServerS3
+  AccessKeyID:
+    Value: !Ref S3UserAccessKey
+  SecretAccessKey:
+    Value: !GetAtt S3UserAccessKey.SecretAccessKey
+  BucketName:
+    Value: !Ref EnterpriseSolidServerS3
+  User:
+    Value: !Ref S3BucketUser
