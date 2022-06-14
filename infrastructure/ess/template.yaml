@@ -135,11 +135,37 @@ Resources:
       EngineVersion: '10.7'
       EngineMode: serverless
       DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
       ScalingConfiguration:
         AutoPause: true
         MinCapacity: 2
         MaxCapacity: 4
         SecondsUntilAutoPause: 1000
+
+  AuroraSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: 'Subnet group for ESS Aurora Postgres'
+      SubnetIds:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  AuroraSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for ESS Aurora Postgres'
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 5432
+        ToPort: 5432
+        CidrIp: 10.0.0.0/16
 
   EnterpriseSolidServerMSK:
     Type: 'AWS::MSK::Cluster'
