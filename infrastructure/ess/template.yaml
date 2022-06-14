@@ -1,0 +1,257 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: "A stack to run ESS in an EKS cluster"
+
+Parameters:
+  CommonStackName:
+    Type: String
+    Default: common
+  KubernetesClusterName:
+    Type: String
+    Default: hello-node-eksCluster
+  Namespace:
+    Type: String
+    Default: ess
+  CertManagerNamespace:
+    Type: String
+    Default: cert-manager
+  ESSBucketName:
+    Type: String
+    Default: ess.integration.storage
+  ESSDBUsername:
+    NoEcho: 'true'
+    Description: Username for PostgreSQL database access
+    Type: String
+    MinLength: '1'
+    MaxLength: '16'
+    AllowedPattern: '[a-zA-Z][a-zA-Z0-9]*'
+    ConstraintDescription: must begin with a letter and contain only alphanumeric characters.
+    Default: ess
+  ESSDBPassword:
+    NoEcho: 'true'
+    Description: Password for PostgreSQL database access
+    Type: String
+    MinLength: '8'
+    MaxLength: '41'
+    AllowedPattern: '[a-zA-Z0-9]*'
+    ConstraintDescription: must contain only alphanumeric characters.
+  ESSMSKName:
+    Type: String
+    Default: EnterpriseSolidServerMSK
+
+Resources:
+  FargateProfile:
+    Type: AWS::EKS::FargateProfile
+    Properties:
+      ClusterName: !Ref KubernetesClusterName
+      PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
+      Selectors:
+        - Namespace: !Ref Namespace
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  CertManagerFargateProfile:
+    Type: AWS::EKS::FargateProfile
+    Properties:
+      ClusterName: !Ref KubernetesClusterName
+      PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
+      Selectors:
+        - Namespace: !Ref CertManagerNamespace
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  PodExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['', [!Ref Namespace, PodExecutionRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: eks-fargate-pods.amazonaws.com
+            Action: 'sts:AssumeRole'
+          - Effect: Allow
+            Principal:
+              Federated: arn:aws:iam::626456592666:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
+        - !Ref LoggingPolicy
+
+  EnterpriseSolidServerS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ESSBucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'aws:kms'
+      VersioningConfiguration:
+        Status: Enabled
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  S3BucketUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: bucket-access
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action:
+              - "s3:*"
+              Resource:
+                - !Sub arn:aws:s3:::${EnterpriseSolidServerS3}
+                - !Sub arn:aws:s3:::${EnterpriseSolidServerS3}/*
+
+  S3UserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref S3BucketUser
+
+  EnterpriseSolidServerAurora:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster
+      DatabaseName: ess
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  AuroraSubnetGroup:
+    Type: AWS::RDS::DBSubnetGroup
+    Properties:
+      DBSubnetGroupDescription: 'Subnet group for ESS Aurora Postgres'
+      SubnetIds:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  AuroraSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for ESS Aurora Postgres'
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: 5432
+        ToPort: 5432
+        CidrIp: 10.0.0.0/16
+
+  EnterpriseSolidServerMSK:
+    Type: 'AWS::MSK::Cluster'
+    Properties:
+      ClusterName: !Ref ESSMSKName
+      KafkaVersion: 2.2.1
+      NumberOfBrokerNodes: 2
+      BrokerNodeGroupInfo:
+        InstanceType: kafka.t3.small
+        SecurityGroups:
+          - !Ref MSKSecurityGroup
+        ClientSubnets:
+          - Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+          - Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  MSKSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for ESS MSK'
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        CidrIp: 10.0.0.0/16
+
+  ExternalDnsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: "Grants access to manage DNS records in Route53"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - route53:ChangeResourceRecordSets
+          Resource: "arn:aws:route53:::hostedzone/*"
+        - Effect: Allow
+          Action:
+          - route53:ListHostedZones
+          - route53:ListResourceRecordSets
+          Resource: "*"
+
+  LoggingPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: "Allow resources to log to CloudWatch"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogStream
+          - logs:CreateLogGroup
+          - logs:DescribeLogStreams
+          - logs:PutLogEvents
+          Resource: "*"
+
+  HTTPSCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: "*.ess.solid.integration.account.gov.uk"
+      DomainValidationOptions:
+        - DomainName: "*.ess.solid.integration.account.gov.uk"
+          HostedZoneId:
+            Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-SolidRoute53"
+      ValidationMethod: DNS
+
+Outputs:
+  HTTPSCertificate:
+    Description: ARN for the wildcard ACM TLS certificate used for the cluster
+    Value:
+      Ref: HTTPSCertificate
+  EnterpriseSolidServerS3:
+    Description: S3 bucket for the Enterprise Solid Server
+    Value:
+      Ref: EnterpriseSolidServerS3
+  AccessKeyID:
+    Value: !Ref S3UserAccessKey
+  SecretAccessKey:
+    Value: !GetAtt S3UserAccessKey.SecretAccessKey
+  BucketName:
+    Value: !Ref EnterpriseSolidServerS3
+  User:
+    Value: !Ref S3BucketUser
