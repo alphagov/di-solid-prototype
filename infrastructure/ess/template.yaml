@@ -125,6 +125,126 @@ Resources:
     Properties:
       UserName: !Ref S3BucketUser
 
+  ESSAuroraAcp:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-acp
+      DatabaseName: acp
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  ESSAuroraFragments:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-fragments
+      DatabaseName: fragments
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  ESSAuroraOpenid:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-openid
+      DatabaseName: openid
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  ESSAuroraPodStorage:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-podstorage
+      DatabaseName: podstorage
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  ESSAuroraVc:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-vc
+      DatabaseName: vc
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
+  ESSAuroraWebid:
+    Type: "AWS::RDS::DBCluster"
+    Properties:
+      MasterUsername: !Ref ESSDBUsername
+      MasterUserPassword: !Ref ESSDBPassword
+      DBClusterIdentifier: aurora-postgresql-cluster-webid
+      DatabaseName: webid
+      Engine: aurora-postgresql
+      EngineVersion: '10.7'
+      EngineMode: serverless
+      DBClusterParameterGroupName: default.aurora-postgresql10
+      VpcSecurityGroupIds:
+      - !Ref AuroraSecurityGroup
+      DBSubnetGroupName: !Ref AuroraSubnetGroup
+      ScalingConfiguration:
+        AutoPause: true
+        MinCapacity: 2
+        MaxCapacity: 4
+        SecondsUntilAutoPause: 1000
+
   AuroraSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
