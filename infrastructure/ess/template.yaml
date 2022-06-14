@@ -125,26 +125,6 @@ Resources:
     Properties:
       UserName: !Ref S3BucketUser
 
-  EnterpriseSolidServerAurora:
-    Type: "AWS::RDS::DBCluster"
-    Properties:
-      MasterUsername: !Ref ESSDBUsername
-      MasterUserPassword: !Ref ESSDBPassword
-      DBClusterIdentifier: aurora-postgresql-cluster
-      DatabaseName: ess
-      Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
-      VpcSecurityGroupIds:
-      - !Ref AuroraSecurityGroup
-      DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
-
   AuroraSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
     Properties:
