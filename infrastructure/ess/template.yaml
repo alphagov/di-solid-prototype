@@ -149,11 +149,24 @@ Resources:
       NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
         InstanceType: kafka.t3.small
+        SecurityGroups:
+          - !Ref MSKSecurityGroup
         ClientSubnets:
           - Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
           - Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  MSKSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: 'Security group for ESS MSK'
+      VpcId: 
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+      - IpProtocol: -1
+        CidrIp: 10.0.0.0/16 
 
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
