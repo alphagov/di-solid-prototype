@@ -131,6 +131,7 @@ Resources:
       MasterUsername: !Ref ESSDBUsername
       MasterUserPassword: !Ref ESSDBPassword
       DBClusterIdentifier: aurora-postgresql-cluster
+      DatabaseName: ess
       Engine: aurora-postgresql
       EngineVersion: '10.7'
       EngineMode: serverless
@@ -187,12 +188,12 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: 'Security group for ESS MSK'
-      VpcId: 
+      VpcId:
         Fn::ImportValue:
           Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
       - IpProtocol: -1
-        CidrIp: 10.0.0.0/16 
+        CidrIp: 10.0.0.0/16
 
   ExternalDnsPolicy:
     Type: AWS::IAM::ManagedPolicy
