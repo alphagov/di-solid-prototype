@@ -36,9 +36,9 @@ Parameters:
     MaxLength: '41'
     AllowedPattern: '[a-zA-Z0-9]*'
     ConstraintDescription: must contain only alphanumeric characters.
-  ESSMSKName:
+  ESSMSKName2:
     Type: String
-    Default: EnterpriseSolidServerMSK
+    Default: EssMSK
 
 Resources:
   FargateProfile:
@@ -268,10 +268,10 @@ Resources:
         ToPort: 5432
         CidrIp: 10.0.0.0/16
 
-  EnterpriseSolidServerMSK:
+  EssMSK:
     Type: 'AWS::MSK::Cluster'
     Properties:
-      ClusterName: !Ref ESSMSKName
+      ClusterName: !Ref ESSMSKName2
       KafkaVersion: 2.8.1
       EncryptionInfo:
         EncryptionInTransit:
