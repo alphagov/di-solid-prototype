@@ -272,7 +272,7 @@ Resources:
     Type: 'AWS::MSK::Cluster'
     Properties:
       ClusterName: !Ref ESSMSKName
-      KafkaVersion: 2.2.1
+      KafkaVersion: 2.8.1
       NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
         InstanceType: kafka.t3.small
@@ -286,14 +286,14 @@ Resources:
       ConfigurationInfo:
         Revision: 1
         Arn: !Ref MSKConfiguration
-    
+
   MSKConfiguration:
     Type: AWS::MSK::Configuration
     Properties:
       Name: ESS-MSK-cluster-configuration
       ServerProperties: |
         auto.create.topics.enable=true
-  
+
   MSKSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
