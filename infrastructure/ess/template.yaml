@@ -273,6 +273,11 @@ Resources:
     Properties:
       ClusterName: !Ref ESSMSKName
       KafkaVersion: 2.8.1
+      ClientAuthentication:
+        Tls:
+          Enabled: False
+        Unauthenticated:
+          Enabled: True
       LoggingInfo:
         BrokerLogs:
           CloudWatchLogs:
