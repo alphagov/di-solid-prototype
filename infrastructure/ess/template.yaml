@@ -183,7 +183,17 @@ Resources:
               Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
           - Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
-
+      ConfigurationInfo:
+        Revision: 1
+        Arn: !Ref MSKConfiguration
+    
+  MSKConfiguration:
+    Type: AWS::MSK::Configuration
+    Properties:
+      Name: ESS-MSK-cluster-configuration
+      ServerProperties: |
+        auto.create.topics.enable=true
+  
   MSKSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
