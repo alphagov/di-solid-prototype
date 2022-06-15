@@ -273,6 +273,11 @@ Resources:
     Properties:
       ClusterName: !Ref ESSMSKName
       KafkaVersion: 2.8.1
+      LoggingInfo:
+        BrokerLogs:
+          CloudWatchLogs:
+            Enabled: true
+            LogGroup: msk
       NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
         InstanceType: kafka.t3.small
