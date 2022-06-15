@@ -277,7 +277,7 @@ Resources:
         BrokerLogs:
           CloudWatchLogs:
             Enabled: true
-            LogGroup: !GetAtt MSKCloudwatchLogGroup.Properties.LogGroupName
+            LogGroup: msk
       NumberOfBrokerNodes: 2
       BrokerNodeGroupInfo:
         InstanceType: kafka.t3.small
