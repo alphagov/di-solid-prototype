@@ -273,6 +273,10 @@ Resources:
     Properties:
       ClusterName: !Ref ESSMSKName
       KafkaVersion: 2.8.1
+      EncryptionInfo:
+        EncryptionInTransit:
+          ClientBroker: TLS_PLAINTEXT
+          InCluster: true
       ClientAuthentication:
         Tls:
           Enabled: False
