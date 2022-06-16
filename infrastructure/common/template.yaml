@@ -25,6 +25,8 @@ Resources:
       Tags:
       - Key: kubernetes.io/role/elb
         Value: 1
+      - Key: kubernetes.io/cluster/hello-node-eksCluster
+        Value: shared
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -38,6 +40,8 @@ Resources:
       Tags:
       - Key: kubernetes.io/role/elb
         Value: 1
+      - Key: kubernetes.io/cluster/hello-node-eksCluster
+        Value: shared
 
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
@@ -51,6 +55,8 @@ Resources:
       Tags:
       - Key: kubernetes.io/role/internal-elb
         Value: 1
+      - Key: kubernetes.io/cluster/hello-node-eksCluster
+        Value: shared
 
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
@@ -64,6 +70,8 @@ Resources:
       Tags:
       - Key: kubernetes.io/role/internal-elb
         Value: 1
+      - Key: kubernetes.io/cluster/hello-node-eksCluster
+        Value: shared
 
   ## INTERNET GATEWAY
   InternetGateway:
