@@ -133,17 +133,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-acp
       DatabaseName: acp
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  AcpAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraAcp
+      Engine: aurora-postgresql
 
   ESSAuroraFragments:
     Type: "AWS::RDS::DBCluster"
@@ -153,17 +154,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-fragments
       DatabaseName: fragments
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  FragmentsAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraFragments
+      Engine: aurora-postgresql
 
   ESSAuroraOpenid:
     Type: "AWS::RDS::DBCluster"
@@ -173,17 +175,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-openid
       DatabaseName: openid
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  OpenidAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraOpenid
+      Engine: aurora-postgresql
 
   ESSAuroraPodStorage:
     Type: "AWS::RDS::DBCluster"
@@ -193,17 +196,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-podstorage
       DatabaseName: podstorage
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  PodStorageAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraPodStorage
+      Engine: aurora-postgresql
 
   ESSAuroraVc:
     Type: "AWS::RDS::DBCluster"
@@ -213,17 +217,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-vc
       DatabaseName: vc
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  VCAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraVc
+      Engine: aurora-postgresql
 
   ESSAuroraWebid:
     Type: "AWS::RDS::DBCluster"
@@ -233,17 +238,18 @@ Resources:
       DBClusterIdentifier: aurora-postgresql-cluster-webid
       DatabaseName: webid
       Engine: aurora-postgresql
-      EngineVersion: '10.7'
-      EngineMode: serverless
-      DBClusterParameterGroupName: default.aurora-postgresql10
+      EngineVersion: '13.7'
+      EngineMode: provisioned
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
-      ScalingConfiguration:
-        AutoPause: true
-        MinCapacity: 2
-        MaxCapacity: 4
-        SecondsUntilAutoPause: 1000
+
+  WebidAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraWebid
+      Engine: aurora-postgresql
 
   AuroraSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
@@ -264,8 +270,8 @@ Resources:
           Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
       - IpProtocol: tcp
-        FromPort: 5432
-        ToPort: 5432
+        FromPort: 3306
+        ToPort: 3306
         CidrIp: 10.0.0.0/16
 
   EssMSK:
