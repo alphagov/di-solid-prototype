@@ -135,10 +135,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  AcpAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraAcp
+      Engine: aurora-postgresql
 
   ESSAuroraFragments:
     Type: "AWS::RDS::DBCluster"
@@ -150,10 +156,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  FragmentsAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraFragments
+      Engine: aurora-postgresql
 
   ESSAuroraOpenid:
     Type: "AWS::RDS::DBCluster"
@@ -165,10 +177,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  OpenidAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraOpenid
+      Engine: aurora-postgresql
 
   ESSAuroraPodStorage:
     Type: "AWS::RDS::DBCluster"
@@ -180,10 +198,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  PodStorageAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraPodStorage
+      Engine: aurora-postgresql
 
   ESSAuroraVc:
     Type: "AWS::RDS::DBCluster"
@@ -195,10 +219,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  VCAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraVc
+      Engine: aurora-postgresql
 
   ESSAuroraWebid:
     Type: "AWS::RDS::DBCluster"
@@ -210,10 +240,16 @@ Resources:
       Engine: aurora-postgresql
       EngineVersion: '13.7'
       EngineMode: provisioned
-      DBClusterParameterGroupName: default.aurora-postgresql10
       VpcSecurityGroupIds:
       - !Ref AuroraSecurityGroup
       DBSubnetGroupName: !Ref AuroraSubnetGroup
+
+  WebidAuroraInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t4g.medium
+      DBClusterIdentifier: !Ref ESSAuroraWebid
+      Engine: aurora-postgresql
 
   AuroraSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
