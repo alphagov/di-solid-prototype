@@ -11,4 +11,4 @@ Deploy a Hello World Node app to an AWS EKS cluster using Fargate compute.
 4. Create a Kubernetes secret for the database endpoint and port from step 1 by running `kubectl create secret generic hello-world-db --from-literal=endpoint='ENDPOINT' --from-literal=port='PORT' -n hello-world`.
 5. Deploy the demo app by running `kubectl apply -f hello-world.yaml`
 
-**NOTE:** The cluster is still in use to run ESS (see [the ESS folder](../ess/)) but the demo app is no longer deployed to save on AWS costs.
+**NOTE:** The cluster is still in use to run ESS (see [the ESS folder](../ess/)) but the demo app and backing services are no longer deployed to save on AWS costs.
