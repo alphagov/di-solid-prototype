@@ -80,7 +80,7 @@ Resources:
             Condition:
               StringEquals:
                 "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
-                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:kube-system:aws-load-balancer-controller"
 
   AWSLoadBalancerControllerIAMPolicy:
     Type: AWS::IAM::Policy
