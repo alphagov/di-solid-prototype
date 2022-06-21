@@ -119,7 +119,7 @@ Resources:
 
   AWSLoadBalancerControllerIAMPolicy:
     Type: AWS::IAM::ManagedPolicy
-    Properties: 
+    Properties:
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -317,10 +317,10 @@ Resources:
 
   HelloWorldDocumentDBSubnetGroup:
     Type: AWS::DocDB::DBSubnetGroup
-    Properties: 
+    Properties:
       DBSubnetGroupName: !Join ['', [!Ref ServiceName, DocumentDBSubnetGroup]]
       DBSubnetGroupDescription: !Join [' ', ["Subnet group for the", !Ref ServiceName, "DocumentDB"]]
-      SubnetIds: 
+      SubnetIds:
         - Fn::ImportValue:
             Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
         - Fn::ImportValue:
@@ -330,7 +330,7 @@ Resources:
     Type: AWS::EC2::SecurityGroup
     Properties:
       GroupDescription: !Join ['', ['Security group for ', !Ref ServiceName, ' document DB']]
-      VpcId: 
+      VpcId:
         Fn::ImportValue:
           Fn::Sub: "${CommonStackName}-VPCID"
       SecurityGroupIngress:
