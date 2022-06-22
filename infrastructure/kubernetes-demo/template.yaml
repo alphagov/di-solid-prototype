@@ -13,9 +13,6 @@ Parameters:
   CommonStackName:
     Type: String
     Default: common
-  Namespace:
-    Type: String
-    Default: hello-world
 
 Resources:
   HelloWorldEKSCluster:
@@ -32,19 +29,6 @@ Resources:
       RoleArn: !GetAtt KubernetesRole.Arn
       Version: !Ref KubernetesVersion
 
-  HelloWorldEKSFargateProfile:
-    Type: AWS::EKS::FargateProfile
-    Properties:
-      ClusterName: !Ref HelloWorldEKSCluster
-      PodExecutionRoleArn: !GetAtt HelloWorldPodExecutionRole.Arn
-      Selectors:
-        - Namespace: !Ref Namespace
-      Subnets:
-        - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
-        - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
-
   KubeSystemEKSFargateProfile:
     Type: AWS::EKS::FargateProfile
     Properties:
@@ -57,28 +41,6 @@ Resources:
             Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
         - Fn::ImportValue:
             Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
-
-  HelloWorldPodExecutionRole:
-    Type: AWS::IAM::Role
-    Properties:
-      RoleName: !Join ['', [!Ref ServiceName, HelloWorldPodExecutionRole]]
-      AssumeRolePolicyDocument:
-        Statement:
-          - Effect: Allow
-            Principal:
-              Service: eks-fargate-pods.amazonaws.com
-            Action: 'sts:AssumeRole'
-          - Effect: Allow
-            Principal:
-              Federated: arn:aws:iam::626456592666:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14
-            Action: "sts:AssumeRoleWithWebIdentity"
-            Condition:
-              StringEquals:
-                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
-                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:hello-world:hello-world"
-      ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
-        - !Ref HelloWorldPodExecutionPolicy
 
   KubeSystemPodExecutionRole:
     Type: AWS::IAM::Role
@@ -105,17 +67,6 @@ Resources:
             Action: 'sts:AssumeRole'
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
-
-  HelloWorldPodExecutionPolicy:
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      PolicyDocument:
-        Version: '2012-10-17'
-        Statement:
-        - Effect: Allow
-          Action:
-          - secretsmanager:GetSecretValue
-          Resource: !Ref HelloWorldDocumentDBCredentials
 
   AWSLoadBalancerControllerIAMPolicy:
     Type: AWS::IAM::ManagedPolicy
@@ -276,75 +227,6 @@ Resources:
           - elasticloadbalancing:ModifyRule
           Resource: "*"
 
-  HelloWorldDocumentDBCredentials:
-    Type: 'AWS::SecretsManager::Secret'
-    Properties:
-      Name: hello-world-document-db-credentials
-      Description: "Admin credentials for the Hello World DocumentDB cluster."
-      GenerateSecretString:
-        SecretStringTemplate: '{"username": "helloworld"}'
-        GenerateStringKey: "password"
-        PasswordLength: 30
-        ExcludeCharacters: '"@/\'
-
-  HelloWorldDocumentDBCluster:
-    Type: AWS::DocDB::DBCluster
-    DeletionPolicy: Delete
-    Properties:
-      DBClusterIdentifier: !Join ['', [!Ref ServiceName, DocumentDBCluster]]
-      MasterUsername: "{{resolve:secretsmanager:hello-world-document-db-credentials:SecretString:username}}"
-      MasterUserPassword: "{{resolve:secretsmanager:hello-world-document-db-credentials:SecretString:password}}"
-      EngineVersion: 4.0.0
-      AvailabilityZones:
-        - !Select
-          - 0
-          - Fn::GetAZs: !Ref 'AWS::Region'
-        - !Select
-          - 1
-          - Fn::GetAZs: !Ref 'AWS::Region'
-      DBSubnetGroupName: !Ref HelloWorldDocumentDBSubnetGroup
-      VpcSecurityGroupIds:
-        - !Ref HelloWorldDocumentDBSecurityGroup
-    DependsOn:
-      - HelloWorldDocumentDBCredentials
-
-  HelloWorldDocumentDBInstance:
-    Type: "AWS::DocDB::DBInstance"
-    Properties:
-      DBClusterIdentifier: !Ref HelloWorldDocumentDBCluster
-      DBInstanceIdentifier: !Join ['', [!Ref ServiceName, DocumentDBInstance]]
-      DBInstanceClass: db.t4g.medium
-
-  HelloWorldDocumentDBSubnetGroup:
-    Type: AWS::DocDB::DBSubnetGroup
-    Properties:
-      DBSubnetGroupName: !Join ['', [!Ref ServiceName, DocumentDBSubnetGroup]]
-      DBSubnetGroupDescription: !Join [' ', ["Subnet group for the", !Ref ServiceName, "DocumentDB"]]
-      SubnetIds:
-        - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
-        - Fn::ImportValue:
-            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
-
-  HelloWorldDocumentDBSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: !Join ['', ['Security group for ', !Ref ServiceName, ' document DB']]
-      VpcId:
-        Fn::ImportValue:
-          Fn::Sub: "${CommonStackName}-VPCID"
-      SecurityGroupIngress:
-      - IpProtocol: TCP
-        FromPort: 27017
-        ToPort: 27017
-        CidrIp: 10.0.0.0/16
-
 Outputs:
-  DocumentDBClusterId:
-    Value: !Ref HelloWorldDocumentDBCluster
-  DocumentDBClusterEndpoint:
-    Value: !GetAtt HelloWorldDocumentDBCluster.Endpoint
-  DocumentDBClusterPort:
-    Value: !GetAtt HelloWorldDocumentDBCluster.Port
   KubernetesClusterId:
     Value: !Ref HelloWorldEKSCluster
