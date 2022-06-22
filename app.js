@@ -2,9 +2,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+let nunjucks = require('nunjucks')
+
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -15,6 +16,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+
+nunjucks.configure('views', {
+  autoescape:  true,
+  express:  app
+})
+
+app.set('view engine', 'njk');
 
 module.exports = app;
