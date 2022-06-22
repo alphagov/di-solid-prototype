@@ -3,13 +3,20 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "build-sass": "rm -rf public/stylesheets/application.css && sass --no-source-map public/stylesheets/application.scss public/stylesheets/application.css --style compressed",
+    "copy-assets": "cp node_modules/govuk-frontend/govuk/all.js public/javascripts/govuk-frontend/",
+    "build": "npm run build-sass && npm run copy-assets",
     "start": "node ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "govuk-frontend": "^4.1.0",
     "morgan": "~1.9.1",
     "nunjucks": "^3.2.3"
+  },
+  "devDependencies": {
+    "sass": "^1.52.3"
   }
 }
