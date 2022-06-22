@@ -5,11 +5,13 @@
   "main": "dist/app",
   "typings": "dist/app",
   "scripts": {
+    "lint": "eslint .",
     "clean": "rm -rf dist",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/public/stylesheets/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist/public/javascripts/govuk-frontend && cp node_modules/govuk-frontend/govuk/all.js dist/public/javascripts/govuk-frontend",
     "copy-views": "mkdir -p dist/views && cp src/views/*.njk dist/views",
     "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && tsc",
+    "test": "npm run lint",
     "start": "node ."
   },
   "dependencies": {
