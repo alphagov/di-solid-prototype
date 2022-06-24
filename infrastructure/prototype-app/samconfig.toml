@@ -5,5 +5,5 @@ version = 0.1
 stack_name = "prototype-app"
 region = "eu-west-2"
 confirm_changeset = true
-capabilities = "CAPABILITY_IAM"
+capabilities = "CAPABILITY_NAMED_IAM"
 image_repositories = []

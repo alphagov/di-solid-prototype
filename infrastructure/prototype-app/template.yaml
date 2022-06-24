@@ -3,12 +3,224 @@ Transform: AWS::Serverless-2016-10-31
 
 Description: "Deploy the Solid proof of concept app"
 
+Parameters:
+  ContainerPort:
+    Type: Number
+    Default: 3000
+  CommonStackName:
+    Type: String
+    Default: common
+  ImageTag:
+    Type: String
+    Default: 9615586
+
 Resources:
   ContainerRepository:
     Type: AWS::ECR::Repository
     Properties: 
       ImageTagMutability: IMMUTABLE
       RepositoryName: solid-prototype-app
+
+  ECSCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      CapacityProviders: [
+        "FARGATE_SPOT"
+      ]
+
+  TaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      NetworkMode: awsvpc
+      Cpu: '256'
+      Memory: '512'
+      RequiresCompatibilities:
+        - FARGATE
+      TaskRoleArn: !GetAtt TaskRole.Arn
+      ExecutionRoleArn: !GetAtt ExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: solid-prototype-app
+          Cpu: '256'
+          Memory: '512'
+          Image: !Join ['', [!GetAtt ContainerRepository.RepositoryUri, ':', !Ref ImageTag]]
+          PortMappings:
+            - ContainerPort: !Ref ContainerPort
+
+  Service:
+    Type: AWS::ECS::Service
+    DependsOn: LoadBalancerRule
+    Properties:
+      ServiceName: solid-prototype-app
+      Cluster: !GetAtt ECSCluster.Arn
+      LaunchType: FARGATE
+      DeploymentConfiguration:
+        MaximumPercent: 200
+        MinimumHealthyPercent: 100
+      DesiredCount: 1
+      HealthCheckGracePeriodSeconds: 15
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          AssignPublicIp: ENABLED
+          SecurityGroups:
+            - !Ref ContainerSecurityGroup
+          Subnets:
+            - Fn::ImportValue:
+                Fn::Sub: "${CommonStackName}-PublicSubnet1ID"
+            - Fn::ImportValue:
+                Fn::Sub: "${CommonStackName}-PublicSubnet2ID"
+      TaskDefinition: !Ref TaskDefinition
+      LoadBalancers:
+        - ContainerName: solid-prototype-app
+          ContainerPort: !Ref ContainerPort
+          TargetGroupArn: !Ref TargetGroup
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckPath: /healthcheck
+      HealthCheckIntervalSeconds: 10
+      HealthCheckTimeoutSeconds: 6
+      HealthyThresholdCount: 2
+      UnhealthyThresholdCount: 3
+      TargetType: ip
+      Name: !Join ['-', [solid-prototype-app, TargetGroup]]
+      Port: !Ref ContainerPort
+      Protocol: HTTP
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+
+  LoadBalancerRule:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref TargetGroup
+          Type: 'forward'
+      Conditions:
+        - Field: path-pattern
+          Values: ['*']
+      ListenerArn: !Ref LoadBalancerListener
+      Priority: 1
+
+  ExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['-', [solid-prototype-app, ExecutionRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - 'arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy'
+
+  TaskRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['-', [solid-prototype-app, TaskRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Join ['-', [solid-prototype-app, ContainerSecurityGroup]]
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: !Ref ContainerPort
+          ToPort: !Ref ContainerPort
+          SourceSecurityGroupId: !Ref LoadBalancerSecurityGroup
+
+  LoadBalancerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: !Join ['-', [solid-prototype-app, LoadBalancerSecurityGroup]]
+      VpcId:
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-VPCID"
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 443
+          ToPort: 443
+          CidrIp: 0.0.0.0/0
+
+  LoadBalancer:
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      Name: !Join ['-', [solid-prototype-app, LoadBalancer]]
+      Scheme: internet-facing
+      SecurityGroups:
+        - !Ref LoadBalancerSecurityGroup
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PublicSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PublicSubnet2ID"
+
+  LoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: "redirect"
+          RedirectConfig:
+            Protocol: "HTTPS"
+            Port: 443
+            Host: "#{host}"
+            Path: "/#{path}"
+            Query: "#{query}"
+            StatusCode: "HTTP_301"
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+
+  HTTPSLoadBalancerListener:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - TargetGroupArn: !Ref TargetGroup
+          Type: forward
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 443
+      Protocol: HTTPS
+      Certificates:
+      - CertificateArn: !Ref HTTPSCertificate
+      
+  HTTPSCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: prototype.solid.integration.account.gov.uk
+      DomainValidationOptions: 
+        - DomainName: prototype.solid.integration.account.gov.uk
+          HostedZoneId: 
+            Fn::ImportValue:
+              Fn::Sub: "${CommonStackName}-SolidRoute53"
+      ValidationMethod: DNS
+
+  DNSRecord:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      Name: prototype.solid.integration.account.gov.uk
+      ResourceRecords:
+        - !GetAtt LoadBalancer.DNSName
+      HostedZoneId: 
+        Fn::ImportValue:
+          Fn::Sub: "${CommonStackName}-SolidRoute53"
+      Type: CNAME
+      TTL: 3000
 
 Outputs:
   RepositoryUrl:
