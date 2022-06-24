@@ -1,0 +1,16 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: "Deploy the Solid proof of concept app"
+
+Resources:
+  ContainerRepository:
+    Type: AWS::ECR::Repository
+    Properties: 
+      ImageTagMutability: IMMUTABLE
+      RepositoryName: solid-prototype-app
+
+Outputs:
+  RepositoryUrl:
+    Description: The URL for the app's ECR image repository
+    Value: !GetAtt ContainerRepository.RepositoryUri
