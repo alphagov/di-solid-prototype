@@ -12,7 +12,6 @@ Parameters:
     Default: common
   ImageTag:
     Type: String
-    Default: 9615586
 
 Resources:
   ContainerRepository:
