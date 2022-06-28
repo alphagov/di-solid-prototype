@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import http from "http";
 import nunjucks from "nunjucks";
+import cookieSession from "cookie-session";
 
 import { indexRouter } from "./routes/index";
 
@@ -16,6 +17,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Use cookie-session to store session in a client side cookie
+app.use(
+  cookieSession({
+    name: "session",
+    // These keys are required by cookie-session to sign the cookies.
+    keys: [
+      "Required, but value not relevant for this demo - key1",
+      "Required, but value not relevant for this demo - key2",
+    ],
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
 
 app.use('/', indexRouter);
 
