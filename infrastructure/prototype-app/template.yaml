@@ -16,7 +16,7 @@ Parameters:
 Resources:
   ContainerRepository:
     Type: AWS::ECR::Repository
-    Properties: 
+    Properties:
       ImageTagMutability: IMMUTABLE
       RepositoryName: solid-prototype-app
 
@@ -197,14 +197,14 @@ Resources:
       Protocol: HTTPS
       Certificates:
       - CertificateArn: !Ref HTTPSCertificate
-      
+
   HTTPSCertificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
       DomainName: prototype.solid.integration.account.gov.uk
-      DomainValidationOptions: 
+      DomainValidationOptions:
         - DomainName: prototype.solid.integration.account.gov.uk
-          HostedZoneId: 
+          HostedZoneId:
             Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-SolidRoute53"
       ValidationMethod: DNS
@@ -215,7 +215,7 @@ Resources:
       Name: prototype.solid.integration.account.gov.uk
       ResourceRecords:
         - !GetAtt LoadBalancer.DNSName
-      HostedZoneId: 
+      HostedZoneId:
         Fn::ImportValue:
           Fn::Sub: "${CommonStackName}-SolidRoute53"
       Type: CNAME
