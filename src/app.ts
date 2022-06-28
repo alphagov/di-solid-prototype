@@ -8,6 +8,8 @@ import http from "http";
 import nunjucks from "nunjucks";
 import cookieSession from "cookie-session";
 
+import { getPort, getSessionKeys } from "./config"
+
 import { indexRouter } from "./routes/index";
 
 const app: express.Application = express();
@@ -22,11 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(
   cookieSession({
     name: "session",
-    // These keys are required by cookie-session to sign the cookies.
-    keys: [
-      "Required, but value not relevant for this demo - key1",
-      "Required, but value not relevant for this demo - key2",
-    ],
+    keys: getSessionKeys(),
     maxAge: 24 * 60 * 60 * 1000, // 24 hours
   })
 );
@@ -65,7 +63,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res) => {
 app.use(errorHandler);
 
 
-const port = process.env.PORT || '3000';
+const port = getPort();
 app.set('port', port);
 
 const server = http.createServer(app);
