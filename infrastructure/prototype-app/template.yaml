@@ -152,7 +152,8 @@ Resources:
                 - !Ref GitHubIdentityProviderArn
             Condition:
               StringLike:
-                token.actions.githubusercontent.com:sub: !Sub repo:alphagov/di-solid-prototype:*
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: repo:alphagov/di-solid-prototype:*
       ManagedPolicyArns:
         - !Ref GitHubActionsPolicy
       Tags:
@@ -206,6 +207,7 @@ Resources:
 
   GitHubIdentityProvider:
     Type: AWS::IAM::OIDCProvider
+    Condition: CreateOIDCProvider
     Properties:
       ClientIdList:
         - "sts.amazonaws.com"
@@ -323,10 +325,5 @@ Outputs:
   RepositoryUrl:
     Description: The URL for the app's ECR image repository
     Value: !GetAtt ContainerRepository.RepositoryUri
-  GitHubIdentityProviderArn:
-    Description: The ARN of the GitHub identity provider
-    Value: !GetAtt GitHubIdentityProvider.Arn
-    Export:
-      Name: GitHubIdentityProviderArn
   GithubActionRole:
     Value: !GetAtt GithubActionRole.Arn

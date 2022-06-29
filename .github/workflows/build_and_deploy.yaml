@@ -4,10 +4,13 @@ on:
   push:
     branches:
       - main
+env:
+  AWS_REGION : "eu-west-2"
 
 jobs:
   deploy:
     name: Deploy POC app to Fargate
+    environment: build
     runs-on: ubuntu-latest
     timeout-minutes: 60
     permissions:
@@ -24,7 +27,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
-          aws-region: "eu-west-2"
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
         id: login-ecr
