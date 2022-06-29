@@ -1,0 +1,44 @@
+name: Solid POC and build and deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy POC app to Fargate
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up SAM cli
+        uses: aws-actions/setup-sam@v1
+
+      - name: Assume AWS role
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
+          aws-region: "eu-west-2"
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          PROTOTYPE_ECR_REPOSITORY: ${{ secrets.PROTOTYPE_ECR_REPOSITORY }}
+        run: |
+          docker build -t $ECR_REGISTRY/$PROTOTYPE_ECR_REPOSITORY:$GITHUB_SHA .
+          docker push $ECR_REGISTRY/$PROTOTYPE_ECR_REPOSITORY:$GITHUB_SHA
+
+      - name: Package template
+        env:
+          TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
+        run: sam deploy --template $TEMPLATE_PATH --parameter-overrides ParameterKey=ImageTag,ParameterValue=$GITHUB_SHA --confirm-changeset

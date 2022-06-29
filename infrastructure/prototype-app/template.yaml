@@ -12,11 +12,20 @@ Parameters:
     Default: common
   ImageTag:
     Type: String
+  GitHubIdentityProviderArn:
+    Description: Arn for the GitHub OIDC Provider.
+    Default: ""
+    Type: String
+
+Conditions:
+  CreateOIDCProvider: !Equals
+    - !Ref GitHubIdentityProviderArn
+    - ""
 
 Resources:
   ContainerRepository:
     Type: AWS::ECR::Repository
-    Properties: 
+    Properties:
       ImageTagMutability: IMMUTABLE
       RepositoryName: solid-prototype-app
 
@@ -127,6 +136,95 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
 
+  GithubActionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['-', [solid-prototype-app, GithubActionRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Action:
+              - sts:AssumeRoleWithWebIdentity
+            Principal:
+              Federated: !If
+                - CreateOIDCProvider
+                - !Ref GitHubIdentityProvider
+                - !Ref GitHubIdentityProviderArn
+            Condition:
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub repo:alphagov/di-solid-prototype:*
+      ManagedPolicyArns:
+        - !Ref GitHubActionsPolicy
+      Tags:
+        - Key: Name
+          Value: !Join
+            - "-"
+            - - !Ref AWS::StackName
+              - "GitHubActionsRole"
+        - Key: Service
+          Value: "ci/cd"
+        - Key: Source
+          Value: "alphagov/di-devplatform-deploy/upload-bucket/template.yaml"
+
+  GitHubActionsPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      ManagedPolicyName:
+        Fn::Join:
+          - "-"
+          - - !Ref AWS::StackName
+            - "GitHubActionsPolicy"
+            - Fn::Select:
+                - 4
+                - Fn::Split:
+                    - "-"
+                    - Fn::Select:
+                        - 2
+                        - Fn::Split:
+                            - "/"
+                            - Ref: AWS::StackId
+      PolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Action:
+              - "ecr:BatchCheckLayerAvailability"
+              - "ecr:CompleteLayerUpload"
+              - "ecr:InitiateLayerUpload"
+              - "ecr:PutImage"
+              - "ecr:UploadLayerPart"
+              - "ecs:RegisterTaskDefinition"
+              - "ecs:StartTask"
+            Resource:
+              - !GetAtt ContainerRepository.Arn
+              - !Sub "${ContainerRepository.Arn}/*"
+          - Effect: "Allow"
+            Action:
+              - "iam:ListPolicies"
+            Resource:
+              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
+
+  GitHubIdentityProvider:
+    Type: AWS::IAM::OIDCProvider
+    Properties:
+      ClientIdList:
+        - "sts.amazonaws.com"
+      ThumbprintList:
+        - "6938fd4d98bab03faadb97b34396831e3780aea1"
+      Url: "https://token.actions.githubusercontent.com"
+      Tags:
+        - Key: Product
+          Value: Prototype Solid Application - GOV.UK
+        - Key: Name
+          Value: !Join
+            - "-"
+            - - !Ref AWS::StackName
+              - "GitHubIdentityProvider"
+        - Key: Service
+          Value: "ci/cd"
+        - Key: Source
+          Value: "alphagov/di-devplatform-deploy/github-identity/template.yaml"
+
   ContainerSecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -197,14 +295,14 @@ Resources:
       Protocol: HTTPS
       Certificates:
       - CertificateArn: !Ref HTTPSCertificate
-      
+
   HTTPSCertificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
       DomainName: prototype.solid.integration.account.gov.uk
-      DomainValidationOptions: 
+      DomainValidationOptions:
         - DomainName: prototype.solid.integration.account.gov.uk
-          HostedZoneId: 
+          HostedZoneId:
             Fn::ImportValue:
               Fn::Sub: "${CommonStackName}-SolidRoute53"
       ValidationMethod: DNS
@@ -215,7 +313,7 @@ Resources:
       Name: prototype.solid.integration.account.gov.uk
       ResourceRecords:
         - !GetAtt LoadBalancer.DNSName
-      HostedZoneId: 
+      HostedZoneId:
         Fn::ImportValue:
           Fn::Sub: "${CommonStackName}-SolidRoute53"
       Type: CNAME
@@ -225,3 +323,10 @@ Outputs:
   RepositoryUrl:
     Description: The URL for the app's ECR image repository
     Value: !GetAtt ContainerRepository.RepositoryUri
+  GitHubIdentityProviderArn:
+    Description: The ARN of the GitHub identity provider
+    Value: !GetAtt GitHubIdentityProvider.Arn
+    Export:
+      Name: GitHubIdentityProviderArn
+  GithubActionRole:
+    Value: !GetAtt GithubActionRole.Arn
