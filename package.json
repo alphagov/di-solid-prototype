@@ -13,7 +13,7 @@
     "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && tsc",
     "test": "npm run lint && mocha src/test",
     "start": "node .",
-    "dev": "nodemon ."
+    "dev": "npm run build && nodemon ."
   },
   "mocha": {
     "diff": true,
