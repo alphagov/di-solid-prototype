@@ -12,7 +12,8 @@
     "copy-views": "mkdir -p dist/views && cp src/views/*.njk dist/views",
     "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && tsc",
     "test": "npm run lint && mocha src/test",
-    "start": "node ."
+    "start": "node .",
+    "dev": "nodemon ."
   },
   "mocha": {
     "diff": true,
@@ -51,6 +52,7 @@
     "chai": "^4.3.6",
     "eslint": "^8.18.0",
     "mocha": "^10.0.0",
+    "nodemon": "^2.0.18",
     "sass": "^1.53.0",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
