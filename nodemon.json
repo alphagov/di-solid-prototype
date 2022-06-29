@@ -1,0 +1,8 @@
+{
+  "watch": ["src/**/*"],
+  "ext": "ts,js,json,njk,css,scss,txt",
+  "ignore": [".git", "node_modules/**/node_modules", "src/test"],
+  "events": {
+    "restart": "npm run build"
+  }
+}
