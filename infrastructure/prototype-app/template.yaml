@@ -152,7 +152,8 @@ Resources:
                 - !Ref GitHubIdentityProviderArn
             Condition:
               StringLike:
-                token.actions.githubusercontent.com:sub: !Sub repo:alphagov/di-solid-prototype:*
+                token.actions.githubusercontent.com:aud: sts.amazonaws.com
+                token.actions.githubusercontent.com:sub: repo:alphagov/di-solid-prototype:*
       ManagedPolicyArns:
         - !Ref GitHubActionsPolicy
       Tags:
