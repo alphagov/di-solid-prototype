@@ -19,14 +19,14 @@
 {% endblock %}
 
 {% block content %}
-  <p class="govuk-body">Logged in with the WebID: [{{ webId }}].</p>
+  <h1 class="govuk-heading-xl">Access logs</h1>
 
-  <p class="govuk-body">
+  <form action="/access-logs" method="post">
     {{ govukButton({
-        text: "View access logs",
-        href: "/access-logs"
-      }) }}
-  </p>
+      text: "Write new event",
+      type: "submit"
+    }) }}
+  </form>
 
 {% endblock %}
 
