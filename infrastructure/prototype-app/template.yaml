@@ -324,10 +324,5 @@ Outputs:
   RepositoryUrl:
     Description: The URL for the app's ECR image repository
     Value: !GetAtt ContainerRepository.RepositoryUri
-  GitHubIdentityProviderArn:
-    Description: The ARN of the GitHub identity provider
-    Value: !GetAtt GitHubIdentityProvider.Arn
-    Export:
-      Name: GitHubIdentityProviderArn
   GithubActionRole:
     Value: !GetAtt GithubActionRole.Arn
