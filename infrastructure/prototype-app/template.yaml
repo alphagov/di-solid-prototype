@@ -12,6 +12,12 @@ Parameters:
     Default: common
   ImageTag:
     Type: String
+  GitHubOrg:
+    Type: String
+    Default: alphagov
+  PocRepositoryName:
+    Type: String
+    Default: di-solid-prototype
   GitHubIdentityProviderArn:
     Description: Arn for the GitHub OIDC Provider.
     Default: ""
@@ -143,8 +149,7 @@ Resources:
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
-            Action:
-              - sts:AssumeRoleWithWebIdentity
+            Action: sts:AssumeRoleWithWebIdentity
             Principal:
               Federated: !If
                 - CreateOIDCProvider
@@ -153,7 +158,7 @@ Resources:
             Condition:
               StringLike:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
-                token.actions.githubusercontent.com:sub: repo:alphagov/di-solid-prototype:*
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${PocRepositoryName}:*
       ManagedPolicyArns:
         - !Ref GitHubActionsPolicy
       Tags:
@@ -189,6 +194,11 @@ Resources:
         Statement:
           - Effect: "Allow"
             Action:
+              - ecr:GetAuthorizationToken
+            Resource:
+              - "*"
+          - Effect: "Allow"
+            Action:
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:CompleteLayerUpload"
               - "ecr:InitiateLayerUpload"
@@ -204,6 +214,11 @@ Resources:
               - "iam:ListPolicies"
             Resource:
               - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
+          - Effect: "Allow"
+            Action:
+              - "cloudformation:CreateChangeSet"
+            Resource:
+              - "*"
 
   GitHubIdentityProvider:
     Type: AWS::IAM::OIDCProvider
@@ -322,8 +337,5 @@ Resources:
       TTL: 3000
 
 Outputs:
-  RepositoryUrl:
-    Description: The URL for the app's ECR image repository
-    Value: !GetAtt ContainerRepository.RepositoryUri
   GithubActionRole:
     Value: !GetAtt GithubActionRole.Arn
