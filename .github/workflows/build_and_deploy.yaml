@@ -5,7 +5,8 @@ on:
     branches:
       - main
 env:
-  AWS_REGION : "eu-west-2"
+  AWS_REGION: "eu-west-2"
+  GITHUB_SESSION_NAME: SolidPOCDeploySession
 
 jobs:
   deploy:
@@ -26,8 +27,9 @@ jobs:
       - name: Assume AWS role
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.GH_ACTIONS_ROLE_ARN }}
+          role-session-name: ${{ env.GITHUB_SESSION_NAME }}
 
       - name: Login to Amazon ECR
         id: login-ecr
