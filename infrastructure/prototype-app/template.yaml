@@ -12,6 +12,12 @@ Parameters:
     Default: common
   ImageTag:
     Type: String
+  GitHubOrg:
+    Type: String
+    Default: alphagov
+  PocRepositoryName:
+    Type: String
+    Default: di-solid-prototype
   GitHubIdentityProviderArn:
     Description: Arn for the GitHub OIDC Provider.
     Default: ""
@@ -153,7 +159,7 @@ Resources:
             Condition:
               StringLike:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
-                token.actions.githubusercontent.com:sub: repo:alphagov/di-solid-prototype:*
+                token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${PocRepositoryName}:*
       ManagedPolicyArns:
         - !Ref GitHubActionsPolicy
       Tags:
