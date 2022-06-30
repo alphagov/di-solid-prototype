@@ -149,8 +149,7 @@ Resources:
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
-            Action:
-              - sts:AssumeRoleWithWebIdentity
+            Action: sts:AssumeRoleWithWebIdentity
             Principal:
               Federated: !If
                 - CreateOIDCProvider
