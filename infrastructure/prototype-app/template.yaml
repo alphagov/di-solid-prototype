@@ -337,8 +337,5 @@ Resources:
       TTL: 3000
 
 Outputs:
-  RepositoryUrl:
-    Description: The URL for the app's ECR image repository
-    Value: !GetAtt ContainerRepository.RepositoryUri
   GithubActionRole:
     Value: !GetAtt GithubActionRole.Arn
