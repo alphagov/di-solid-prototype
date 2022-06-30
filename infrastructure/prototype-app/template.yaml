@@ -194,9 +194,13 @@ Resources:
         Statement:
           - Effect: "Allow"
             Action:
+              - ecr:GetAuthorizationToken
+            Resource:
+              - "*"
+          - Effect: "Allow"
+            Action:
               - "ecr:BatchCheckLayerAvailability"
               - "ecr:CompleteLayerUpload"
-              - "ecr:GetAuthorizationToken"
               - "ecr:InitiateLayerUpload"
               - "ecr:PutImage"
               - "ecr:UploadLayerPart"
@@ -210,6 +214,11 @@ Resources:
               - "iam:ListPolicies"
             Resource:
               - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
+          - Effect: "Allow"
+            Action:
+              - "cloudformation:CreateChangeSet"
+            Resource:
+              - "*"
 
   GitHubIdentityProvider:
     Type: AWS::IAM::OIDCProvider
