@@ -9,7 +9,7 @@ env:
   ECR_REPOSITORY: solid-prototype-app                             # set this to your Amazon ECR repository name
   ECS_SERVICE: solid-prototype-app                                # set this to your Amazon ECS service name
   ECS_CLUSTER: prototype-app-ECSCluster-PpwVfFNomNqq              # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: prototype-app-TaskDefinition-hYpBRWnTIsFl  # set this to the path to your Amazon ECS task definition
+  ECS_TASK_DEFINITION: .aws/task-definition.json                  # set this to the path to your Amazon ECS task definition
                                                                   # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: solid-prototype-app                             # set this to the name of the container in the
                                                                   # containerDefinitions section of your task definition
