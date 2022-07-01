@@ -15,7 +15,7 @@ export async function loginPost(req: Request, res: Response): Promise<void> {
   const redirectToSolidIdentityProvider = (url: string) => { res.redirect(url); };
   await session.login({
     redirectUrl: `${getHostname()}/login/callback`,
-    oidcIssuer: "https://login.inrupt.com",
+    oidcIssuer: "https://openid.ess.solid.integration.account.gov.uk/",
     clientName: "GDS Solid proof of concept app",
     handleRedirect: redirectToSolidIdentityProvider,
   });
