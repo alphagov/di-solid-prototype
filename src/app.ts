@@ -6,8 +6,12 @@ import cookieParser from "cookie-parser";
 import logger from "morgan";
 import http from "http";
 import nunjucks from "nunjucks";
+import cookieSession from "cookie-session";
+
+import { getPort, getSessionKeys } from "./config"
 
 import { indexRouter } from "./routes/index";
+import { loginRouter } from "./routes/login";
 
 const app: express.Application = express();
 
@@ -17,7 +21,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Use cookie-session to store session in a client side cookie
+app.use(
+  cookieSession({
+    name: "session",
+    keys: getSessionKeys(),
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
+
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
 
 nunjucks.configure(
   ['dist/views', 'node_modules/govuk-frontend/'], 
@@ -51,7 +65,7 @@ const errorHandler: ErrorRequestHandler = (err, req, res) => {
 app.use(errorHandler);
 
 
-const port = process.env.PORT || '3000';
+const port = getPort();
 app.set('port', port);
 
 const server = http.createServer(app);

@@ -59,6 +59,9 @@ Resources:
           Image: !Join ['', [!GetAtt ContainerRepository.RepositoryUri, ':', !Ref ImageTag]]
           PortMappings:
             - ContainerPort: !Ref ContainerPort
+          Environment:
+            - Name: NODE_ENV
+              Value: production
 
   Service:
     Type: AWS::ECS::Service
