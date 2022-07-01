@@ -195,6 +195,7 @@ Resources:
           - Effect: "Allow"
             Action:
               - ecr:GetAuthorizationToken
+              - ecs:DescribeTaskDefinition
             Resource:
               - "*"
           - Effect: "Allow"

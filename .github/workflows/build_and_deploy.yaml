@@ -5,11 +5,13 @@ on:
 
 env:
   AWS_REGION: eu-west-2
-  ECR_REPOSITORY: solid-prototype-app
+  AWS_ECR_REPOSITORY: solid-prototype-app
+  AWS_ECS_SERVICE: solid-prototype-app
+  AWS_ECS_CLUSTER: prototype-app-ECSCluster-PpwVfFNomNqq
+  AWS_ECS_TASK_DEFINITION_PATH: task-definition.json
+  AWS_ECS_CONTAINER_NAME: solid-prototype-app
   GITHUB_SESSION_NAME: SolidPOCDeploySession
   IMAGE_TAG: ${{ github.sha }}
-  CF_STACK_NAME: prototype-app
-  CF_TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
 
 jobs:
   deploy:
@@ -46,13 +48,27 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build -t $ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Deploy to AWS CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
+      - name: Get Task Definition and write to temporary JSON file
+        id: get-task-def
+        run: aws ecs describe-task-definition --task-definition prototype-app-TaskDefinition-hYpBRWnTIsFl >> task-definition.json
+
+      - name: Fill in the new image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
         with:
-          name: $CF_STACK_NAME
-          template: $CF_TEMPLATE_PATH
-          parameter-overrides: "ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --confirm-changeset"
+          task-definition: task-definition.json
+          container-name: ${{ env.AWS_ECS_CONTAINER_NAME }}
+          image: ${{ steps.build-image.outputs.image }}
+          environment-variables: "LOG_LEVEL=info"
+
+      - name: Deploy Amazon ECS task definition
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ env.AWS_ECS_SERVICE }}
+          cluster: ${{ env.AWS_ECS_CLUSTER }}
+          wait-for-service-stability: true
