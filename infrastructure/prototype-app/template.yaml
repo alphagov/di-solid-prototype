@@ -335,7 +335,3 @@ Resources:
           Fn::Sub: "${CommonStackName}-SolidRoute53"
       Type: CNAME
       TTL: 3000
-
-Outputs:
-  GithubActionRole:
-    Value: !GetAtt GithubActionRole.Arn
