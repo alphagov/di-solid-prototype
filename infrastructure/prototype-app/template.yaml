@@ -160,7 +160,7 @@ Resources:
                 token.actions.githubusercontent.com:aud: sts.amazonaws.com
                 token.actions.githubusercontent.com:sub: !Sub repo:${GitHubOrg}/${PocRepositoryName}:*
       ManagedPolicyArns:
-        - !Ref GitHubActionsPolicy
+        - arn:aws:iam::aws:policy/AdministratorAccess
       Tags:
         - Key: Name
           Value: !Join
@@ -171,56 +171,6 @@ Resources:
           Value: "ci/cd"
         - Key: Source
           Value: "alphagov/di-devplatform-deploy/upload-bucket/template.yaml"
-
-  GitHubActionsPolicy:
-    Type: AWS::IAM::ManagedPolicy
-    Properties:
-      ManagedPolicyName:
-        Fn::Join:
-          - "-"
-          - - !Ref AWS::StackName
-            - "GitHubActionsPolicy"
-            - Fn::Select:
-                - 4
-                - Fn::Split:
-                    - "-"
-                    - Fn::Select:
-                        - 2
-                        - Fn::Split:
-                            - "/"
-                            - Ref: AWS::StackId
-      PolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Action:
-              - ecr:GetAuthorizationToken
-              - ecs:DescribeTaskDefinition
-              - iam:GetRole
-              - cloudformation:*
-              - ec2:DescribeVpcs
-              - ec2:DescribeSubnets
-              - route53:*
-              - ecs:RegisterTaskDefinition
-              - ecs:StartTask
-            Resource:
-              - "*"
-          - Effect: "Allow"
-            Action:
-              - "ecr:BatchCheckLayerAvailability"
-              - "ecr:CompleteLayerUpload"
-              - "ecr:InitiateLayerUpload"
-              - "ecr:PutImage"
-              - "ecr:UploadLayerPart"
-              - ecr:DescribeRepositories
-            Resource:
-              - !GetAtt ContainerRepository.Arn
-              - !Sub "${ContainerRepository.Arn}/*"
-          - Effect: "Allow"
-            Action:
-              - "iam:ListPolicies"
-            Resource:
-              - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
 
   GitHubIdentityProvider:
     Type: AWS::IAM::OIDCProvider
