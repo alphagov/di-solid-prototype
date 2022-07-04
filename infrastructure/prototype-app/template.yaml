@@ -217,6 +217,11 @@ Resources:
               - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
           - Effect: "Allow"
             Action:
+              - "iam:GetRole"
+            Resource:
+              - "*"
+          - Effect: "Allow"
+            Action:
               - "cloudformation:*"
             Resource:
               - "*"
