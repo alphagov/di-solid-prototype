@@ -198,6 +198,9 @@ Resources:
               - ecs:DescribeTaskDefinition
               - iam:GetRole
               - cloudformation:*
+              - ec2:DescribeVpcs
+              - ec2:DescribeSubnets
+              - route53:*
             Resource:
               - "*"
           - Effect: "Allow"
@@ -207,6 +210,7 @@ Resources:
               - "ecr:InitiateLayerUpload"
               - "ecr:PutImage"
               - "ecr:UploadLayerPart"
+              - ecr:DescribeRepositories
               - "ecs:RegisterTaskDefinition"
               - "ecs:StartTask"
             Resource:
