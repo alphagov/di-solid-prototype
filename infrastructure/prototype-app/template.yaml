@@ -217,7 +217,7 @@ Resources:
               - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
           - Effect: "Allow"
             Action:
-              - "cloudformation:CreateChangeSet"
+              - "cloudformation:*"
             Resource:
               - "*"
 
