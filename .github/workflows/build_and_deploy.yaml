@@ -55,4 +55,4 @@ jobs:
       - name: Deploy application
         env:
           TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
-        run: sam deploy --template $TEMPLATE_PATH --parameter-overrides ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --no-confirm-changeset
+        run: sam deploy --template $TEMPLATE_PATH --parameter-overrides ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --no-confirm-changeset --debug
