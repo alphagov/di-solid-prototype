@@ -1,7 +1,9 @@
 name: Solid POC - build and deploy
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 env:
   AWS_REGION: eu-west-2
