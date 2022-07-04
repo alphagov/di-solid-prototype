@@ -196,6 +196,8 @@ Resources:
             Action:
               - ecr:GetAuthorizationToken
               - ecs:DescribeTaskDefinition
+              - iam:GetRole
+              - cloudformation:*
             Resource:
               - "*"
           - Effect: "Allow"
@@ -215,16 +217,6 @@ Resources:
               - "iam:ListPolicies"
             Resource:
               - !Sub "arn:aws:iam::${AWS::AccountId}:policy/*"
-          - Effect: "Allow"
-            Action:
-              - "iam:GetRole"
-            Resource:
-              - "*"
-          - Effect: "Allow"
-            Action:
-              - "cloudformation:*"
-            Resource:
-              - "*"
 
   GitHubIdentityProvider:
     Type: AWS::IAM::OIDCProvider
