@@ -1,16 +1,13 @@
-name: Solid POC and build and deploy
+name: Solid POC - build and deploy
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+
 env:
   AWS_REGION: eu-west-2
-  ECR_REPOSITORY: solid-prototype-app
+  AWS_ECR_REPOSITORY: solid-prototype-app
   GITHUB_SESSION_NAME: SolidPOCDeploySession
   IMAGE_TAG: ${{ github.sha }}
-  CF_STACK_NAME: prototype-app
-  CF_TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
 
 jobs:
   deploy:
@@ -47,13 +44,11 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          docker build -t $ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG
+          echo "::set-output name=image::$ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Deploy to AWS CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
-        with:
-          name: $CF_STACK_NAME
-          template: $CF_TEMPLATE_PATH
-          parameter-overrides: "ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --confirm-changeset"
+      - name: Deploy application
+        env:
+          TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
+        run: sam deploy --template $TEMPLATE_PATH --parameter-overrides ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --no-confirm-changeset
