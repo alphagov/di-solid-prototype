@@ -52,25 +52,7 @@ jobs:
           docker push $ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$AWS_ECR_REPOSITORY:$IMAGE_TAG"
 
-      - name: Get Task Definition and write to temporary JSON file
-        id: get-task-def
-        run: aws ecs describe-task-definition --task-definition prototype-app-TaskDefinition-hYpBRWnTIsFl >> task-definition.json
-
-      - name: Fill in the new image ID in the Amazon ECS task definition
-        id: task-def
-        uses: aws-actions/amazon-ecs-render-task-definition@v1
+      - name: Deploy application
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        with:
-          task-definition: task-definition.json
-          container-name: $ECR_REGISTRY/$AWS_ECR_REPOSITORY:latest
-          image: ${{ steps.build-image.outputs.image }}
-          environment-variables: "LOG_LEVEL=info"
-
-      - name: Deploy Amazon ECS task definition
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: ${{ steps.task-def.outputs.task-definition }}
-          service: ${{ env.AWS_ECS_SERVICE }}
-          cluster: ${{ env.AWS_ECS_CLUSTER }}
-          wait-for-service-stability: true
+          TEMPLATE_PATH: infrastructure/prototype-app/template.yaml
+        run: sam deploy --template $TEMPLATE_PATH --parameter-overrides ParameterKey=ImageTag,ParameterValue=$IMAGE_TAG --no-confirm-changeset
