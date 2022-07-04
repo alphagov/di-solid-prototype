@@ -59,9 +59,11 @@ jobs:
       - name: Fill in the new image ID in the Amazon ECS task definition
         id: task-def
         uses: aws-actions/amazon-ecs-render-task-definition@v1
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         with:
           task-definition: task-definition.json
-          container-name: ${{ env.AWS_ECS_CONTAINER_NAME }}
+          container-name: $ECR_REGISTRY/$AWS_ECR_REPOSITORY:latest
           image: ${{ steps.build-image.outputs.image }}
           environment-variables: "LOG_LEVEL=info"
 
