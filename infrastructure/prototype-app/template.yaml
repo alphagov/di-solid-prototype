@@ -201,6 +201,8 @@ Resources:
               - ec2:DescribeVpcs
               - ec2:DescribeSubnets
               - route53:*
+              - ecs:RegisterTaskDefinition
+              - ecs:StartTask
             Resource:
               - "*"
           - Effect: "Allow"
@@ -211,8 +213,6 @@ Resources:
               - "ecr:PutImage"
               - "ecr:UploadLayerPart"
               - ecr:DescribeRepositories
-              - "ecs:RegisterTaskDefinition"
-              - "ecs:StartTask"
             Resource:
               - !GetAtt ContainerRepository.Arn
               - !Sub "${ContainerRepository.Arn}/*"
