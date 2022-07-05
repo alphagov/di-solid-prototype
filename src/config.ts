@@ -28,3 +28,17 @@ export function getClientId(environment?: string) {
   }
   return `${hostname}/info/id`
 }
+
+export enum EssServices {
+  Authorization = 'authorization',
+  Provision = 'provision',
+  Storage = 'storage',
+  OpenId = 'openid',
+  Id = 'id',
+  Uma = 'uma',
+  Vc = 'vc'
+}
+
+export function getEssServiceURI(service: EssServices) {
+  return `https://${service}.ess.solid.integration.account.gov.uk`
+}

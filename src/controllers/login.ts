@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
 
-import { getHostname, getClientId } from "../config";
+import { getHostname, getClientId, getEssServiceURI, EssServices } from "../config";
 
 export async function loginGet(req: Request, res: Response): Promise<void> {
   res.render('login/start');
@@ -15,8 +15,8 @@ export async function loginPost(req: Request, res: Response): Promise<void> {
   const redirectToSolidIdentityProvider = (url: string) => { res.redirect(url); };
   await session.login({
     redirectUrl: `${getHostname()}/login/callback`,
-    oidcIssuer: "https://openid.ess.solid.integration.account.gov.uk/",
     clientId: getClientId('production'),
+    oidcIssuer: getEssServiceURI(EssServices.OpenId),
     handleRedirect: redirectToSolidIdentityProvider,
   });
 }
