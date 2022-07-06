@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
 
 import { getHostname, getClientId, getEssServiceURI, EssServices } from "../config";
+import { createProfileAndPod } from "../lib/pod";
 
 export async function loginGet(req: Request, res: Response): Promise<void> {
   res.render('login/start');
@@ -25,7 +26,11 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   await session?.handleIncomingRedirect(`${getHostname()}${req.originalUrl}`);
 
-  if (session?.info.isLoggedIn) {
-    res.render('login/success', {webId: session?.info.webId})
+  if (session?.info.isLoggedIn && session.info.webId) {
+    const response = await session.fetch(session.info.webId)
+    if (response.status == 404) {
+      await createProfileAndPod(session)
+    }
+    res.render('login/success', {webId: session.info.webId})
   }
 }
