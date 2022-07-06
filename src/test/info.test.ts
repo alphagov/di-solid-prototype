@@ -33,7 +33,7 @@ describe("buildClientIdDocument", () => {
     })
 
     it("always includes the local callback URL in redirect_uris", () => {
-      expect(clientId["redirect_uris"]).to.include("https://localhost:3000/login/callback")
+      expect(clientId["redirect_uris"]).to.include("http://localhost:3000/login/callback")
     })
   })
 })
