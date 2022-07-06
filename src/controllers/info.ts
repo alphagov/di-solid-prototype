@@ -17,7 +17,8 @@ export function buildClientIdDocument(): ClientIdDocument {
       getHostname()
     ],
     "redirect_uris": [
-      `${getHostname()}/login/callback`
+      `${getHostname()}/login/callback`,
+      "https://localhost:3000/login/callback"
     ]
   }
 }

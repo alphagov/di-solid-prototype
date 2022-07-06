@@ -21,4 +21,19 @@ describe("buildClientIdDocument", () => {
   it("sets the client_id to /info/id", () => {
     expect(clientId["client_id"]).to.eq(getClientId())
   })
+
+  describe("when the app is deployed", () => {
+    before(() => {
+      process.env.NODE_ENV = 'production'
+      clientId = buildClientIdDocument();
+    })
+
+    after(() => {
+      process.env.NODE_ENV = 'test'
+    })
+
+    it("always includes the local callback URL in redirect_uris", () => {
+      expect(clientId["redirect_uris"]).to.include("https://localhost:3000/login/callback")
+    })
+  })
 })
