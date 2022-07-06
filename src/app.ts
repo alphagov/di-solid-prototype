@@ -12,6 +12,7 @@ import { getPort, getSessionKeys } from "./config"
 
 import { indexRouter } from "./routes/index";
 import { loginRouter } from "./routes/login";
+import { infoRouter } from "./routes/info";
 
 const app: express.Application = express();
 
@@ -32,6 +33,7 @@ app.use(
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/info', infoRouter);
 
 nunjucks.configure(
   ['dist/views', 'node_modules/govuk-frontend/'], 
