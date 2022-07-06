@@ -1,5 +1,5 @@
 export function getPort() {
-  return process.env.LOGS_LEVEL || 3000;
+  return process.env.PORT || 3000;
 }
 
 export function getSessionKeys() {
