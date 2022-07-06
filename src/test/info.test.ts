@@ -1,7 +1,7 @@
 import { describe } from "mocha";
 import { expect } from "./utils/test";
 import { buildClientIdDocument, ClientIdDocument } from "../controllers/info"
-import { getHostname } from "../config"
+import { getHostname, getClientId } from "../config"
 
 describe("buildClientIdDocument", () => {
   let clientId: ClientIdDocument;
@@ -19,6 +19,6 @@ describe("buildClientIdDocument", () => {
   })
 
   it("sets the client_id to /info/id", () => {
-    expect(clientId["client_id"]).to.eq(`${getHostname()}/info/id`)
+    expect(clientId["client_id"]).to.eq(getClientId())
   })
 })

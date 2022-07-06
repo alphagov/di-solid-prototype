@@ -14,3 +14,7 @@ export function getHostname() {
 export function getProtocol() {
   return process.env.NODE_ENV == 'production' ? 'https' : 'http';
 }
+
+export function getClientId() {
+  return `${getHostname()}/info/id`
+}
