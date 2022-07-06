@@ -19,6 +19,12 @@ export function getProtocol() {
   return process.env.NODE_ENV == 'production' ? 'https' : 'http';
 }
 
-export function getClientId() {
-  return `${getHostname()}/info/id`
+export function getClientId(environment?: string) {
+  let hostname: string;
+  if (environment && environment == 'production') {
+    hostname = `https://${getDeployedDomain()}`
+  } else {
+    hostname = getHostname();
+  }
+  return `${hostname}/info/id`
 }
