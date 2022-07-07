@@ -21,6 +21,12 @@
 {% block content %}
   <h1 class="govuk-heading-xl">Access logs</h1>
 
+  {% if created %}
+    <p class="govuk-body">Last event at: {{ created }}</p>
+  {% else %}
+    <p class="govuk-body">No previous events found</p>
+  {% endif %}
+
   <form action="/access-logs" method="post">
     {{ govukButton({
       text: "Write new event",
