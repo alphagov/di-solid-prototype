@@ -14,6 +14,7 @@ import { indexRouter } from "./routes/index";
 import { loginRouter } from "./routes/login";
 import { infoRouter } from "./routes/info";
 import { accessRouter } from "./routes/access";
+import { identityRouter } from "./routes/identity";
 
 const app: express.Application = express();
 
@@ -36,6 +37,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/info', infoRouter);
 app.use('/access-logs', accessRouter);
+app.use('/identity', identityRouter);
 
 nunjucks.configure(
   ['dist/views', 'node_modules/govuk-frontend/'], 
