@@ -46,7 +46,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
   const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
   const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
   const session = await getSessionFromStorage(req.session?.sessionId);
-  
+
   if (session != undefined) {
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs/");
     const metadataUri = `${containerUri}/vc-metadata`
@@ -81,7 +81,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
 // If the targetFileURL does not exist, create the file at the location.
 async function writeFileToPod(file: Blob, targetFileURL: string, session: Session ) {
   try {
-    const savedFile = await overwriteFile(  
+    const savedFile = await overwriteFile(
       targetFileURL,                                      // URL for the file.
       // We need to explicitly convert our 'Blob' into a Buffer here (see
       // detailed comment on our 'import { Blob }' code above).

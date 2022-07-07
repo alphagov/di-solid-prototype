@@ -1,0 +1,20 @@
+{% extends "layouts/account.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set pageTitleName = 'account.pages.deleteProofOfId.title' | translate %}
+{% set activeNavLink = '/account/settings' %}
+{% set backLink =  '/account/settings/your-proof-of-identity' %}
+
+{% block content %}
+  <h1 class="govuk-heading-l govuk-!-margin-bottom-7">{{ 'account.pages.deleteProofOfId.title' | translate }}</h1>
+  <p class="govuk-body">{{ 'account.pages.deleteProofOfId.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'account.pages.deleteProofOfId.paragraph2' | translate }}</p>
+
+  <form action="" method="post">
+    {{ govukButton({
+      text: 'account.pages.deleteProofOfId.buttonText' | translate,
+      classes: "govuk-button--warning"
+    }) }}
+  </form>
+  <a href="{{ backLink }}" class="govuk-link govuk-body">{{ 'account.pages.deleteProofOfId.cancelLink' | translate }}</a>
+
+{% endblock %}

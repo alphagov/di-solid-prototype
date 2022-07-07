@@ -1,1 +1,33 @@
 @import "../../../node_modules/govuk-frontend/govuk/all";
+
+.information-box {
+  margin-bottom: govuk-spacing(4);
+  padding: govuk-spacing(3);
+  background: govuk-colour("light-grey");
+  @include govuk-media-query($from: tablet) {
+    padding: govuk-spacing(6);
+    margin-top: govuk-spacing(2);
+    margin-bottom: govuk-spacing(8);
+  }
+}
+
+.accounts-panel {
+  padding: govuk-spacing(6);
+  border: solid 1px govuk-colour("mid-grey");
+  border-top: solid 3px $govuk-brand-colour;
+  margin-bottom: govuk-spacing(6);
+}
+
+.accounts-table {
+  @include govuk-media-query($until: tablet) {
+    .govuk-table__header,
+    .govuk-table__cell {
+      width: 100%;
+      display: block;
+      border: none;
+    }
+    .govuk-table__row {
+      border-bottom: 1px solid govuk-colour("mid-grey");
+    }
+  }
+}

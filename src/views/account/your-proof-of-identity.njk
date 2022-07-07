@@ -1,0 +1,38 @@
+{% extends "layouts/account.njk" %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% set pageTitleName = 'account.pages.yourProofOfId.title' | translate %}
+{% set activeNavLink = '/account/settings'%}
+{% set backLink =  '/account/settings' %}
+
+{% block content %}
+  <h1 class="govuk-heading-l govuk-!-margin-bottom-7">{{ 'account.pages.yourProofOfId.title' | translate }}</h1>
+  <p class="govuk-body">{{ 'account.pages.yourProofOfId.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'account.pages.yourProofOfId.paragraph2' | translate }}</p>
+  <h2 class="govuk-heading-m">{{ 'account.pages.yourProofOfId.summaryListTitle' | translate }}</h2>
+  {{ govukTable({
+    firstCellIsHeader: true,
+    classes: "accounts-table",
+    rows: [
+      [
+        {
+          text: "Thing",
+          classes: "govuk-!-width-one-half"
+        },
+        {
+          text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", "01 January 2022")
+        }
+      ],
+      [
+        {
+          text: "Thing2",
+          classes: "govuk-!-width-one-half"
+        },
+        {
+          text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", "02 January 2022")
+        }
+      ]
+    ]
+  }) }}
+
+  <a href="/account/settings/your-proof-of-identity/delete" class="govuk-link govuk-body">{{ 'account.pages.yourProofOfId.deleteInformationLink' | translate }}</a>
+{% endblock %}

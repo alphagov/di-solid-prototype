@@ -1,0 +1,31 @@
+{% extends "layouts/base.njk" %}
+{% set serviceName = 'account.serviceName' | translate %}
+
+{% block header %}
+  {% if hideSignOutLink %}
+    {{ govukHeader({
+         homepageUrl: '/'
+     }) }}
+  {% else %}
+    {{ govukHeader({
+       homepageUrl: '/',
+       navigationClasses: "govuk-header__navigation--end",
+       navigation: [
+           {
+             href: '/account',
+             text: 'account.header.accountLink' | translate,
+             active: true if activeNavLink == '/account'
+           },
+           {
+             href: '/account/settings',
+             text: 'account.header.accountSettingsLink' | translate,
+             active: true if activeNavLink == '/account/settings'
+           },
+           {
+               href: "/sign-out",
+               text: 'account.header.signOutLink' | translate
+           }
+         ]
+    })}}
+  {% endif %}
+{% endblock %}

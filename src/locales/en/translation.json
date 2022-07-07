@@ -3,7 +3,6 @@
     "back": "Back",
     "continue": "Continue",
     "change": "Change",
-    "start": "Start",
     "errorTitlePrefix": "Error",
     "footer": {
       "accessibilityStatement": {
@@ -23,11 +22,13 @@
         "linkText": "Privacy notice"
       }
     },
+    "on": "on",
     "phaseBanner": {
       "tag": "beta",
       "text": "This is a new service – your <a  href=\"/feedback\" class=\"govuk-link\">feedback</a> will help us to improve it."
     },
-    "postcode": "Postcode"
+    "postcode": "Postcode",
+    "start": "Start"
   },
   "identity": {
     "checkYourDetails": {
@@ -169,6 +170,77 @@
       "heading": "Use your saved proof of identity to continue",
       "paragraph1": "You need to prove your identity before you [doThing].",
       "paragraph2": "Your GOV.UK account will check your saved proof of identity to confirm it’s really you."
+    }
+  },
+  "account": {
+    "serviceName": "GOV.UK Account",
+    "header": {
+      "homepageHref": "https://www.gov.uk/",
+      "accountLink": "Account home",
+      "accountSettingsLink": "Account settings",
+      "signOutLink": "Sign out"
+    },
+    "pages": {
+      "activity": {
+        "title": "Account activity",
+        "contactUs": "If you see something you do not recognise, <a class=\"govuk-link\" href=\"[contactUsLink]\">contact us</a>."
+      },
+      "home": {
+        "title": "Your GOV.UK account",
+        "header": "Your GOV.UK account",
+        "signedInStatus": "You’re signed in as",
+        "servicesHeading": "Services you’ve used with your GOV.UK account",
+
+        "IdServicesHeading": "Services that have checked your identity",
+        "IdServicesParagraph": "You’ve used your GOV.UK account to prove your identity to the following services:",
+        "aboutAccounts": {
+          "heading": "About GOV.UK accounts",
+          "paragraph1": "GOV.UK accounts are new. At the moment you can only use your GOV.UK account with a few services.",
+          "paragraph2": "GOV.UK accounts are currently separate from other government accounts (for example Government Gateway or Universal Credit).",
+          "paragraph3": "In the future, you’ll be able to use your GOV.UK account to sign in to most services on GOV.UK."
+        }
+      },
+      "settings": {
+        "title": "GOV.UK account settings",
+        "accountDetails": "Your sign in details",
+        "summaryList": {
+          "email": "Email address",
+          "password": "Password",
+          "phoneNumber": "Phone number",
+          "changeAction": "Change"
+        },
+        "yourProofOfId": {
+          "heading": "Your proof of identity",
+          "link": "View your saved proof of identity",
+          "info": "You’ve saved your proof of identity to your account. Your account will check it each time a service needs to confirm who you are."
+        },
+        "yourAccountActivity": {
+          "heading": "View your account activity",
+          "link": "View your account activity",
+          "info": "See when you’ve signed in and how your account has used your saved information."
+        },
+        "deleteAccount": {
+          "heading": "Delete your GOV.UK account",
+          "link": "Delete your GOV.UK account",
+          "info": "This will permanently delete your GOV.UK account. You’ll no longer be able to sign in to the services you’ve used with your account."
+        },
+        "deletedProofOfIdSuccess": "You’ve deleted your proof of identity"
+      },
+      "yourProofOfId": {
+        "title": "Your proof of identity",
+        "paragraph1": "Your GOV.UK account proves your identity with information you’ve provided.",
+        "paragraph2": "Your account checks this information to prove your identity every time you use a service that requires it.",
+        "summaryListTitle": "Information you’ve provided to prove your identity",
+        "deleteInformationLink": "Delete this information from your account",
+        "savedOn": "Saved on [date]"
+      },
+      "deleteProofOfId": {
+        "title": "Delete the information you use to prove your identity",
+        "paragraph1": "Confirm you want to permanently delete the information your GOV.UK account uses to prove your identity. This will not delete your account.",
+        "paragraph2": "You will need to go through the process of proving your identity next time you use a service that requires it.",
+        "buttonText": "Delete identity information",
+        "cancelLink": "Do not delete your information"
+      }
     }
   }
 }

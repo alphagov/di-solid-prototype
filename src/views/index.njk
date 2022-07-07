@@ -2,9 +2,12 @@
 {% set pageTitleName = 'Hello world' %}
 {% set serviceName = 'GOV.UK account' %}
 
-
 {% block content %}
 <h1 class="govuk-heading-xl">Hello world</h1>
+  <h2 class="govuk-heading-m">Account</h2>
+  <ul>
+    <li><a href="/account" class="govuk-link">GOV.UK Account</a></li>
+  </ul>
   <h2 class="govuk-heading-m">Identity</h2>
   <ul>
     <li><a href="/identity/prove-identity-logged-out" class="govuk-link">Prove your identity to continue</a></li>
@@ -24,5 +27,4 @@
     <li><a href="/identity/save" class="govuk-link">You’ve successfully proved your identity</a></li>
     <li><a href="/identity/complete/saved" class="govuk-link">You’ve saved your proof of identity to your GOV.UK account</a></li>
   </ul>
-
 {% endblock %}
