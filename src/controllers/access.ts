@@ -1,17 +1,19 @@
 import { Request, Response } from "express";
-import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import {
+  getOrCreateDataset,
+  getDatasetUri,
+} from "../lib/pod"
+
 import {
   buildThing,
-  createSolidDataset,
   createThing,
-  getPodUrlAll,
   getSolidDataset,
   setThing,
   saveSolidDatasetAt,
   getThing,
   Thing,
   getDatetime,
-  SolidDataset,
 } from "@inrupt/solid-client";
 import { RDF, DCTERMS } from "@inrupt/vocab-common-rdf";
 
@@ -22,7 +24,7 @@ const GOV_UK_AccessLogEntry = "https://vocab.account.gov.uk/AccessLogEntry";
 export async function accessGet(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session != undefined) {
-    const datasetUri = await getDatasetUri(session);
+    const datasetUri = await getDatasetUri(session, "private/govuk/identity/poc/access-log");
     try {
       const dataset = await getSolidDataset(datasetUri, {fetch: session.fetch});
       const created = getDatetime(getThing(dataset, datasetUri) as Thing, DCTERMS.created);
@@ -38,7 +40,7 @@ export async function accessPost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session != undefined) {
 
-    const datasetUri = await getDatasetUri(session);
+    const datasetUri = await getDatasetUri(session, "private/govuk/identity/poc/access-log");
     const dataset = await getOrCreateDataset(session, datasetUri);
 
     const accessLogEntry = buildThing(createThing({ url: datasetUri }))
@@ -55,25 +57,6 @@ export async function accessPost(req: Request, res: Response): Promise<void> {
       { fetch: session.fetch}
     )
     res.redirect('/access-logs');
-  } else {
-    throw new SessionError();
-  }
-}
-
-async function getOrCreateDataset(session: Session, datasetUri: string): Promise<SolidDataset> {
-  try {
-    const dataset = await getSolidDataset(datasetUri, {fetch: session.fetch});
-    return dataset;
-  } catch (fetchError) {
-    const dataset = createSolidDataset();
-    return dataset;
-  }
-}
-
-async function getDatasetUri(session: Session) {
-  if (session.info.webId) {
-    const podUri = await getPodUrlAll(session.info.webId, {fetch: session.fetch});
-    return `${podUri[0]}private/demo/access-log`;
   } else {
     throw new SessionError();
   }
