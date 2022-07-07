@@ -22,6 +22,15 @@ describe("buildClientIdDocument", () => {
     expect(clientId["client_id"]).to.eq(getClientId())
   })
 
+  it("includes the values required for a refresh token and offline access", () => {
+    expect(clientId["grant_types"]).to.include("refresh_token")
+    expect(clientId["scope"]).to.match(/offline_access/)
+  })
+
+  it("has a valid format for scope", () => {
+    expect(clientId["scope"]).to.match(/[\w\s]+/)
+  })
+
   describe("when the app is deployed", () => {
     before(() => {
       process.env.NODE_ENV = 'production'
