@@ -1,0 +1,45 @@
+{% extends "govuk/template.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block head %}
+  <!--[if !IE 8]><!-->
+    <link href="/stylesheets/application.css" rel="stylesheet">
+  <!--<![endif]-->
+
+  {# For Internet Explorer 8, you need to compile specific stylesheet #}
+  {# see https://frontend.design-system.service.gov.uk/supporting-ie8/#support-internet-explorer-8 #}
+  <!--[if IE 8]>
+    <link href="/govuk-frontend/all-ie8.css" rel="stylesheet">
+  <![endif]-->
+
+  {# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
+  <!--[if lt IE 9]>
+    <script src="/html5-shiv/html5shiv.js"></script>
+  <![endif]-->
+{% endblock %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">You’ve successfully proved your identity</h1>
+
+  <p class="govuk-body">
+    You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are. 
+  </p>
+
+  <form action="/identity/save/" method="post">
+    {{ govukButton({
+      text: "Save proof of identity to your GOV.UK account",
+      type: "submit"
+    }) }}
+  </form>
+
+  <a class="govuk-link" href="/identity/continue">
+    Do not save proof of identity and continue to DBS
+  </a>
+
+{% endblock %}
+
+{% block bodyEnd %}
+  {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
+  <script src="/javascripts/govuk-frontend/all.js"></script>
+  <script>window.GOVUKFrontend.initAll()</script>
+{% endblock %}
