@@ -19,23 +19,7 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">You’ve successfully proved your identity</h1>
-
-  <p class="govuk-body">
-    You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are. 
-  </p>
-
-  <form action="/identity/save/" method="post">
-    {{ govukButton({
-      text: "Save proof of identity to your GOV.UK account",
-      type: "submit"
-    }) }}
-  </form>
-
-  <a class="govuk-link" href="/identity/complete/return">
-    Do not save proof of identity and continue to DBS
-  </a>
-
+  <h1 class="govuk-heading-xl">Fine, don't save your ID then</h1>
 {% endblock %}
 
 {% block bodyEnd %}

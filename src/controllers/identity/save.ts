@@ -52,7 +52,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
       updatedDataset,
       { fetch: session.fetch }
     )
-    res.redirect('/identity/complete');
+    res.redirect('/identity/complete/return');
   } else {
     throw new SessionError();
   }

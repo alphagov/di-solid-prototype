@@ -5,6 +5,11 @@ import {
     savePost,
 } from "../controllers/identity/save"
 
+import {
+    completeSavedGet,
+    completeReturnGet,
+} from "../controllers/identity/complete"
+
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 
 const router = express.Router();
@@ -27,5 +32,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 /* Save your identity page. */
 router.get('/save', saveGet);
 router.post('/save', savePost);
+
+/* IPV Core completion pages */
+router.get('/complete/saved', completeSavedGet);
+router.get('/complete/return', completeReturnGet);
 
 export { router as identityRouter };
