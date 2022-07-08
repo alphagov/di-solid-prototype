@@ -19,22 +19,7 @@
 {% endblock %}
 
 {% block content %}
-  <p class="govuk-body">Logged in with the WebID: [{{ webId }}].</p>
-
-  <p class="govuk-body">
-    {{ govukButton({
-        text: "View access logs",
-        href: "/access-logs"
-      }) }}
-  </p>
-
-  <p class="govuk-body">
-    {{ govukButton({
-        text: "Save an Identity",
-        href: "/identity/save"
-      }) }}
-  </p>
-
+  <h1 class="govuk-heading-xl">Fine, don't save your ID then</h1>
 {% endblock %}
 
 {% block bodyEnd %}

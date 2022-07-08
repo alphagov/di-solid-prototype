@@ -1,5 +1,13 @@
 import { Session } from '@inrupt/solid-client-authn-node';
 import { getEssServiceURI, EssServices } from '../config';
+import { SessionError } from "../errors";
+import {
+  createSolidDataset,
+  getPodUrlAll,
+  getSolidDataset,
+  SolidDataset,
+} from "@inrupt/solid-client";
+
 
 export async function createProfileAndPod(session: Session) {
   if (session.info.webId) {
@@ -29,5 +37,24 @@ export async function createProfileAndPod(session: Session) {
         })
       }
     )
+  }
+}
+
+export async function getOrCreateDataset(session: Session, datasetUri: string): Promise<SolidDataset> {
+  try {
+    const dataset = await getSolidDataset(datasetUri, {fetch: session.fetch});
+    return dataset;
+  } catch (fetchError) {
+    const dataset = createSolidDataset();
+    return dataset;
+  }
+}
+
+export async function getDatasetUri(session: Session, containerPath: string) {
+  if (session.info.webId && containerPath) {
+    const podUri = await getPodUrlAll(session.info.webId, {fetch: session.fetch});
+    return `${podUri[0]}${containerPath}`;
+  } else {
+    throw new SessionError();
   }
 }
