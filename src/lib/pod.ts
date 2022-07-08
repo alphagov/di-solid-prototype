@@ -50,7 +50,7 @@ export async function getOrCreateDataset(session: Session, datasetUri: string): 
   }
 }
 
-export async function getDatasetUri(session: Session, containerPath: String) {
+export async function getDatasetUri(session: Session, containerPath: string) {
   if (session.info.webId && containerPath) {
     const podUri = await getPodUrlAll(session.info.webId, {fetch: session.fetch});
     return `${podUri[0]}${containerPath}`;
