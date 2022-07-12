@@ -1,3 +1,28 @@
 {
-  "greeting": "hello world!"
+  "general": {
+    "back": "Back",
+    "errorTitlePrefix": "Error",
+    "footer": {
+      "accessibilityStatement": {
+        "pageTitle": "Accessibility statement",
+        "linkText": "Accessibility statement"
+      },
+      "cookies": {
+        "pageTitle": "Cookie Policy",
+        "linkText": "Cookies"
+      },
+      "terms": {
+        "pageTitle": "Terms and conditions",
+        "linkText": "Terms and conditions"
+      },
+      "privacy": {
+        "pageTitle": "Privacy notice",
+        "linkText": "Privacy notice"
+      }
+    },
+    "phaseBanner": {
+      "tag": "beta",
+      "text": "This is a new service – your <a  href=\"/feedback\" class=\"govuk-link\">feedback</a> will help us to improve it."
+    }
+  }
 }
