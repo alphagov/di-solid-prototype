@@ -1,0 +1,16 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.proveIdentity.heading' | translate %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.proveIdentity.heading' | translate }}</h1>
+  <p class="govuk-body">{{ 'identity.proveIdentity.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'identity.proveIdentity.paragraph2' | translate }}</p>
+  <p class="govuk-body">{{ 'identity.proveIdentity.paragraph3' | translate }}</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>{{ 'identity.proveIdentity.listItem1' | translate }}</li>
+    <li>{{ 'identity.proveIdentity.listItem2' | translate }}</li>
+    <li>{{ 'identity.proveIdentity.listItem3' | translate }}</li>
+  </ul>
+  <p class="govuk-body">{{ 'identity.proveIdentity.paragraph4' | translate }}</p>
+  <a href="/identity/enter-passport" class="govuk-button">{{ 'general.continue' | translate }}</a>
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.enterPassport.heading' | translate %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+
+{% set hrefBack = referer %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.enterPassport.heading' | translate }}</h1>
+  <p class="govuk-body">{{ 'identity.enterPassport.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'identity.enterPassport.paragraph2' | translate }}</p>
+  <form action="/identity/enter-passport" method="post">
+    {{ govukInput({
+      label: {
+        text: 'identity.enterPassport.passportNumberInput.label' | translate,
+        classes: "govuk-label--s"
+      },
+      hint: {
+        text: 'identity.enterPassport.passportNumberInput.hint' | translate
+      },
+      classes: "govuk-input--width-10",
+      id: "passport-number",
+      name: "passport-number",
+      attributes: {
+        required: true
+      }
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterPassport.surnameInput.label' | translate
+      },
+      id: "surname",
+      name: "surname",
+      autocomplete: "family-name",
+      attributes: {
+        required: true
+      }
+    }) }}
+
+    {% call govukFieldset({
+      classes: "govuk-fieldset--inset",
+      legend: {
+        text: "Given names"
+      }
+    }) %}
+    {{ govukInput({
+      label: {
+        text: 'identity.enterPassport.firstNameInput.label' | translate
+      },
+      id: "first-name",
+      name: "first-name",
+      autocomplete: "given-name",
+      attributes: {
+        required: true
+      }
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterPassport.middleNameInput.label' | translate
+      },
+      hint: {
+        text: 'identity.enterPassport.middleNameInput.hint' | translate
+      },
+      id: "middle-name",
+      name: "middle-name",
+      autocomplete: "additional-name"
+    }) }}
+    {% endcall %}
+
+    {{ govukDateInput({
+      id: "date-of-birth",
+      namePrefix: "date-of-birth",
+      fieldset: {
+        legend: {
+          text: 'identity.enterPassport.dateOfBirthInput.label' | translate,
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      hint: {
+        text: 'identity.enterPassport.dateOfBirthInput.hint' | translate
+      },
+      attributes: {
+        required: true
+      }
+    }) }}
+
+    {{ govukDateInput({
+      id: "expiry",
+      namePrefix: "expiry",
+      fieldset: {
+        legend: {
+          text: 'identity.enterPassport.expiryDateInput.label' | translate,
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      hint: {
+        text: 'identity.enterPassport.expiryDateInput.hint' | translate
+      },
+      attributes: {
+        required: true
+      }
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate,
+      type: "submit"
+    }) }}
+  </form>
+  <a href="/identity/find-address" class="govuk-link">NEXT</a>
+
+{% endblock %}

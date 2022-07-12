@@ -1,6 +1,9 @@
 {
   "general": {
     "back": "Back",
+    "continue": "Continue",
+    "change": "Change",
+    "start": "Start",
     "errorTitlePrefix": "Error",
     "footer": {
       "accessibilityStatement": {
@@ -23,6 +26,118 @@
     "phaseBanner": {
       "tag": "beta",
       "text": "This is a new service – your <a  href=\"/feedback\" class=\"govuk-link\">feedback</a> will help us to improve it."
+    }
+  },
+  "identity": {
+    "checkYourDetails": {
+      "heading": "We need to check your details",
+      "paragraph1": "Your details will be checked against information held by another organisation.",
+      "paragraph2": "This will help us protect you against online identity theft.",
+      "additionalDetails": {
+        "summaryText": "Who we check your details with",
+        "text": "<p class=\"govuk-body\">We’ll check your details with <a class=\"govuk-link\" href=\"/[experianLink]\" rel=\"noreferrer noopener\" target=\"_blank\">Experian (opens in new tab)</a>. This is because companies like Experian have access to information about interactions you’ve previously had with other organisations.</p><p class=\"govuk-body\"><a class=\"govuk-link\" href=\"/[privacyNoticeLink]\" rel=\"noreferrer noopener\" target=\"_blank\">Read our privacy notice (opens in a new tab)</a> if you’d like to know more about how your details will be used to prove your identity.</p>"
+      }
+    },
+    "confirmDetails": {
+      "heading": "Confirm your details",
+      "warning": "Make sure your details are correct before you continue. You will not be able to change them later.",
+      "summaryList": {
+        "key1": "Current address",
+        "key2": "Year you started living at this address"
+      }
+    },
+    "enterAddress": {
+      "heading": "Enter your address"
+    },
+    "enterPassport": {
+      "heading": "Enter your details exactly as they appear on your UK passport",
+      "paragraph1": "Your passport contains a lot of information that we can check to make sure that you are who you say you are.",
+      "paragraph2": "We’ll check your details with the HM Passport Office to make sure your passport has not been cancelled or reported as lost or stolen.",
+      "passportNumberInput": {
+        "hint": "This is the 9 digit number in the top right hand corner of the photo page in your passport",
+        "label": "Passport number"
+      },
+      "dateOfBirthInput": {
+        "hint": "For example, 5 9 1973",
+        "label": "Date of birth"
+      },
+      "expiryDateInput": {
+        "hint": "For example, 27 5 2029",
+        "label": "Expiry date"
+      },
+      "firstNameInput": {
+        "label": "First name"
+      },
+      "surnameInput": {
+        "label": "Surname"
+      },
+      "middleNameInput": {
+        "label": "Middle names",
+        "hint": "You do not have to fill this in if you do not have any middle names"
+      }
+    },
+    "findAddress": {
+      "heading": "Find your address",
+      "buttonText": "Find address",
+      "inputLabel": "Enter your postcode",
+      "inputHint": "Enter the postcode of your current home address. This must be a UK postcode, for example SW1A 2AA."
+    },
+    "chooseAddress": {
+      "heading": "Choose your address",
+      "selectLabel": "Choose your current home address from the list:",
+      "noAddressLink": "I cannot find my address in the list",
+      "buttonText": "Choose address"
+    },
+    "proveIdentity": {
+      "heading": "Prove your identity",
+      "paragraph1": "This takes about 10 to 20 minutes.",
+      "paragraph2": "We’ll ask for your current address and passport details.",
+      "paragraph3": "We’ll also ask you some security questions only you will know the answer to. You might find it easier to answer these questions if you have information about:",
+      "paragraph4": "You’ll be able to save your proof of identity to your GOV.UK account.",
+      "listItem1": "your mobile phone contract",
+      "listItem2": "your bank account",
+      "listItem3": "any credit cards, loans or morgages you may have"
+    },
+    "save": {
+      "heading": "You’ve successfully proved your identity",
+      "paragraph": "You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are.",
+      "buttonText": "Save proof of identity to your GOV.UK account",
+      "linkText": "Do not save proof of identity and continue to [service]"
+    },
+    "saved": {
+      "heading": "You’ve saved your proof of identity to your GOV.UK account",
+      "paragraph1": "This means you can skip the identity questions next time a service needs to check who you are.",
+      "paragraph2": "You can sign in to your GOV.UK account to see or delete your proof of identity at any time.",
+      "buttonText": "Continue to [doThing]",
+      "additionalDetails": {
+        "summaryText": "If you do not want to continue now",
+        "text": "You can <a class=\"govuk-link\" href=\"/[doThingLink]\">[doThing]</a> later. You’ll be asked to sign to to your GOV.UK account and use your saved proof of identity to continue."
+      }
+    },
+    "securityQuestions": {
+      "answerSecurityQuestions": {
+        "heading": "Answer security questions",
+        "paragraph1": "We’ll ask you some security questions that only you should know the answers to. This will help us stop anyone else who might have your details from pretending to be you.",
+        "paragraph2": "The questions will be about things like your mobile phone contract, bank account, and any credit cards, loans or mortgages you have.",
+        "paragraph3": "We will not keep your answers.",
+        "warning":"Try to answer these questions as accurately as you can. You will not be able to change the answers if you make a mistake"
+      },
+      "questionOne": {
+        "heading": "How much did you borrow when you first took out your mortgage?",
+        "hint": "You can find this amount on your offer letter or mortgage agreement"
+      },
+      "questionTwo": {
+        "heading": "When did you take out your mobile phone contract?",
+        "hint": "Think about when you took out your personal mobile phone contract instead of your work phone, if you have one."
+      },
+      "questionThree": {
+        "heading": "When did you open your current account?",
+        "hint": "Think about your current account only. This does not include any joint, business or savings accounts you might have."
+      },
+      "questionFour": {
+        "heading": "How much of your loan do you pay back every month?",
+        "hint": "Think about the amount you agreed to pay back every month on a personal loan. This does not include hire purchase agreements, second mortgages, home credit loans or student loans. You can find this amount on your loan agreement."
+      }
     }
   }
 }

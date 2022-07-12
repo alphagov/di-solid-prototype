@@ -1,0 +1,29 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.findAddress.heading' | translate %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.findAddress.heading' | translate }}</h1>
+  <form action="/identity/find-address" method="post">
+    {{ govukInput({
+      label: {
+        text: 'identity.findAddress.inputLabel' | translate
+      },
+      hint: {
+        text: 'identity.findAddress.inputHint' | translate
+      },
+      classes: "govuk-input--width-10",
+      id: "address-postcode",
+      name: "address-postcode",
+      autocomplete: "postal-code"
+    }) }}
+
+    {{ govukButton({
+      text: 'identity.findAddress.buttonText' | translate,
+      type: "submit"
+    }) }}
+  </form>
+  <a href="/identity/choose-address" class="govuk-link">NEXT</a>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "./question-template.njk" %}
+
+{% set questionLegend = 'identity.securityQuestions.questionOne.heading' | translate %}
+{% set questionName = 'mortgage-amount' %}
+{% set questionHint = 'identity.securityQuestions.questionOne.hint' | translate %}
+{% set questionOptions = [{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+}] %}
+
+{% block beforeContent %}
+<a href="/identity/security-questions/question-2" class="govuk-link">NEXT</a>
+{% endblock %}

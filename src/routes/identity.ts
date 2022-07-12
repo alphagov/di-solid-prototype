@@ -14,10 +14,58 @@ import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 
 const router = express.Router();
 
+function checkYourDetailsGet(req: Request, res: Response) {
+  res.render('identity/check-your-details');
+}
+
+function chooseAddressGet(req: Request, res: Response) {
+  res.render('identity/choose-address');
+}
+
+function confirmDetailsGet(req: Request, res: Response) {
+  res.render('identity/confirm-details');
+}
+
+function enterAddressGet(req: Request, res: Response) {
+  res.render('identity/enter-address');
+}
+
+function enterPassportGet(req: Request, res: Response) {
+  res.render('identity/enter-passport');
+}
+
+function findAddressGet(req: Request, res: Response) {
+  res.render('identity/find-address');
+}
+
+function proveIdentityGet(req: Request, res: Response) {
+  res.render('identity/prove-identity');
+}
+
+function securityQuestionsIntroGet(req: Request, res: Response) {
+  res.render('identity/security-questions/intro');
+}
+
+function securityQuestionOneGet(req: Request, res: Response) {
+  res.render('identity/security-questions/question-1');
+}
+
+function securityQuestionTwoGet(req: Request, res: Response) {
+  res.render('identity/security-questions/question-2');
+}
+
+function securityQuestionThreeGet(req: Request, res: Response) {
+  res.render('identity/security-questions/question-3');
+}
+
+function securityQuestionFourGet(req: Request, res: Response) {
+  res.render('identity/security-questions/question-4');
+}
+
 async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunction) {
     if (req.session == undefined) { res.redirect("/login") }
     const session = await getSessionFromStorage(req.session?.sessionId);
-  
+
     if (!session?.info.isLoggedIn) {
       res.redirect("/login");
     } else {
@@ -32,6 +80,19 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 /* Save your identity page. */
 router.get('/save', saveGet);
 router.post('/save', savePost);
+
+router.get('/check-your-details', checkYourDetailsGet);
+router.get('/choose-address', chooseAddressGet);
+router.get('/confirm-details', confirmDetailsGet);
+router.get('/enter-address', enterAddressGet);
+router.get('/enter-passport', enterPassportGet);
+router.get('/find-address', findAddressGet);
+router.get('/prove-identity', proveIdentityGet);
+router.get('/security-questions/intro', securityQuestionsIntroGet);
+router.get('/security-questions/question-1', securityQuestionOneGet);
+router.get('/security-questions/question-2', securityQuestionTwoGet);
+router.get('/security-questions/question-3', securityQuestionThreeGet);
+router.get('/security-questions/question-4', securityQuestionFourGet);
 
 /* IPV Core completion pages */
 router.get('/complete/saved', completeSavedGet);

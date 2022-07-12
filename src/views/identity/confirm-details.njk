@@ -1,0 +1,55 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.confirmDetails.heading' | translate %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.confirmDetails.heading' | translate }}</h1>
+
+  {{ govukWarningText({
+    text: 'identity.confirmDetails.warning' | translate,
+    iconFallbackText: "Warning"
+  }) }}
+  {{ govukSummaryList({
+  rows: [
+    {
+      key: {
+        text: 'identity.confirmDetails.summaryList.key1' | translate
+      },
+      value: {
+        html: "123 ChangeMe Street<br>Incorrect Town<br>London<br>SE23 6FH"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "general.change" | translate,
+            visuallyHiddenText: "address"
+          }
+        ]
+      }
+    },{
+      key: {
+        text: 'identity.confirmDetails.summaryList.key2' | translate
+      },
+      value: {
+        html: "???"
+      },
+      actions: {
+        items: [
+          {
+            href: "#",
+            text: "general.change" | translate,
+            visuallyHiddenText: "year"
+          }
+        ]
+      }
+    }
+  ]})
+}}
+
+  <a href="/identity/check-your-details" class="govuk-link">NEXT</a>
+
+{% endblock %}

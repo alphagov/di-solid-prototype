@@ -1,0 +1,31 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.enterAddress.heading' | translate %}
+{% set hrefBack = referer %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.enterAddress.heading' | translate }}</h1>
+
+  {{ govukSummaryList({
+    rows: [
+      {
+        key: {
+          text: "Postcode"
+        },
+        value: {
+          html: "SW1A 2AA"
+        },
+        actions: {
+          items: [
+            {
+              href: "/identity/find-address",
+              text: "general.change" | translate,
+              visuallyHiddenText: "postcode"
+            }
+          ]
+        }
+      }
+    ]
+  })}}
+  <a href="/identity/confirm-details" class="govuk-link">NEXT</a>
+{% endblock %}

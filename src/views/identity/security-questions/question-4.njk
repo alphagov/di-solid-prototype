@@ -1,0 +1,25 @@
+{% extends "./question-template.njk" %}
+
+{% set questionLegend = 'identity.securityQuestions.questionFour.heading' | translate %}
+{% set questionName = 'mobile-contract' %}
+{% set questionHint = 'identity.securityQuestions.questionFour.hint' | translate %}
+{% set questionOptions = [{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+},{
+  value: "Up to £160,000",
+  text: "Up to £160,000"
+}] %}
+
+{% block beforeContent %}
+<a href="/identity/save" class="govuk-link">NEXT</a>
+{% endblock %}

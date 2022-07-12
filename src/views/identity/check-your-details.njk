@@ -1,0 +1,18 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.checkYourDetails.heading' | translate %}
+{# TODO: determine what these URLs should be, pull them from a shared config rather than coding them into the template #}
+{% set experianLink = "www.no-idea.org/put-this-in-a-config" %}
+{% set privacyNoticeLink = "www.no-idea.org/put-this-in-a-config" %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.checkYourDetails.heading' | translate }}</h1>
+  <p class="govuk-body">{{ 'identity.checkYourDetails.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'identity.checkYourDetails.paragraph2' | translate }}</p>
+
+  {{ govukDetails({
+    summaryText: 'identity.checkYourDetails.additionalDetails.summaryText' | translate,
+    html: 'identity.checkYourDetails.additionalDetails.text' | translate | replace("[experianLink]", experianLink) | replace("[privacyNoticeLink]", privacyNoticeLink)
+  }) }}
+  <a href="/identity/security-questions/intro" class="govuk-link">NEXT</a>
+{% endblock %}
