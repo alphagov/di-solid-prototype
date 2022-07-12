@@ -70,7 +70,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
       updatedDataset,
       { fetch: session.fetch }
     )
-    res.redirect('/identity/complete/return');
+    res.redirect('/identity/complete/saved');
   } else {
     throw new SessionError();
   }
