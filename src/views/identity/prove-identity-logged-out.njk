@@ -1,0 +1,40 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.proveIdentityLoggedOut.heading' | translate %}
+{% set doThing = 'apply for a basic DBS check' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.proveIdentityLoggedOut.heading' | translate }}</h1>
+  <p class="govuk-body">{{ 'identity.proveIdentityLoggedOut.paragraph' | translate | replace("[doThing]", doThing) }}</p>
+  <form action="/identity/prove-identity-logged-out" method="post">
+    {{ govukRadios({
+      idPrefix: "prove-identity-options",
+      name: "prove-identity-options",
+      fieldset: {
+        legend: {
+          text: 'identity.proveIdentityLoggedOut.optionsLegend' | translate,
+          classes: "govuk-fieldset__legend--s"
+        }
+      },
+      items: [
+        {
+          value: "account",
+          text: 'identity.proveIdentityLoggedOut.optionOne.text' | translate,
+          hint: {
+            text: 'identity.proveIdentityLoggedOut.optionOne.hint' | translate
+          }
+        },
+        {
+          value: "in-person",
+          text: 'identity.proveIdentityLoggedOut.optionTwo.text' | translate
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate,
+      type: "submit"
+    })}}
+  </form>
+{% endblock %}

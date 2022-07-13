@@ -41,34 +41,35 @@
     }) }}
 
     {% call govukFieldset({
-      classes: "govuk-fieldset--inset",
       legend: {
         text: "Given names"
       }
     }) %}
-    {{ govukInput({
-      label: {
-        text: 'identity.enterPassport.firstNameInput.label' | translate
-      },
-      id: "first-name",
-      name: "first-name",
-      autocomplete: "given-name",
-      attributes: {
-        required: true
-      }
-    }) }}
+    <div class="govuk-inset-text govuk-!-margin-top-0">
+      {{ govukInput({
+        label: {
+          text: 'identity.enterPassport.firstNameInput.label' | translate
+        },
+        id: "first-name",
+        name: "first-name",
+        autocomplete: "given-name",
+        attributes: {
+          required: true
+        }
+      }) }}
 
-    {{ govukInput({
-      label: {
-        text: 'identity.enterPassport.middleNameInput.label' | translate
-      },
-      hint: {
-        text: 'identity.enterPassport.middleNameInput.hint' | translate
-      },
-      id: "middle-name",
-      name: "middle-name",
-      autocomplete: "additional-name"
-    }) }}
+      {{ govukInput({
+        label: {
+          text: 'identity.enterPassport.middleNameInput.label' | translate
+        },
+        hint: {
+          text: 'identity.enterPassport.middleNameInput.hint' | translate
+        },
+        id: "middle-name",
+        name: "middle-name",
+        autocomplete: "additional-name"
+      }) }}
+    </div>
     {% endcall %}
 
     {{ govukDateInput({
@@ -109,6 +110,4 @@
       type: "submit"
     }) }}
   </form>
-  <a href="/identity/find-address" class="govuk-link">NEXT</a>
-
 {% endblock %}

@@ -26,7 +26,8 @@
     "phaseBanner": {
       "tag": "beta",
       "text": "This is a new service – your <a  href=\"/feedback\" class=\"govuk-link\">feedback</a> will help us to improve it."
-    }
+    },
+    "postcode": "Postcode"
   },
   "identity": {
     "checkYourDetails": {
@@ -44,10 +45,19 @@
       "summaryList": {
         "key1": "Current address",
         "key2": "Year you started living at this address"
-      }
+      },
+      "buttonText": "I confirm my details are correct"
     },
     "enterAddress": {
-      "heading": "Enter your address"
+      "heading": "Enter your address",
+      "flatNumberInputLabel": "Flat number",
+      "houseNumberInputLabel": "House number",
+      "houseNameInputLabel": "House name",
+      "streetNameInputLabel": "Street name",
+      "cityNameInputLabel": "Town or city",
+      "yearQuestion": "When did you start living here?",
+      "yearQuestionHint": "Enter the year you started living at this address, for example 2017",
+      "yearQuestionLabel": "Year"
     },
     "enterPassport": {
       "heading": "Enter your details exactly as they appear on your UK passport",
@@ -98,6 +108,22 @@
       "listItem2": "your bank account",
       "listItem3": "any credit cards, loans or morgages you may have"
     },
+    "proveIdentityLoggedOut": {
+      "heading": "Prove your identity to continue",
+      "paragraph": "You need to prove your identity before you can [doThing].",
+      "optionsLegend": "How would you like to prove your identity?",
+      "optionOne":{
+        "text": "Prove your identity online using a GOV.UK account",
+        "hint": "You’ll be asked to create a GOV.UK account if you do not have one"
+      },
+      "optionTwo":{
+        "text": "Take your identity documents to be checked in person"
+      },
+      "paragraph4": "You’ll be able to save your proof of identity to your GOV.UK account.",
+      "listItem1": "your mobile phone contract",
+      "listItem2": "your bank account",
+      "listItem3": "any credit cards, loans or morgages you may have"
+    },
     "save": {
       "heading": "You’ve successfully proved your identity",
       "paragraph": "You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are.",
@@ -138,6 +164,11 @@
         "heading": "How much of your loan do you pay back every month?",
         "hint": "Think about the amount you agreed to pay back every month on a personal loan. This does not include hire purchase agreements, second mortgages, home credit loans or student loans. You can find this amount on your loan agreement."
       }
+    },
+    "useSavedIdentity": {
+      "heading": "Use your saved proof of identity to continue",
+      "paragraph1": "You need to prove your identity before you [doThing].",
+      "paragraph2": "Your GOV.UK account will check your saved proof of identity to confirm it’s really you."
     }
   }
 }

@@ -38,8 +38,16 @@ function findAddressGet(req: Request, res: Response) {
   res.render('identity/find-address');
 }
 
+function proveIdentityLoggedOutGet(req: Request, res: Response) {
+  res.render('identity/prove-identity-logged-out');
+}
+
 function proveIdentityGet(req: Request, res: Response) {
   res.render('identity/prove-identity');
+}
+
+function useSavedProofOfIdentityGet(req: Request, res: Response) {
+  res.render('identity/use-saved-proof-of-identity');
 }
 
 function securityQuestionsIntroGet(req: Request, res: Response) {
@@ -88,6 +96,8 @@ router.get('/enter-address', enterAddressGet);
 router.get('/enter-passport', enterPassportGet);
 router.get('/find-address', findAddressGet);
 router.get('/prove-identity', proveIdentityGet);
+router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);
+router.get('/use-saved-proof-of-identity', useSavedProofOfIdentityGet);
 router.get('/security-questions/intro', securityQuestionsIntroGet);
 router.get('/security-questions/question-1', securityQuestionOneGet);
 router.get('/security-questions/question-2', securityQuestionTwoGet);

@@ -2,30 +2,85 @@
 {% set pageTitleName = 'identity.enterAddress.heading' | translate %}
 {% set hrefBack = referer %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">{{ 'identity.enterAddress.heading' | translate }}</h1>
+  <form action="/identity/enter-address" method="post">
+    <h1 class="govuk-heading-xl">{{ 'identity.enterAddress.heading' | translate }}</h1>
+    <p class="govuk-body govuk-!-margin-bottom-2">{{ "general.postcode" | translate }}</p>
+    <p class="govuk-body"><strong>SW1A 2AA </strong><a class="govuk-link govuk-!-margin-left-2" href="/identity/find-address">{{ "general.change" | translate }}<span class="govuk-visually-hidden"> {{ "general.postcode" | translate }}</span></a></p>
 
-  {{ govukSummaryList({
-    rows: [
-      {
-        key: {
-          text: "Postcode"
-        },
-        value: {
-          html: "SW1A 2AA"
-        },
-        actions: {
-          items: [
-            {
-              href: "/identity/find-address",
-              text: "general.change" | translate,
-              visuallyHiddenText: "postcode"
-            }
-          ]
-        }
+    {{ govukInput({
+      label: {
+        text: 'identity.enterAddress.flatNumberInputLabel' | translate
+      },
+      classes: "govuk-input--width-10",
+      id: "flat-number",
+      name: "flat-number"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterAddress.houseNumberInputLabel' | translate
+      },
+      classes: "govuk-input--width-10",
+      id: "house-number",
+      name: "house-number"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterAddress.houseNameInputLabel' | translate
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "house-name",
+      name: "house-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterAddress.streetNameInputLabel' | translate
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "street-name",
+      name: "street-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: 'identity.enterAddress.cityNameInputLabel' | translate
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "city-name",
+      name: "city-name"
+    }) }}
+    {% call govukFieldset({
+      legend: {
+        text: 'identity.enterAddress.yearQuestion' | translate,
+        classes: "govuk-fieldset__legend--s"
       }
-    ]
-  })}}
-  <a href="/identity/confirm-details" class="govuk-link">NEXT</a>
+    }) %}
+      {{ govukHint({
+        text: 'identity.enterAddress.yearQuestionHint' | translate,
+        id: "year-hint"
+      })}}
+      {{ govukInput({
+        label: {
+          text: 'identity.enterAddress.yearQuestionLabel' | translate
+        },
+        classes: "govuk-input--width-4",
+        id: "year",
+        name: "year",
+        describedBy: "year-hint"
+      }) }}
+    {% endcall %}
+
+    {{govukButton({
+      text: 'general.continue' | translate,
+      type: "submit"
+    })}}
+  </form>
 {% endblock %}
