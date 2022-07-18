@@ -10,65 +10,26 @@ import {
     completeReturnGet,
 } from "../controllers/identity/complete"
 
+import {
+  checkYourDetailsGet,
+  chooseAddressGet,
+  confirmDetailsGet,
+  enterAddressGet,
+  enterPassportGet,
+  findAddressGet,
+  proveIdentityGet,
+  proveIdentityLoggedOutGet,
+  useSavedProofOfIdentityGet,
+  securityQuestionsIntroGet,
+  securityQuestionOneGet,
+  securityQuestionTwoGet,
+  securityQuestionThreeGet,
+  securityQuestionFourGet
+} from "../controllers/identity/ipv"
+
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 
 const router = express.Router();
-
-function checkYourDetailsGet(req: Request, res: Response) {
-  res.render('identity/check-your-details');
-}
-
-function chooseAddressGet(req: Request, res: Response) {
-  res.render('identity/choose-address');
-}
-
-function confirmDetailsGet(req: Request, res: Response) {
-  res.render('identity/confirm-details');
-}
-
-function enterAddressGet(req: Request, res: Response) {
-  res.render('identity/enter-address');
-}
-
-function enterPassportGet(req: Request, res: Response) {
-  res.render('identity/enter-passport');
-}
-
-function findAddressGet(req: Request, res: Response) {
-  res.render('identity/find-address');
-}
-
-function proveIdentityLoggedOutGet(req: Request, res: Response) {
-  res.render('identity/prove-identity-logged-out');
-}
-
-function proveIdentityGet(req: Request, res: Response) {
-  res.render('identity/prove-identity');
-}
-
-function useSavedProofOfIdentityGet(req: Request, res: Response) {
-  res.render('identity/use-saved-proof-of-identity');
-}
-
-function securityQuestionsIntroGet(req: Request, res: Response) {
-  res.render('identity/security-questions/intro');
-}
-
-function securityQuestionOneGet(req: Request, res: Response) {
-  res.render('identity/security-questions/question-1');
-}
-
-function securityQuestionTwoGet(req: Request, res: Response) {
-  res.render('identity/security-questions/question-2');
-}
-
-function securityQuestionThreeGet(req: Request, res: Response) {
-  res.render('identity/security-questions/question-3');
-}
-
-function securityQuestionFourGet(req: Request, res: Response) {
-  res.render('identity/security-questions/question-4');
-}
 
 async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunction) {
     if (req.session == undefined) { res.redirect("/login") }
