@@ -1,0 +1,28 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = questionLegend %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% block content %}
+  <form action="/identity/security-questions" method="post">
+    {{ govukRadios({
+      idPrefix: questionName,
+      name: questionName,
+      fieldset: {
+        legend: {
+          text: questionLegend,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: {
+        text: questionHint
+      },
+      items: questionOptions
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate,
+      type: "submit"
+    }) }}
+  </form>
+{% endblock %}

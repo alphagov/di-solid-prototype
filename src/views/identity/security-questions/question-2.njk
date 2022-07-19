@@ -1,0 +1,24 @@
+{% extends "./question-template.njk" %}
+
+{% set questionLegend = 'identity.securityQuestions.questionThree.heading' | translate %}
+{% set questionName = 'mobile-contract' %}
+{% set questionHint = 'identity.securityQuestions.questionThree.hint' | translate %}
+{% set questionOptions = [{
+  value: "Up to £200",
+  text: "Up to £200"
+},{
+  value: "Over £200 up to £400",
+  text: "Over £200 up to £400"
+},{
+  value: "Over £400 up to £600",
+  text: "Over £400 up to £600"
+},{
+  value: "Over £600 up to £800",
+  text: "Over £600 up to £800"
+},{
+  value: "None of the above/does not apply",
+  text: "None of the above/does not apply"
+}] %}
+
+{% block beforeContent %}
+{% endblock %}

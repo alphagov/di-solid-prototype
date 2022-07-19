@@ -1,27 +1,28 @@
-{% extends "govuk/template.njk" %}
-{% block head %}
-  <!--[if !IE 8]><!-->
-    <link href="/stylesheets/application.css" rel="stylesheet">
-  <!--<![endif]-->
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'Hello world' %}
+{% set serviceName = 'GOV.UK account' %}
 
-  {# For Internet Explorer 8, you need to compile specific stylesheet #}
-  {# see https://frontend.design-system.service.gov.uk/supporting-ie8/#support-internet-explorer-8 #}
-  <!--[if IE 8]>
-    <link href="/govuk-frontend/all-ie8.css" rel="stylesheet">
-  <![endif]-->
-
-  {# For older browsers to allow them to recognise HTML5 elements such as `<header>` #}
-  <!--[if lt IE 9]>
-    <script src="/html5-shiv/html5shiv.js"></script>
-  <![endif]-->
-{% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">{{'greeting' | translate}}</h1>
-{% endblock %}
+<h1 class="govuk-heading-xl">Hello world</h1>
+  <h2 class="govuk-heading-m">Identity</h2>
+  <ul>
+    <li><a href="/identity/prove-identity-logged-out" class="govuk-link">Prove your identity to continue</a></li>
+    <li><a href="/identity/prove-identity" class="govuk-link">Prove your identity</a></li>
+    <li><a href="/identity/use-saved-proof-of-identity" class="govuk-link">Use your saved proof of identity to continue</a></li>
+    <li><a href="/identity/enter-passport" class="govuk-link">Enter your details exactly as they appear on your UK passport</a></li>
+    <li><a href="/identity/find-address" class="govuk-link">Find your address</a></li>
+    <li><a href="/identity/choose-address" class="govuk-link">Choose your address</a></li>
+    <li><a href="/identity/enter-address" class="govuk-link">Enter your address</a></li>
+    <li><a href="/identity/confirm-details" class="govuk-link">Confirm your details</a></li>
+    <li><a href="/identity/check-your-details" class="govuk-link">We need to check your details</a></li>
+    <li><a href="/identity/security-questions/intro" class="govuk-link">Answer security questions</a></li>
+    <li><a href="/identity/security-questions/question-1" class="govuk-link">How much did you borrow when you first took out your mortgage?</a></li>
+    <li><a href="/identity/security-questions/question-2" class="govuk-link">When did you open your current account?</a></li>
+    <li><a href="/identity/security-questions/question-3" class="govuk-link">When did you take out your mobile phone contract?</a></li>
+    <li><a href="/identity/security-questions/question-4" class="govuk-link">How much of your loan do you pay back every month?</a></li>
+    <li><a href="/identity/save" class="govuk-link">You’ve successfully proved your identity</a></li>
+    <li><a href="/identity/complete/saved" class="govuk-link">You’ve saved your proof of identity to your GOV.UK account</a></li>
+  </ul>
 
-{% block bodyEnd %}
-  {# Run JavaScript at end of the <body>, to avoid blocking the initial render. #}
-  <script src="/javascripts/govuk-frontend/all.js"></script>
-  <script>window.GOVUKFrontend.initAll()</script>
 {% endblock %}

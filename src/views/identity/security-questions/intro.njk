@@ -1,0 +1,16 @@
+{% extends "layouts/base.njk" %}
+{% set pageTitleName = 'identity.securityQuestions.answerSecurityQuestions.heading' | translate %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'identity.securityQuestions.answerSecurityQuestions.heading' | translate }}</h1>
+  <p class="govuk-body">{{ 'identity.securityQuestions.answerSecurityQuestions.paragraph1' | translate }}</p>
+  <p class="govuk-body">{{ 'identity.securityQuestions.answerSecurityQuestions.paragraph2' | translate }}</p>
+  {{ govukWarningText({
+    text: 'identity.securityQuestions.answerSecurityQuestions.warning' | translate,
+    iconFallbackText: "Warning"
+  }) }}
+  <p class="govuk-body">{{ 'identity.securityQuestions.answerSecurityQuestions.paragraph3' | translate }}</p>
+  <a href="/identity/security-questions/question-1" class="govuk-button">{{ 'general.start' | translate }}</a>
+{% endblock %}
