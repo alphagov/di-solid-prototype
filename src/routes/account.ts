@@ -9,10 +9,10 @@ import {
 
 const router = express.Router();
 
-router.get('/account', accountHomeGet);
-router.get('/account/settings', accountSettingsGet);
-router.get('/account/settings/activity', accountActivityGet);
-router.get('/account/settings/your-proof-of-identity', yourProofOfIdGet);
-router.get('/account/settings/your-proof-of-identity/delete', deleteYourProofOfIdGet);
+router.get('/', accountHomeGet);
+router.get('/settings', accountSettingsGet);
+router.get('/settings/activity', accountActivityGet);
+router.get('/settings/your-proof-of-identity', yourProofOfIdGet);
+router.get('/settings/your-proof-of-identity/delete', deleteYourProofOfIdGet);
 
 export {router as accountRouter};

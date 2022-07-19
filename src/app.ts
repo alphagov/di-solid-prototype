@@ -43,7 +43,7 @@ app.use('/login', loginRouter);
 app.use('/info', infoRouter);
 app.use('/access-logs', accessRouter);
 app.use('/identity', identityRouter);
-app.use(accountRouter);
+app.use('/account', accountRouter);
 
 i18next
   .use(Backend)
