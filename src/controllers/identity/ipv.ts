@@ -74,3 +74,20 @@ export function enterAddressPost(req: Request, res: Response) {
   res.redirect("/identity/confirm-details");
 }
 
+/* Confirm your Details */
+export function confirmDetailsGet(req: Request, res: Response) {
+  if (req.session) {
+    res.render("identity/confirm-details", { 
+      postCode: req.session.address["address-postcode"].toUpperCase(),
+      startedYear: req.session.address.year 
+    });
+  }
+}
+
+export function confirmDetailsPost(req: Request, res: Response) {
+  if (req.session) {
+    req.session.confirmed = true
+  }
+  res.redirect("/identity/check-your-details");
+}
+
