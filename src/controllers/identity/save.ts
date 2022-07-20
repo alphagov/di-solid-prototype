@@ -1,6 +1,11 @@
 import { Request, Response } from "express";
-import { credentials } from "../../lib/credentials";
+import { passportCheckVC } from "../../lib/passport_check_vc";
+import { evidenceSuccessful } from "../../lib/credential_helpers";
 import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
+import {
+  NamePart,
+} from "../../components/vocabularies/CommonComponents";
+
 import {
   buildThing,
   createThing,
@@ -52,7 +57,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
     const metadataUri = `${containerUri}/vc-metadata`
     const metadataDataset = await getOrCreateDataset(session, metadataUri);
     const blobUri = `${containerUri}/vc-blob`;
-    const vcFile = new Blob([JSON.stringify(credentials())], { type: "application/json" })
+    const vcFile = new Blob([JSON.stringify(buildPassportIdentityCheck(req.session))], { type: "application/json" })
     await writeFileToPod(vcFile, blobUri, session)
 
     const reusableIdentityCredential = buildThing(
@@ -94,4 +99,49 @@ async function writeFileToPod(file: Blob, targetFileURL: string, session: Sessio
   } catch (error) {
     console.error(error);
   }
+}
+
+function buildPassportIdentityCheck(session: any): string { // TODO Any is bad...
+  let firstName: string = session.passport["first-name"]
+  let middleName: string = session.passport["middle-name"]
+  let surname: string = session.passport["surname"]
+
+  let nameParts: NamePart[] = [
+    {
+      "value": firstName,
+      "type": "GivenName",
+    },
+    {
+      "value": middleName,
+      "type": "GivenName",
+    },
+    {
+      "value": surname,
+      "type": "FamilyName",
+    },
+  ]
+
+  let byear = session.passport["date-of-birth-year"]
+  let bmonth = session.passport["date-of-birth-year"]
+  let bday = session.passport["date-of-birth-day"]
+  let birthDate = `${byear}-${bmonth}-${bday}`
+  
+  let eyear = session.passport["date-of-birth-year"]
+  let emonth = session.passport["date-of-birth-year"]
+  let eday = session.passport["date-of-birth-day"]
+  let passportDetails = {
+    "documentNumber": session.passport["passport-number"],
+    "expiryDate": `${eyear}-${emonth}-${eday}`
+  }
+
+  let payload = passportCheckVC(
+    nameParts,
+    birthDate,
+    passportDetails,
+    evidenceSuccessful()
+  )
+
+  // @ TODO Now take the payload and make it into a JWT... 
+
+  return "TODO JWT GOES HERE"
 }
