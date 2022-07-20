@@ -142,3 +142,7 @@ export function securityQuestionPost(req: Request, res: Response) {
     }
   }
 }
+
+export function checkInPersonGet(req: Request, res: Response) {
+  res.render("identity/check-in-person");
+}
