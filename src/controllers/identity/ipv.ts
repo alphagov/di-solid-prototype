@@ -43,3 +43,16 @@ export function findAddressPost(req: Request, res: Response) {
   }
   res.redirect("/identity/choose-address");
 }
+
+/* Choose your Address */
+export function chooseAddressGet(req: Request, res: Response) {
+  if (req.session && req.session.address) {
+    let postCode = req.session.address["address-postcode"].toUpperCase()
+    res.render("identity/choose-address", { postCode: postCode });
+  }
+}
+
+export function chooseAddressPost(req: Request, res: Response) {
+  res.redirect("/identity/enter-address");
+}
+
