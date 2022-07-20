@@ -47,7 +47,7 @@ export function findAddressPost(req: Request, res: Response) {
 /* Choose your Address */
 export function chooseAddressGet(req: Request, res: Response) {
   if (req.session && req.session.address) {
-    let postCode = req.session.address["address-postcode"].toUpperCase()
+    const postCode = req.session.address["address-postcode"].toUpperCase()
     res.render("identity/choose-address", { postCode: postCode });
   }
 }
@@ -59,7 +59,7 @@ export function chooseAddressPost(req: Request, res: Response) {
 /* Enter your Address */
 export function enterAddressGet(req: Request, res: Response) {
   if (req.session) {
-    let postCode = req.session.address["address-postcode"].toUpperCase()
+    const postCode = req.session.address["address-postcode"].toUpperCase()
     res.render("identity/enter-address", { postCode: postCode });
   }
 }
@@ -128,7 +128,6 @@ export function securityQuestionPost(req: Request, res: Response) {
       ...req.session.kvb,
       ...req.body
     }
-    console.log(req.session)
     if (!req.session.kvb["mortgage-amount"]) { 
       res.redirect("/identity/security-questions/question-1") 
     } else if (!req.session.kvb["mobile-contract-value"]) {
