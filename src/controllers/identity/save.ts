@@ -75,6 +75,14 @@ export async function savePost(req: Request, res: Response): Promise<void> {
       updatedDataset,
       { fetch: session.fetch }
     )
+
+    // @TODO All the above will amount to saving the passport check.
+    // It needs some of the linke data GOV_UK_* updated to reflect that
+    // Also we then need to repeat this below, but generating a second JWT that represents
+    // The KVB check... That will need a _new_ function here similar to buildPassportIdentityCheck()
+    // but can import from kvb_check_vc.ts, then we'll need more linked data.
+    // After that's complete we can then redirect to saved!
+
     res.redirect('/identity/complete/saved');
   } else {
     throw new SessionError();
