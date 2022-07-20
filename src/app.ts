@@ -16,6 +16,7 @@ import { infoRouter } from "./routes/info";
 import { accessRouter } from "./routes/access";
 import { identityRouter } from "./routes/identity";
 import { Environment } from "nunjucks";
+import { accountRouter } from "./routes/account";
 
 import i18next from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
@@ -42,6 +43,7 @@ app.use('/login', loginRouter);
 app.use('/info', infoRouter);
 app.use('/access-logs', accessRouter);
 app.use('/identity', identityRouter);
+app.use('/account', accountRouter);
 
 i18next
   .use(Backend)

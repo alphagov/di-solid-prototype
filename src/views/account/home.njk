@@ -1,0 +1,73 @@
+{% extends "layouts/account.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set pageTitleName = 'account.pages.home.title' | translate %}
+{% set activeNavLink = '/account' %}
+{% set email = 'something@somewhere.com' %}
+{# Services you've used with your account, hard coded this for now #}
+{% set services = [{
+  name: "Personal tax account",
+  description:"Check your records and manage your payments to HM Revenue and Customs (HMRC).",
+  link: {
+    href: "#",
+    text: "Go to your personal tax account"
+  },
+  timeLastUsed: "20 June 2022"
+}] %}
+
+{# Services which have used your proof of id, hard coded this for now #}
+{% set idServices = [{
+  link: {
+    href: "#",
+    text: "Personal tax account"
+  },
+  timeLastChecked: "20 June 2022"
+  },{
+    link: {
+      href: "#",
+      text: "Request a basic DBS check"
+    },
+    timeLastChecked: "18 June 2022"
+  }]
+%}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'account.pages.home.title' | translate }}</h1>
+  <p class="govuk-body">{{ 'account.pages.home.signedInStatus' | translate }} <strong>{{ email }}</strong></p>
+  <hr class="govuk-section-break govuk-section-break--m">
+  {% if services %}
+    <section class="govuk-!-margin-bottom-8">
+      <h2 class="govuk-heading-m">{{ 'account.pages.home.servicesHeading' | translate }}</h2>
+      {% for service in services %}
+        <div class="accounts-panel">
+          <h3 class="govuk-heading-s">{{service.name}}</h3>
+          <p class="govuk-body">{{service.description}}</p>
+          <p class="govuk-body"><a class="govuk-link" href="{{service.link.href}}">{{service.link.text}}</a></p>
+          <p class="govuk-body govuk-hint"> Last used: {{service.timeLastUsed}}</p>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  {% if idServices %}
+    <section class="govuk-!-margin-bottom-8">
+      <h2 class="govuk-heading-m">{{ 'account.pages.home.IdServicesHeading' | translate }}</h2>
+      <p class="govuk-body">{{ 'account.pages.home.IdServicesParagraph' | translate }}</p>
+      <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-7">
+        {% for service in idServices %}
+          <li>
+            <a href="{{service.link.href}}">{{service.link.text}}</a> ({{ 'general.on' | translate }} {{service.timeLastChecked}})
+          </li>
+        {% endfor %}
+      </ul>
+      <p class="govuk-body">
+        <a href="/account/settings/your-proof-of-identity" class="govuk-link">{{ 'account.pages.settings.yourProofOfId.link' | translate }}</a>
+      </p>
+    </section>
+  {% endif %}
+  <section class="information-box">
+    <h2 class="govuk-heading-m">{{ 'account.pages.home.aboutAccounts.heading' | translate }}</h2>
+    <p class="govuk-body">{{ 'account.pages.home.aboutAccounts.paragraph1' | translate }}</p>
+    <p class="govuk-body">{{ 'account.pages.home.aboutAccounts.paragraph2' | translate }}</p>
+    <p class="govuk-body">{{ 'account.pages.home.aboutAccounts.paragraph3' | translate }}</p>
+  </section>
+{% endblock %}

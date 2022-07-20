@@ -19,17 +19,17 @@
 {% endblock %}
 
 {% block pageTitle %}
-    {% if error or errors %}
-        {{ 'general.errorTitlePrefix' | translate }}
-        -
-    {% endif %}
-    {% if pageTitleName %}
-        {{ pageTitleName }}
-        -
-    {% endif %}
-    {% if serviceName %}
-      {{ serviceName }}
-    {% endif %}
+  {% if error or errors %}
+      {{ 'general.errorTitlePrefix' | translate }}
+      -
+  {% endif %}
+  {% if pageTitleName %}
+      {{ pageTitleName }}
+      -
+  {% endif %}
+  {% if serviceName %}
+    {{ serviceName }}
+  {% endif %}
 {% endblock %}
 
 {% block main %}
@@ -41,13 +41,13 @@
         html: 'general.phaseBanner.text' | translate | replace ("[supportUrl]", authFrontEndUrl + "/contact-us?supportType=PUBLIC")
     }) }}
     {% if backLink %}
-        <a href="{{backLink}}" class="govuk-back-link">{{'general.back' | translate}}</a>
-     {% endif %}
+      <a href="{{backLink}}" class="govuk-back-link govuk-!-margin-bottom-0">{{'general.back' | translate}}</a>
+    {% endif %}
     {% block beforeContent %}{% endblock %}
     <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content">
       <div class="govuk-grid-row">
         <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
-        {% block content %}{% endblock %}
+          {% block content %}{% endblock %}
         </div>
       </div>
     </main>
@@ -55,31 +55,31 @@
 {% endblock %}
 
 {% block footer %}
-    {{ govukFooter({
-        meta: {
-            items: [
-                {
-                    href: "/accessibility-statement",
-                    attributes: { target: "_blank"},
-                    text: 'general.footer.accessibilityStatement.linkText' | translate
-                },
-                {
-                    href: "https://www.gov.uk/help/cookies",
-                    attributes: { target: "_blank"},
-                    text: 'general.footer.cookies.linkText' | translate
-                },
-                {
-                    href: "/terms-and-conditions",
-                    attributes: { target: "_blank"},
-                    text: 'general.footer.terms.linkText' | translate
-                },
-                {
-                    href: "/privacy-notice",
-                    attributes: { target: "_blank"},
-                    text: 'general.footer.privacy.linkText' | translate
-                }
-            ]
-        }
+  {{ govukFooter({
+      meta: {
+        items: [
+          {
+              href: "/accessibility-statement",
+              attributes: { target: "_blank"},
+              text: 'general.footer.accessibilityStatement.linkText' | translate
+          },
+          {
+              href: "https://www.gov.uk/help/cookies",
+              attributes: { target: "_blank"},
+              text: 'general.footer.cookies.linkText' | translate
+          },
+          {
+              href: "/terms-and-conditions",
+              attributes: { target: "_blank"},
+              text: 'general.footer.terms.linkText' | translate
+          },
+          {
+              href: "/privacy-notice",
+              attributes: { target: "_blank"},
+              text: 'general.footer.privacy.linkText' | translate
+          }
+        ]
+      }
     }) }}
 {% endblock %}
 
