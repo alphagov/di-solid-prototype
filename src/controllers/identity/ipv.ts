@@ -91,3 +91,8 @@ export function confirmDetailsPost(req: Request, res: Response) {
   res.redirect("/identity/check-your-details");
 }
 
+/* Check your Details */
+export function checkYourDetailsGet(req: Request, res: Response) {
+  res.render("identity/check-your-details");
+}
+
