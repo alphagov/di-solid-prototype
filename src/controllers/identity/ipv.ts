@@ -29,3 +29,17 @@ export function enterPassportPost(req: Request, res: Response) {
   res.redirect("/identity/find-address");
 }
 
+/* Find your Address */
+export function findAddressGet(req: Request, res: Response) {
+  res.render("identity/find-address");
+}
+
+export function findAddressPost(req: Request, res: Response) {
+  if (req.session) {
+    if (!req.session.address) {
+      req.session.address = {}
+    }
+    req.session.address = req.body;
+  }
+  res.redirect("/identity/choose-address");
+}
