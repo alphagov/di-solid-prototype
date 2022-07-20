@@ -1,0 +1,62 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix gov_uk_gds_poc: <https://vocab.gov.uk/gds/poc/>
+
+#
+# This vocabulary is use to define terms that are specific to our particular
+# application - in this case, the GDS Proof of Concept (PoC).
+#
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+<https://vocab.gov.uk/gds/poc/v/gdsCore> a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://vocab.gov.uk/gds/poc/0.0.1> ;
+     dcterms:title "Vocabulary for Inrupt's ETL Tutorial" ;
+     dcterms:description """A vocabulary for common terms used across this GDS Proof of Concept"""@en ;
+     dcterms:creator <https://id.gov.uk/webid/dept/gds> ;
+     dcterms:issued "2021-08-23"^^xsd:date ;
+     vann:preferredNamespacePrefix "gov_uk_gds_poc" ;
+     vann:preferredNamespaceUri <https://vocab.gov.uk/gds/poc/> ;
+     cc:attributionURL gov_uk_gds_poc: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+gov_uk_gds_poc:GdsPoc a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy gov_uk_gds_poc: ;
+    rdfs:label "GDS Proof of Concept"@en ;
+    rdfs:label "Prawf o Gysyniad GDS"@cy ;
+    rdfs:label "Prueba de concepto de GDS"@es ;
+    rdfs:comment "GDS Proof of Concept using Inrupt's ESS to provide Solid Pods to demonstrate reusable identities."@en ;
+    rdfs:comment "Prawf Cysyniad GDS gan ddefnyddio ESS Inrupt i ddarparu Podiau Solid i ddangos hunaniaethau y gellir eu hailddefnyddio."@cy ;
+    rdfs:comment "Prueba de concepto de GDS usando ESS de Inrupt para proporcionar Solid Pods para demostrar identidades reutilizables."@es .
+
+gov_uk_gds_poc:gdsPocEntrypoint a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy gov_uk_gds_poc: ;
+    rdfs:label "GDS PoC entrypoint"@en ;
+    rdfs:label "Man mynediad PoC GDS"@cy ;
+    rdfs:label "Punto de entrada de GDS PoC"@es ;
+    rdfs:comment "This property references the Pod entrypoint for the GDS PoC application to store its data in a Pod."@en ;
+    rdfs:comment "Mae'r eiddo hwn yn cyfeirio at y pwynt mynediad Pod ar gyfer y cais GDS PoC i storio ei ddata mewn Pod"@cy ;
+    rdfs:comment "Esta propiedad hace referencia al punto de entrada del Pod para que la aplicación GDS PoC almacene sus datos en un Pod."@es .
+
+#
+#gov_uk_gds_poc: a rdf:Property, owl:ObjectProperty ;
+#    rdfs:isDefinedBy gov_uk_gds_poc: ;
+#    rdfs:label ""@en ;
+#    rdfs:label ""@cy ;
+#    rdfs:label ""@es ;
+#    rdfs:comment ""@en ;
+#    rdfs:comment ""@cy ;
+#    rdfs:comment ""@es .

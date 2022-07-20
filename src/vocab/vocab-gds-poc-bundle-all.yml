@@ -1,0 +1,317 @@
+#
+# This file contains a simple list of vocabularies that we bundle together to
+# form the collective set of 3rd-party vocabularies.
+#
+# We define these vocabularies on behalf of 3rd parties that do not (yet)
+# provide RDF vocabularies for their APIs.
+#
+# Local vocabularies can be provided relative to the location of this resource
+# list file.
+#
+artifactName: vocab-etl-tutorial-bundle-all
+artifactGeneratorVersion: 2.0.0
+
+#
+# This versioning information is optional, and is useful for published
+# packages - since we aren't yet publishing anything for this project yet,
+# this section is commented out.
+#
+#versioning:
+#  type: git
+#  # Hypothetical GitHub repository if we wished to publish this
+#  # vocabulary information...
+#  # For example, Inrupt publishes its vocabulary information here:
+#  #  url: https://github.com/inrupt/solid-common-vocab-rdf.git
+#  versioningTemplates:
+#    - templateInternal: ".gitignore.hbs"
+#      fileName: ".gitignore"
+
+license:
+  path: "./LICENSE"
+  fileName: "LICENSE"
+  header: "./LICENSE_HEADER.js"
+  name: "Proprietary"
+
+artifactToGenerate:
+#  # This is the configuration of the DEFAULT Java artifact - i.e., where the name
+#  # of the generated JAR does not contain details of its dependencies (e.g.
+#  # whether it provides SolidCommonVocab constants or just string constants, or whether
+#  # it depends on RDF4J or Jena or RDF Commons, etc.).
+#  - programmingLanguage: Java
+#    artifactVersion: 0.8.2-SNAPSHOT
+#    artifactNamePrefix: ""
+#    artifactNameSuffix: ""
+#
+#    artifactDirectoryName: Java
+#    sourceFileExtension: java
+#    javaPackageName: com.inrupt.vocab.thirdparty
+#
+#    templateInternal: stringLiteral/java/vocab.hbs
+#
+#    # Currently we're just adding terms as they occur in vocabs, and not all possible keywords.
+#    languageKeywordsToUnderscore:
+#      - class     # Defined in VCard.
+#      - abstract  # Defined in DCTerms.
+#      - default   # Defined in ACL
+#    packaging:
+#      - packagingTool: maven
+#        groupId: com.inrupt
+#        publish:
+#          - key: "mavenLocal"
+#            command: "mvn --version && mvn install"
+#          - key: "mavenRemote"
+#            command: "mvn deploy"
+#          - key: "cloudsmith"
+#            command: "mvn -s /home/runner/work/solid-common-vocab-rdf/solid-common-vocab-rdf/settings.xml deploy --log-file ../../../mvn-deploy.log"
+#        packagingTemplates:
+#          - templateInternal: stringLiteral/java/pom.hbs
+#            fileName: pom.xml
+#        repository:
+#          - type: repository
+#            id: cloudsmith-staging
+#            url: https://maven.cloudsmith.io/inrupt/sdk-staging/
+#          - type: snapshotRepository
+#            id: cloudsmith-development
+#            url: https://maven.cloudsmith.io/inrupt/sdk-development/
+#
+#
+#  # This is the configuration of the DEFAULT TypeScript artifact - i.e., where
+#  # the name of the generated npm module does not contain details of its
+#  # dependencies (e.g., whether it provides SolidCommonVocab constants or just string
+#  # literals, or whether it depends on RDF/JS or Jena or RDF Commons, etc.).
+#  - programmingLanguage: TypeScript
+#    artifactVersion: "1.0.1"
+#    artifactNamePrefix: ""
+#    artifactNameSuffix: ""
+#
+#    artifactDirectoryName: TypeScript
+#    sourceFileExtension: ts
+#
+#    templateInternal: stringLiteral/typescript/vocab.hbs
+#
+#    packaging:
+#      - packagingTool: npm
+#        npmModuleScope: "@inrupt/"
+#        bundleName: "Vocabinrupt3rdParty"
+#
+#        typescriptVersion: "^4.7.4"
+#        rollupVersion: "^2.36.1"
+#        rollupTypescriptPluginVersion: "^0.29.0"
+#        rollupCommonjsPluginVersion: "^17.0.0"
+#        rollupNodeResolveVersion: "^11.0.1"
+#
+#        publish:
+#          - key: "npmInstallAndBuild"
+#            command: "npm install && npm run build"
+#          - key: "npmLocal"
+#            command: "npm unpublish --force --registry http://localhost:4873/ && npm install --registry http://localhost:4873/ && npm run build && npm publish --registry http://localhost:4873/"
+#          # The following command should only run in CI.
+#          - key: "npmPublic"
+#            command: "npm install --registry https://registry.npmjs.org/ && npm run build && npm publish --registry https://registry.npmjs.org/ --access public"
+#        packagingTemplates:
+#          - templateInternal: stringLiteral/typescript/package.hbs
+#            fileName: package.json
+#          - templateInternal: generic/typescript/index.hbs-JS
+#            fileName: index.ts
+#          - templateInternal: generic/typescript/tsconfig.hbs
+#            fileName: tsconfig.json
+#          - templateInternal: generic/typescript/rollup.config.hbs
+#            fileName: rollup.config.js
+#
+#
+  # This is the configuration of the DEFAULT SolidCommonVocab TypeScript
+  # artifact - i.e., where the name of the generated npm module does not
+  # contain details of the underlying RDF library dependencies (e.g.,
+  # whether it depends on RDF/JS or a specific implementation, etc.).
+  - programmingLanguage: TypeScript
+    artifactVersion: "1.0.1"
+    artifactNamePrefix: ""
+
+    artifactDirectoryName: TypeScript-SolidCommonVocab
+    sourceFileExtension: ts
+    artifactNameSuffix: -solidcommonvocab
+
+    solidCommonVocabVersion: "^1.0.1"
+    rdfjsTypesVersion: "^1.1.0"
+    rdfjsImplVersion: "^1.1.1"
+    templateInternal: solidCommonVocabDependent/typescript/rdfjsRdfDataFactory/vocab.hbs
+
+    packaging:
+      - packagingTool: npm
+        npmModuleScope: "@inrupt/"
+        bundleName: "Vocabinrupt3rdParty"
+
+        typescriptVersion: "^4.7.4"
+        rollupVersion: "^2.36.1"
+        rollupTypescriptPluginVersion: "^0.29.0"
+        rollupCommonjsPluginVersion: "^17.0.0"
+        rollupNodeResolveVersion: "^11.0.1"
+
+        publish:
+          - key: "npmInstallAndBuild"
+            command: "npm install && npm run build"
+          - key: "npmLocal"
+            command: "npm unpublish --force --registry http://localhost:4873/ && npm install --registry http://localhost:4873/ && npm run build && npm publish --registry http://localhost:4873/"
+          - key: 'npmGithub'
+            command: "npm install --registry https://npm.pkg.github.com/inrupt && npm run build && npm publish --registry https://npm.pkg.github.com/inrupt"
+          - key: "npmPrivate"
+            command: "npm install --registry https://registry.npmjs.org/ && npm publish --registry https://registry.npmjs.org/"
+        packagingTemplates:
+          - templateInternal: solidCommonVocabDependent/typescript/rdfjsRdfDataFactory/package.hbs
+            fileName: package.json
+
+          #
+          # Demonstration here of using a local copy of an Artifact Generator
+          # template and modifying it for our purposes (e.g., in this case to
+          # explicitly export a couple of low-level entities that we need
+          # direct access to in our Node.js code)...
+          #
+#          - templateInternal: generic/typescript/index.hbs
+          - templateCustom: ./GovUk-Gds/Template/solidCommonVocabDependent/javascript/index.hbs
+            fileName: index.ts
+
+          - templateInternal: generic/typescript/tsconfig.hbs
+            fileName: tsconfig.json
+          - templateInternal: generic/typescript/rollup.config.hbs
+            fileName: rollup.config.js
+
+#
+#  - programmingLanguage: TypeScript
+#    artifactVersion: "1.0.1"
+#    artifactNamePrefix: ""
+#    artifactNameSuffix: -rdfdatafactory
+#
+#    artifactDirectoryName: TypeScript-RdfDataFactory
+#    sourceFileExtension: ts
+#
+#    rdfjsTypesVersion: "^1.0.1"
+#    rdfjsImplVersion: "^1.1.0"
+#    templateInternal: rdfLibraryDependent/typescript/rdfjsRdfDataFactory/vocab.hbs
+#
+#    packaging:
+#      - packagingTool: npm
+#        npmModuleScope: "@inrupt/"
+#        bundleName: "Vocabinrupt3rdParty"
+#
+#        typescriptVersion: "^4.7.4"
+#        rollupVersion: "^2.36.1"
+#        rollupTypescriptPluginVersion: "^0.29.0"
+#        rollupCommonjsPluginVersion: "^17.0.0"
+#        rollupNodeResolveVersion: "^11.0.1"
+#
+#        publish:
+#          - key: "npmInstallAndBuild"
+#            command: "npm install && npm run build"
+#          - key: "npmLocal"
+#            command: "npm unpublish --force --registry http://localhost:4873/ && npm install --registry http://localhost:4873/ && npm run build && npm publish --registry http://localhost:4873/"
+#          # The following command should only run in CI.
+#          - key: "npmPublic"
+#            command: "npm install --registry https://registry.npmjs.org/ && npm run build && npm publish --registry https://registry.npmjs.org/ --access public"
+#        packagingTemplates:
+#          - templateInternal: rdfLibraryDependent/typescript/rdfjsRdfDataFactory/package.hbs
+#            fileName: package.json
+#          - templateInternal: generic/typescript/index.hbs-JS
+#            fileName: index.ts
+#          - templateInternal: generic/typescript/tsconfig.hbs
+#            fileName: tsconfig.json
+#          - templateInternal: generic/typescript/rollup.config.hbs
+#            fileName: rollup.config.js
+
+
+vocabList:
+  - widocoLanguages: en-es-cy
+    inputResources:
+      - ./GovUk-Gds/CopyOfVocab/gov-uk-gds-poc.ttl
+
+  - widocoLanguages: en-es-cy
+    inputResources:
+      - ./GovUk-Gds/CopyOfVocab/gov-uk-gds-poc-message.ttl
+
+  #
+  # Just some example vocabularies we define on behalf of 3rd-parties (until
+  # they get around to defining and publishing their own authoritative
+  # vocabularies!).
+  #
+  - widocoLanguages: en-es
+    inputResources:
+      - ./ThirdParty/CopyOfVocab/inrupt-3rd-party-companies-house-uk.ttl
+
+  - widocoLanguages: en-es
+    inputResources:
+      - ./ThirdParty/CopyOfVocab/inrupt-3rd-party-unilever.ttl
+
+  - widocoLanguages: en-es
+    inputResources:
+      - ./ThirdParty/CopyOfVocab/inrupt-3rd-party-dnb.ttl
+
+  - widocoLanguages: en-es
+    inputResources:
+      - ./ThirdParty/CopyOfVocab/inrupt-3rd-party-passport-office-uk.ttl
+
+  # We'd also like to be able to extend the Inrupt Common vocabulary too, but
+  # that's currently only published publicly on GitHub, and so we need to use
+  # the Artifact Generator's ability to override HTTP headers to pull that
+  # vocab as 'raw content', and then parse it as Turtle.
+  #
+  # Note: Unfortunately, GitHub has a rate limit of only 60 unauthenticated
+  # requests per hour - after which we get JSON responses back (telling us our
+  # rate limit has been reached), but that blows up the parser 'cos it's
+  # expecting Turtle (i.e., "Error: Unexpected literal on line 1.").
+  #
+  # Note: Doing this raises import issues too - i.e., we are almost certainly
+  # importing the Inrupt Common bundle anyway, and so trying to extend just
+  # this one vocab means our IDE will offer two very confusing choices if we
+  # don't name our extension of that vocabulary differently.
+#  - vocabAcceptHeaderOverride: application/vnd.github.v3.raw
+#    vocabContentTypeHeaderOverride: text/turtle
+#    inputResources:
+#      - https://api.github.com/repos/inrupt/solid-common-vocab-rdf/contents/inrupt-rdf/Core/CopyOfVocab/inrupt-common.ttl
+#      - ./EtlTutorial/Extension/inrupt-common-etl-tutorial-ext.ttl
+
+  # Unfortunately the above approach (which works on local development
+  # machines) seems to fail when run from GitHub CI. Until we can look into
+  # that fully, we can just make a copy of the Inrupt Common vocab locally in
+  # our Extensions directory!
+#  - inputResources:
+#      - ./GovUk-Gds/Extension/inrupt-common-TEMP_COPY.ttl
+#      - ./GovUk-Gds/Extension/inrupt-common-etl-tutorial-ext.ttl
+
+
+  # These will be included in the next release of the 'Common RDF' bundle from
+  # Inrupt, but including here shows how flexible and powerful the Artifact
+  # Generator is - in that we could choose to cherry-pick individual terms, or
+  # extend terms with extra `rdfs:label` or `rdfs:comment` translations, etc.
+  - inputResources:
+      - https://w3id.org/dpv#
+
+  - inputResources:
+      - https://w3id.org/dpv/dpv-pd#
+
+
+  - inputResources:
+      - https://ontologies.semanticarts.com/o/gistCore11.0.0
+    nameAndPrefixOverride: gist
+    namespaceOverride: https://ontologies.semanticarts.com/gist/
+
+
+
+  #
+  # Rather than pull in the published Inrupt 'Common RDF' bundle (which is
+  # due a release soon), we just pull in the specific 'Common' vocabs we use
+  # so far ourselves (this is a nice demonstration of how easy it is to
+  # configure the Artifact Generator for your immediate or specific needs).
+  #
+  - nameAndPrefixOverride: rdf
+    inputResources:
+      - http://www.w3.org/1999/02/22-rdf-syntax-ns#
+
+  - description: Dublin Core Terms - for describing resources
+    nameAndPrefixOverride: dcterms
+    inputResources:
+      - http://dublincore.org/2012/06/14/dcterms.ttl
+
+  - description: Inrupt-determined cherry-picked Schema.org terms (that include label and comment translations)
+    nameAndPrefixOverride: schema_inrupt
+    inputResources:
+      - https://schema.org/version/latest/schemaorg-current-http.ttl
+    termSelectionResource: ./GovUk-Gds/Extension/schema-inrupt-ext.ttl

@@ -1,3 +1,22 @@
+# Ignore folder used to install vocabs from remote repositories (for when we
+# wish to work a lot with terms in those vocabs). Having those vocabs locally
+# means we can use the Artifact Generator to 'watch' them, and therefore
+# automatically re-generate the corresponding source-code when we make edits
+# to the local vocab copies (meaning developers can use new or changed terms
+# immediately in their main code).
+# (Of course, we need to remember to create PRs to the upstream repository
+# when we're done!). We can also store here locally generated artifacts from
+# local vocabs that we don't yet want to publish anywhere public yet.
+src/InruptTooling/Vocab
+
+# Ignore any generated script files that allow quick re-watching of bundles of
+# vocabs.
+watch-*.sh
+
+# If we run the Artifact Generator locally, then by default it will generate
+# to this directory, so ignore it, just as a precaution.
+Generated
+
 # Logs
 logs
 *.log

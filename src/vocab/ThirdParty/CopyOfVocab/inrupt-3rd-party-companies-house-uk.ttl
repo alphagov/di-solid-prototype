@@ -1,0 +1,105 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+prefix schema: <http://schema.org/>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix inrupt_3rd_party_companies_house_uk: <https://inrupt.com/vocab/3rdparty/companies-house-uk#>
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+inrupt_3rd_party_companies_house_uk: a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://inrupt.com/vocab/3rdparty/companies-house-uk/0.0.1> ;
+     dcterms:title
+         "Inrupt vocabulary for Companies House UK"@en ,
+         "Vocabulario de Inrupt para Companies House UK"@es ;
+     dcterms:description
+         "Inrupt vocabulary created to represent terms from Companies House UK."@en ,
+         "Inrupt vocabulario creado para representar términos de Companies House UK."@es ;
+     rdfs:seeAlso <https://developer.company-information.service.gov.uk/> ;
+     dcterms:creator <https://inrupt.com/profile/card/#us> ;
+     dcterms:issued "2021-08-23"^^xsd:date ;
+     vann:preferredNamespacePrefix "inrupt_3rd_party_companies_house_uk" ;
+     vann:preferredNamespaceUri <https://inrupt.com/vocab/3rdparty/companies-house-uk#> ;
+     cc:attributionURL inrupt_3rd_party_companies_house_uk: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+#
+# Identifier for the corporate entity representing this data source.
+#
+inrupt_3rd_party_companies_house_uk:CompaniesHouseUk a owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:seeAlso <https://www.gov.uk/government/organisations/companies-house> ;
+    rdfs:label "Companies House UK"@en ;
+    rdfs:label "Companies House UK"@es ;
+    rdfs:comment "Companies House UK - We incorporate and dissolve limited companies. We register company information and make it available to the public."@en ;
+    rdfs:comment "Companies House UK - Incorporamos y disolvemos sociedades limitadas. Registramos la información de la empresa y la ponemos a disposición del público."@es .
+
+#
+# Authentication.
+#
+inrupt_3rd_party_companies_house_uk:authenticationApiEndpoint a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "Authentication API endpoint"@en ;
+    rdfs:label "Punto final de la API de autenticación"@es ;
+    rdfs:comment "Authentication API endpoint."@en ;
+    rdfs:comment "Punto final de la API de autenticación."@es .
+
+inrupt_3rd_party_companies_house_uk:authenticationUsername a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "Username"@en ;
+    rdfs:label "Nombre de usuario"@es ;
+    rdfs:comment "Username used to authenticate for API access."@en ;
+    rdfs:comment "Nombre de usuario utilizado para autenticarse para el acceso a la API."@es .
+
+inrupt_3rd_party_companies_house_uk:authenticationPassword a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "Password"@en ;
+    rdfs:label "Contraseña"@es ;
+    rdfs:comment "Password used to authenticate for API access."@en ;
+    rdfs:comment "Contraseña utilizada para autenticarse para el acceso a la API."@es .
+
+inrupt_3rd_party_companies_house_uk:authenticationHttpBasicToken a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "HTTP basic token"@en ;
+    rdfs:label "Token básico HTTP"@es ;
+    rdfs:comment "HTTP basic token used to authenticate for API access."@en ;
+    rdfs:comment "Token básico HTTP que se utiliza para autenticar el acceso a la API."@es .
+
+#
+# General terms...
+#
+
+inrupt_3rd_party_companies_house_uk:status a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "Status"@en ;
+    rdfs:label "Estado"@es ;
+    rdfs:comment "Company status (e.g., active, in liquidation, in the course of dissolution, in receivership, or dissolved)."@en ;
+    rdfs:comment "Estado de la empresa (por ejemplo, activa, en liquidación, en proceso de disolución, en suspensión de pagos o disuelta)."@es .
+
+
+inrupt_3rd_party_companies_house_uk:searchResult a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+    rdfs:label "Search result"@en ;
+    rdfs:label "Resultado de búsqueda"@es ;
+    rdfs:comment "Company search result (via our search API)."@en ;
+    rdfs:comment "Resultado de búsqueda de la empresa (a través de nuestra API de búsqueda)."@es .
+
+#
+#inrupt_3rd_party_companies_house_uk: a rdf:Property, owl:ObjectProperty ;
+#    rdfs:isDefinedBy inrupt_3rd_party_companies_house_uk: ;
+#    rdfs:label ""@en ;
+#    rdfs:label ""@es ;
+#    rdfs:comment ""@en ;
+#    rdfs:comment ""@es .
