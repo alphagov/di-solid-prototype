@@ -96,3 +96,49 @@ export function checkYourDetailsGet(req: Request, res: Response) {
   res.render("identity/check-your-details");
 }
 
+/* Security Question Flow */
+export function securityQuestionsIntroGet(req: Request, res: Response) {
+  res.render("identity/security-questions/intro");
+}
+
+/* Security Question 1 */
+export function securityQuestionOneGet(req: Request, res: Response) {
+  res.render("identity/security-questions/question-1");
+}
+
+/* Security Question 2 */
+export function securityQuestionTwoGet(req: Request, res: Response) {
+  res.render("identity/security-questions/question-2");
+}
+
+/* Security Question 3 */
+export function securityQuestionThreeGet(req: Request, res: Response) {
+  res.render("identity/security-questions/question-3");
+}
+
+/* Security Question 4 */
+export function securityQuestionFourGet(req: Request, res: Response) {
+  res.render("identity/security-questions/question-4");
+}
+
+/* Security Question State Machine */
+export function securityQuestionPost(req: Request, res: Response) {
+  if (req.session) {
+    req.session.kvb = {
+      ...req.session.kvb,
+      ...req.body
+    }
+    console.log(req.session)
+    if (!req.session.kvb["mortgage-amount"]) { 
+      res.redirect("/identity/security-questions/question-1") 
+    } else if (!req.session.kvb["mobile-contract-value"]) {
+      res.redirect("/identity/security-questions/question-2") 
+    } else if (!req.session.kvb["mobile-contract-start"]) {
+      res.redirect("/identity/security-questions/question-3") 
+    } else if (!req.session.kvb["loan"]) {
+      res.redirect("/identity/security-questions/question-4") 
+    } else {
+      res.redirect("/identity/save")
+    }
+  }
+}
