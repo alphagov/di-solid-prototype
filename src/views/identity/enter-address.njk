@@ -11,7 +11,7 @@
   <form action="/identity/enter-address" method="post">
     <h1 class="govuk-heading-xl">{{ 'identity.enterAddress.heading' | translate }}</h1>
     <p class="govuk-body govuk-!-margin-bottom-2">{{ "general.postcode" | translate }}</p>
-    <p class="govuk-body"><strong>SW1A 2AA </strong><a class="govuk-link govuk-!-margin-left-2" href="/identity/find-address">{{ "general.change" | translate }}<span class="govuk-visually-hidden"> {{ "general.postcode" | translate }}</span></a></p>
+    <p class="govuk-body"><strong>{{ postCode }} </strong><a class="govuk-link govuk-!-margin-left-2" href="/identity/find-address">{{ "general.change" | translate }}<span class="govuk-visually-hidden"> {{ "general.postcode" | translate }}</span></a></p>
 
     {{ govukInput({
       label: {
@@ -19,7 +19,8 @@
       },
       classes: "govuk-input--width-10",
       id: "flat-number",
-      name: "flat-number"
+      name: "flat-number",
+      value: "Flat 21"
     }) }}
 
     {{ govukInput({
@@ -46,7 +47,8 @@
       },
       classes: "govuk-!-width-two-thirds",
       id: "street-name",
-      name: "street-name"
+      name: "street-name",
+      value: "Hogwarts Castle"
     }) }}
 
     {{ govukInput({
@@ -55,7 +57,8 @@
       },
       classes: "govuk-!-width-two-thirds",
       id: "city-name",
-      name: "city-name"
+      name: "city-name",
+      value: "Near Hogsmeade"
     }) }}
     {% call govukFieldset({
       legend: {

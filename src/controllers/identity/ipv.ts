@@ -56,3 +56,21 @@ export function chooseAddressPost(req: Request, res: Response) {
   res.redirect("/identity/enter-address");
 }
 
+/* Enter your Address */
+export function enterAddressGet(req: Request, res: Response) {
+  if (req.session) {
+    let postCode = req.session.address["address-postcode"].toUpperCase()
+    res.render("identity/enter-address", { postCode: postCode });
+  }
+}
+
+export function enterAddressPost(req: Request, res: Response) {
+  if (req.session) {
+    req.session.address = {
+      "address-postcode": req.session.address["address-postcode"].toUpperCase(),
+      ...req.body
+    }
+  }
+  res.redirect("/identity/confirm-details");
+}
+
