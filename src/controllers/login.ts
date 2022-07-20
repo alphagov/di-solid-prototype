@@ -4,8 +4,24 @@ import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node"
 import { getHostname, getClientId, getEssServiceURI, EssServices } from "../config";
 import { createProfileAndPod } from "../lib/pod";
 
+
+import { GDS_POC_MESSAGE, getLocalStore, CONTEXT_KEY_LOCALE } from "@inrupt/vocab-gds-poc-bundle-all-solidcommonvocab";
+
+// Super-simple list of supported languages (i.e., translations for messages
+// we have provided in our GDS-PoC-specific messages vocabulary).
+const supportedLanguages = [ "en", "cy", "es" ];
+
+// Super-simple way of iterating over and choosing the 'current' language we
+// wish our messages to be presented to the user - i.e., literally just hit
+// <Ctrl-R> to refresh the screen will iterate to the 'next supported
+// language'...
+let langToggleOnRefresh = 0;
+
 export async function loginGet(req: Request, res: Response): Promise<void> {
-  res.render('login/start');
+  const langTag = supportedLanguages[langToggleOnRefresh++ % supportedLanguages.length];
+  getLocalStore().setItem(CONTEXT_KEY_LOCALE, langTag);
+
+  res.render('login/start', { GDS_POC_MESSAGE, langTag });
 }
 
 export async function loginPost(req: Request, res: Response): Promise<void> {
@@ -31,6 +47,6 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     if (response.status == 404) {
       await createProfileAndPod(session)
     }
-    res.render('login/success', {webId: session.info.webId})
+    res.render('login/success', { GDS_POC_MESSAGE, webId: session.info.webId })
   }
 }

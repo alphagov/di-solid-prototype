@@ -1,3 +1,9 @@
 dist
 node_modules
 infrastructure
+
+#
+# No need to lint generated code (as its never going to conform to
+# "everyone's" linting rules, since they'll always be so subjective).
+#
+src/InruptTooling

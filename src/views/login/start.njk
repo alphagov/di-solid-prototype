@@ -2,7 +2,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Welcome to the GDS Solid PoC!</h1>
+  <h1 class="govuk-heading-xl">{{ GDS_POC_MESSAGE.msgWelcome.message }} [{{langTag}}]</h1>
 
   <form action="/login" method="post">
     {{ govukButton({

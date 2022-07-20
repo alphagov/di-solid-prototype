@@ -1,0 +1,82 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix inrupt_3rd_party_unilever: <https://unilever.com/vocab/unilever#>
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+inrupt_3rd_party_unilever: a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://unilever.com/vocab/unilever/0.0.1> ;
+     dcterms:title "Vocabulary for Unilever" ;
+     dcterms:description """A vocabulary for common terms used across Unilever."""@en ;
+     dcterms:creator <https://inrupt.com/profile/card/#us> ;
+     dcterms:issued "2022-01-12"^^xsd:date ;
+     vann:preferredNamespacePrefix "inrupt_3rd_party_unilever" ;
+     vann:preferredNamespaceUri <https://unilever.com/vocab/unilever#> ;
+     cc:attributionURL inrupt_3rd_party_unilever: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+#
+# THESE TERMS HAVE BEEN MOVED TO THE INRUPT COMMON VOCAB - REMOVE FROM HERE ONCE THAT'S PUBLISHED!
+#
+inrupt_3rd_party_unilever:Tag a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+    rdfs:label "Tag"@en ;
+    rdfs:label "Etiqueta"@es ;
+    rdfs:comment "The class of tags."@en ;
+    rdfs:comment "La clase de etiquetas."@es .
+
+inrupt_3rd_party_unilever:tag a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+    rdfs:label "Tag"@en ;
+    rdfs:label "Etiqueta"@es ;
+    rdfs:comment "Property used to denote that an entity has a specific tag."@en ;
+    rdfs:comment "Propiedad utilizada para indicar que una entidad tiene una etiqueta específica."@es .
+
+#
+# Here we just hypothetically suggest that Unilever defines terms for their
+# newly announced corporate structure (Jan 2022):
+#   https://www.unilever.com/news/press-and-media/press-releases/2022/unilever-simplifies-organisation/
+# Now they have 5 distinct business groups, so we associate simple tags:
+#   Beauty & Wellbeing, Personal Care, Home Care, Nutrition, and Ice Cream
+#
+inrupt_3rd_party_unilever:Tag_Travel a inrupt_3rd_party_unilever:Tag, owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+    rdfs:label "Travel"@en ;
+    rdfs:label "Viajar"@es ;
+    rdfs:comment "Travel tag - used to mark something as being related to travel."@en ;
+    rdfs:comment "Etiqueta de viaje: se utiliza para marcar algo relacionado con un viaje."@es .
+
+inrupt_3rd_party_unilever:Tag_Finance a inrupt_3rd_party_unilever:Tag, owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+    rdfs:label "Finance"@en ;
+    rdfs:label "Finanzas"@es ;
+    rdfs:comment "Finance tag - used to mark something as being related to finance."@en ;
+    rdfs:comment "Etiqueta financiera: se usa para marcar algo como relacionado con las finanzas."@es .
+
+inrupt_3rd_party_unilever:Tag_Id a inrupt_3rd_party_unilever:Tag, owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+    rdfs:label "ID"@en ;
+    rdfs:label "ID"@es ;
+    rdfs:comment "ID tag - used to mark something as being related to identity (e.g., a passport, or drivers license)."@en ;
+    rdfs:comment "Etiqueta de identificación: se usa para marcar algo relacionado con la identidad (por ejemplo, un pasaporte o una licencia de conducir)."@es .
+
+#
+#inrupt_3rd_party_unilever: a rdf:Property, owl:ObjectProperty ;
+#    rdfs:isDefinedBy inrupt_3rd_party_unilever: ;
+#    rdfs:label ""@en ;
+#    rdfs:label ""@es ;
+#    rdfs:comment ""@en ;
+#    rdfs:comment ""@es .

@@ -15,7 +15,7 @@ import {
   Thing,
   getDatetime,
 } from "@inrupt/solid-client";
-import { RDF, DCTERMS } from "@inrupt/vocab-common-rdf";
+import { RDF, DCTERMS, GDS_POC_MESSAGE } from "@inrupt/vocab-gds-poc-bundle-all-solidcommonvocab";
 
 import { SessionError } from "../errors";
 
@@ -29,9 +29,9 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
       const dataset = await getSolidDataset(datasetUri, {fetch: session.fetch});
       const created = getDatetime(getThing(dataset, datasetUri) as Thing, DCTERMS.created);
 
-      res.render('access/show', {created: created})      
+      res.render('access/show', { GDS_POC_MESSAGE, created })
     } catch (fetchError) {
-      res.render('access/show')
+      res.render('access/show', { GDS_POC_MESSAGE })
     }
   }
 }

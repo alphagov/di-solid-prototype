@@ -1,0 +1,60 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix inrupt_3rd_party_dnb: <https://inrupt.com/vocab/3rdparty/dnb#>
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+inrupt_3rd_party_dnb: a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://inrupt.com/vocab/3rdparty/dnb/0.0.1> ;
+     dcterms:title
+         "Inrupt vocabulary for D&B APIs"@en ,
+         "Vocabulario de Inrupt para las API de D&B"@es ;
+     dcterms:description
+         "Inrupt vocabulary created to represent terms from D&B APIs."@en ,
+         "Vocabulario de Inrupt creado para representar términos de las API de D&B."@es ;
+     dcterms:creator <https://inrupt.com/profile/card/#us> ;
+     dcterms:issued "2021-08-23"^^xsd:date ;
+     vann:preferredNamespacePrefix "inrupt_3rd_party_dnb" ;
+     vann:preferredNamespaceUri <https://inrupt.com/vocab/3rdparty/dnb#> ;
+     cc:attributionURL inrupt_3rd_party_dnb: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+#
+# Identifier for the corporate entity representing this data source.
+#
+inrupt_3rd_party_dnb:Dnb a owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_dnb: ;
+    rdfs:seeAlso <https://dnb.com/> ;
+    rdfs:label "Dun & BradStreet (D&B)"@en ;
+    rdfs:label "Dun & BradStreet (D&B)"@es ;
+    rdfs:comment "Dun & BradStreet, the business information company."@en ;
+    rdfs:comment "Dun & BradStreet, la empresa de información empresarial."@es .
+
+inrupt_3rd_party_dnb:DunsNumber rdfs:subClassOf inrupt_common:CustomerId ;
+    rdfs:isDefinedBy inrupt_3rd_party_dnb: ;
+    rdfs:label "Class of DUNS Numbers"@en ;
+    rdfs:label "Clase de números DUNS"@es ;
+    rdfs:comment """The class of corporate identifiers from Dun & Bradstreet (D&B)."""@en ;
+    rdfs:comment """La clase de identificadores corporativos de Dun & Bradstreet (D&B)."""@es ;
+    rdfs:seeAlso <https://ask.dnb.co.uk/help/duns-number/duns-number> .
+
+inrupt_3rd_party_dnb:dunsNumber rdfs:subPropertyOf inrupt_common:customerId ;
+    rdfs:isDefinedBy inrupt_3rd_party_dnb: ;
+    rdfs:label "DUNS Number"@en ;
+    rdfs:label "Número DUNS"@es;
+    rdfs:comment "DUNS Number - a corporate identifier from Dun & Bradstreet (D&B)"@en ;
+    rdfs:comment "Número DUNS: un identificador corporativo de Dun & Bradstreet (D&B)"@es ;
+    rdfs:seeAlso <https://ask.dnb.co.uk/help/duns-number/duns-number> .

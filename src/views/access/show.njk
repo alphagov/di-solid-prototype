@@ -19,12 +19,12 @@
 {% endblock %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">Access logs</h1>
+  <h1 class="govuk-heading-xl">{{ GDS_POC_MESSAGE.msgAccessLogs.message }}</h1>
 
   {% if created %}
-    <p class="govuk-body">Last event at: {{ created }}</p>
+    <p class="govuk-body">{{ GDS_POC_MESSAGE.msgAuditLastEventTimestamp.messageParams(created) }}</p>
   {% else %}
-    <p class="govuk-body">No previous events found</p>
+    <p class="govuk-body">{{ GDS_POC_MESSAGE.msgAuditLastEventNone.message }}</p>
   {% endif %}
 
   <form action="/access-logs" method="post">

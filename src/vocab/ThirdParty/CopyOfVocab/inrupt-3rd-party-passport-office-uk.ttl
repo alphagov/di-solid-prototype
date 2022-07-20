@@ -1,0 +1,66 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix inrupt_3rd_party_passport_office_uk: <https://inrupt.com/vocab/3rdparty/pasport_office_uk#>
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+inrupt_3rd_party_passport_office_uk: a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://inrupt.com/vocab/3rdparty/pasport_office_uk/0.0.1> ;
+     dcterms:title
+         "Inrupt vocabulary for the Passport Office of the UK"@en ,
+         "Vocabulario ininterrumpido para la Oficina de Pasaportes del Reino Unido"@es ;
+     dcterms:description
+         "Inrupt vocabulary for the Passport Office of the UK"@en ,
+         "Vocabulario ininterrumpido para la Oficina de Pasaportes del Reino Unido"@es ;
+     dcterms:creator <https://inrupt.com/profile/card/#us> ;
+     dcterms:issued "2021-08-23"^^xsd:date ;
+     vann:preferredNamespacePrefix "inrupt_3rd_party_passport_office_uk" ;
+     vann:preferredNamespaceUri <https://inrupt.com/vocab/3rdparty/pasport_office_uk#> ;
+     cc:attributionURL inrupt_3rd_party_passport_office_uk: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+#
+# Identifier for the corporate entity representing this data source.
+#
+inrupt_3rd_party_passport_office_uk:PassportOffice a owl:NamedIndividual ;
+    rdfs:isDefinedBy inrupt_3rd_party_passport_office_uk: ;
+    rdfs:seeAlso <https://www.gov.uk/government/organisations/hm-passport-office> ;
+    rdfs:label "Passport office UK"@en ;
+    rdfs:label "Oficina de pasaportes del Reino Unido"@es ;
+    rdfs:comment "HM Passport Office is the sole issuer of UK passports and responsible for civil registration services through the General Register Office."@en ;
+    rdfs:comment "HM Passport Office es el único emisor de pasaportes del Reino Unido y responsable de los servicios de registro civil a través de la Oficina de Registro General."@es .
+
+inrupt_3rd_party_passport_office_uk:Passport a rdfs:Class, owl:Class ;
+    rdfs:isDefinedBy inrupt_3rd_party_passport_office_uk: ;
+    rdfs:label "Passport"@en ;
+    rdfs:label "Pasaporte"@es ;
+    rdfs:comment """The class of passports."""@en ;
+    rdfs:comment """La clase de pasaportes."""@es .
+
+inrupt_3rd_party_passport_office_uk:passport a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_passport_office_uk: ;
+    rdfs:label "Passport"@en ;
+    rdfs:label "Pasaporte"@es ;
+    rdfs:comment """Passport for international travel."""@en ;
+    rdfs:comment """Pasaporte para viajes internacionales."""@es .
+
+
+inrupt_3rd_party_passport_office_uk:passportNumber a rdf:Property, owl:ObjectProperty ;
+    rdfs:isDefinedBy inrupt_3rd_party_passport_office_uk: ;
+    rdfs:label "Passport number"@en ;
+    rdfs:label "Número de pasaporte"@es;
+    rdfs:comment "Passport number that uniquely identifies an instance of a passport."@en ;
+    rdfs:comment "Número de pasaporte que identifica de forma única una instancia de un pasaporte."@es .
