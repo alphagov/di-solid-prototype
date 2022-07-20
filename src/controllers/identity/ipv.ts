@@ -17,3 +17,15 @@ export function proveIdentityGet(req: Request, res: Response) {
   res.render("identity/prove-identity");
 }
 
+/* Enter your Passport details exactly as they appear on your Passport */
+export function enterPassportGet(req: Request, res: Response) {
+  res.render("identity/enter-passport");
+}
+
+export function enterPassportPost(req: Request, res: Response) {
+  if (req.session) {
+    req.session.passport = req.body;
+  }
+  res.redirect("/identity/find-address");
+}
+
