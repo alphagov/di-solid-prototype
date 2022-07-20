@@ -288,10 +288,12 @@ vocabList:
       - https://w3id.org/dpv/dpv-pd#
 
 
-  - inputResources:
-      - https://ontologies.semanticarts.com/o/gistCore11.0.0
-    nameAndPrefixOverride: gist
-    namespaceOverride: https://ontologies.semanticarts.com/gist/
+  # As of 2022-07-20 (@11:18 BST), this vocab wasn't resolving, so removing
+  # for now...
+#  - inputResources:
+#      - https://ontologies.semanticarts.com/o/gistCore11.0.0
+#    nameAndPrefixOverride: gist
+#    namespaceOverride: https://ontologies.semanticarts.com/gist/
 
 
 
