@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { passportCheckVC } from "../../lib/passport_check_vc";
 import { evidenceSuccessful, generateJWT } from "../../lib/credential_helpers";
-import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 import {
   NamePart,
 } from "../../components/vocabularies/CommonComponents";
@@ -10,16 +10,12 @@ import {
 import {
   buildThing,
   createThing,
-  setThing,
-  saveSolidDatasetAt,
-  overwriteFile,
-  getSourceUrl,
   Thing,
  } from "@inrupt/solid-client";
 
 import {
-  getOrCreateDataset,
   getDatasetUri,
+  writeCheckToPod,
 } from "../../lib/pod"
 
 import { SessionError } from "../../errors";
@@ -55,19 +51,8 @@ export async function savePost(req: Request, res: Response): Promise<void> {
   if (session != undefined && req.session) {
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
     
-    const passportArtifacts = await buildPassportCheckArtifacts(req.session, containerUri)
-
-    await writeFileToPod(passportArtifacts.file, passportArtifacts.fileUri, session)
-
-    const metadataDataset = await getOrCreateDataset(session, passportArtifacts.metadataUri);
-    const updatedDataset = setThing(metadataDataset, passportArtifacts.metadata);
-    await saveSolidDatasetAt(
-      passportArtifacts.metadataUri,
-      updatedDataset,
-      { fetch: session.fetch }
-    )
-
-    console.log(`Saved resources (Blob [${passportArtifacts.fileUri}] and it's metadata [${passportArtifacts.metadataUri}]) to Pod in container: [${containerUri}]`);
+    const passportArtifacts = await buildPassportCheckArtifacts(req.session, containerUri);
+    await writeCheckToPod(session, passportArtifacts)
 
     // @TODO All the above will amount to saving the passport check.
     // It needs some of the linke data GOV_UK_* updated to reflect that
@@ -79,26 +64,6 @@ export async function savePost(req: Request, res: Response): Promise<void> {
     res.redirect('/identity/complete/saved');
   } else {
     throw new SessionError();
-  }
-}
-
-// Upload File to the targetFileURL.
-// If the targetFileURL exists, overwrite the file.
-// If the targetFileURL does not exist, create the file at the location.
-async function writeFileToPod(file: Blob, targetFileURL: string, session: Session ) {
-  try {
-    const savedFile = await overwriteFile(
-      targetFileURL,                                      // URL for the file.
-      // We need to explicitly convert our 'Blob' into a Buffer here (see
-      // detailed comment on our 'import { Blob }' code above).
-      Buffer.from(await file.arrayBuffer()),
-      // file,                                               // File
-      { contentType: file.type, fetch: session.fetch }    // mimetype if known, fetch from the authenticated session
-    );
-    console.log(`File saved at ${getSourceUrl(savedFile)}`);
-
-  } catch (error) {
-    console.error(error);
   }
 }
 
@@ -172,8 +137,7 @@ async function buildPassportCheckArtifacts(
     metadataUri: metadataUri
   }
 }
-
-interface CheckArtifacts {
+export interface CheckArtifacts {
   file: Blob,
   fileUri: string,
   metadata: Thing,
