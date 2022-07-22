@@ -128,7 +128,6 @@ export function securityQuestionPost(req: Request, res: Response) {
       ...req.session.kvb,
       ...req.body
     }
-    console.log(req.session)
     if (!req.session.kvb["mortgage-amount"]) { 
       res.redirect("/identity/security-questions/question-1") 
     } else if (!req.session.kvb["mobile-contract-value"]) {
