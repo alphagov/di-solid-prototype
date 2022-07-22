@@ -3,6 +3,13 @@ import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCh
 import { getClientId, getJwtSigningKey } from "../config";
 import { default as jwt } from "jsonwebtoken";
 import { NamePart, PostalAddress } from '../components/vocabularies/CommonComponents';
+import { Thing } from "@inrupt/solid-client";
+
+export const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
+export const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
+
+// eslint-disable-next-line no-shadow
+import { Blob } from "node:buffer";
 
 export function evidenceSuccessful(): IdentityCheck[] {
     return [
@@ -93,4 +100,11 @@ export function getPostalAddress(session: CookieSessionInterfaces.CookieSessionO
       validFrom: session.address["year"]
     }
   ]
+}
+
+export interface CheckArtifacts {
+  file: Blob,
+  fileUri: string,
+  metadata: Thing,
+  metadataUri: string
 }
