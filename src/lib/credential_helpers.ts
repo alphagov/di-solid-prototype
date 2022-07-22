@@ -2,6 +2,7 @@ import { randomUUID } from 'crypto'
 import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCheckCredential"
 import { getClientId, getJwtSigningKey } from "../config";
 import { default as jwt } from "jsonwebtoken";
+import { NamePart, PostalAddress } from '../components/vocabularies/CommonComponents';
 
 export function evidenceSuccessful(): IdentityCheck[] {
     return [
@@ -52,4 +53,44 @@ export function generateJWT(payload: Credential, subject: string) {
   )
   return token
 }
-  
+
+export function getNameParts(session: CookieSessionInterfaces.CookieSessionObject): NamePart[] {
+  const firstName: string = session.passport["first-name"]
+  const middleName: string = session.passport["middle-name"]
+  const surname: string = session.passport["surname"]
+
+  return [
+    {
+      "value": firstName,
+      "type": "GivenName",
+    },
+    {
+      "value": middleName,
+      "type": "GivenName",
+    },
+    {
+      "value": surname,
+      "type": "FamilyName",
+    },
+  ]
+}
+
+export function getBirthDate(session: CookieSessionInterfaces.CookieSessionObject): string {
+  const byear = session.passport["date-of-birth-year"]
+  const bmonth = session.passport["date-of-birth-year"]
+  const bday = session.passport["date-of-birth-day"]
+  return `${byear}-${bmonth}-${bday}`
+}
+
+export function getPostalAddress(session: CookieSessionInterfaces.CookieSessionObject): PostalAddress[] {
+  return [
+    {
+      addressCountry: 'United Kingdom',
+      addressLocality: session.address["city-name"],
+      buildingName: session.address["flat-name"],
+      postalCode: session.address["address-postcode"],
+      streetName: session.address["street-name"],
+      validFrom: session.address["year"]
+    }
+  ]
+}
