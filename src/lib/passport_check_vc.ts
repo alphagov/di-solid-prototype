@@ -71,10 +71,10 @@ function buildPassportCheck(session: CookieSessionInterfaces.CookieSessionObject
   return generateJWT(payload, session.webId)
 }
 
-export async function buildPassportCheckArtifacts(
+export function buildPassportCheckArtifacts(
   session: CookieSessionInterfaces.CookieSessionObject,
   containerUri: string
-): Promise<CheckArtifacts> {
+): CheckArtifacts {
   const fileUri = `${containerUri}/passport/check`;
   const metadataUri = `${containerUri}/passport/metadata`;
 

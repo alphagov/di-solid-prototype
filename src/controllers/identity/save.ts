@@ -39,10 +39,10 @@ export async function savePost(req: Request, res: Response): Promise<void> {
     req.session.webid = session.info.webId
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
     
-    const passportArtifacts = await buildPassportCheckArtifacts(req.session, containerUri);
+    const passportArtifacts = buildPassportCheckArtifacts(req.session, containerUri);
     await writeCheckToPod(session, passportArtifacts)
 
-    const kbvArtifacts = await buildKbvCheckArtifacts(req.session, containerUri)
+    const kbvArtifacts = buildKbvCheckArtifacts(req.session, containerUri)
     await writeCheckToPod(session, kbvArtifacts)
 
     res.redirect('/identity/complete/saved');

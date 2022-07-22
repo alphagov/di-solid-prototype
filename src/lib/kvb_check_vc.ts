@@ -63,10 +63,10 @@ function buildKbvCheck(session: CookieSessionInterfaces.CookieSessionObject): st
   return generateJWT(payload, session.webId)
 }
 
-export async function buildKbvCheckArtifacts(
+export function buildKbvCheckArtifacts(
   session: CookieSessionInterfaces.CookieSessionObject,
   containerUri: string
-): Promise<CheckArtifacts> {
+): CheckArtifacts {
   const fileUri = `${containerUri}/kbv/check`;
   const metadataUri = `${containerUri}/kbv/metadata`;
 
