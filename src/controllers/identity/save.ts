@@ -52,12 +52,12 @@ export async function savePost(req: Request, res: Response): Promise<void> {
   const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
   const session = await getSessionFromStorage(req.session?.sessionId);
 
-  if (session != undefined) {
+  if (session != undefined && req.session) {
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs/");
     const metadataUri = `${containerUri}/vc-metadata`
     const metadataDataset = await getOrCreateDataset(session, metadataUri);
     const blobUri = `${containerUri}/vc-blob`;
-    const vcFile = new Blob([JSON.stringify(buildPassportIdentityCheck(req.session))], { type: "application/json" })
+    const vcFile = new Blob([buildPassportIdentityCheck(req.session)], { type: "application/json" })
     await writeFileToPod(vcFile, blobUri, session)
 
     const reusableIdentityCredential = buildThing(
@@ -109,12 +109,12 @@ async function writeFileToPod(file: Blob, targetFileURL: string, session: Sessio
   }
 }
 
-function buildPassportIdentityCheck(session: any): string { // TODO Any is bad...
-  let firstName: string = session.passport["first-name"]
-  let middleName: string = session.passport["middle-name"]
-  let surname: string = session.passport["surname"]
+function buildPassportIdentityCheck(session: CookieSessionInterfaces.CookieSessionObject): string {
+  const firstName: string = session.passport["first-name"]
+  const middleName: string = session.passport["middle-name"]
+  const surname: string = session.passport["surname"]
 
-  let nameParts: NamePart[] = [
+  const nameParts: NamePart[] = [
     {
       "value": firstName,
       "type": "GivenName",
@@ -129,20 +129,20 @@ function buildPassportIdentityCheck(session: any): string { // TODO Any is bad..
     },
   ]
 
-  let byear = session.passport["date-of-birth-year"]
-  let bmonth = session.passport["date-of-birth-year"]
-  let bday = session.passport["date-of-birth-day"]
-  let birthDate = `${byear}-${bmonth}-${bday}`
+  const byear = session.passport["date-of-birth-year"]
+  const bmonth = session.passport["date-of-birth-year"]
+  const bday = session.passport["date-of-birth-day"]
+  const birthDate = `${byear}-${bmonth}-${bday}`
   
-  let eyear = session.passport["date-of-birth-year"]
-  let emonth = session.passport["date-of-birth-year"]
-  let eday = session.passport["date-of-birth-day"]
-  let passportDetails = {
+  const eyear = session.passport["date-of-birth-year"]
+  const emonth = session.passport["date-of-birth-year"]
+  const eday = session.passport["date-of-birth-day"]
+  const passportDetails = {
     "documentNumber": session.passport["passport-number"],
     "expiryDate": `${eyear}-${emonth}-${eday}`
   }
 
-  let payload = passportCheckVC(
+  const payload = passportCheckVC(
     nameParts,
     birthDate,
     passportDetails,
@@ -151,5 +151,5 @@ function buildPassportIdentityCheck(session: any): string { // TODO Any is bad..
 
   // @ TODO Now take the payload and make it into a JWT... 
 
-  return "TODO JWT GOES HERE"
+  return JSON.stringify(payload)
 }
