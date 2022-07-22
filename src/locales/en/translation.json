@@ -38,7 +38,8 @@
       "additionalDetails": {
         "summaryText": "Who we check your details with",
         "text": "<p class=\"govuk-body\">We’ll check your details with <a class=\"govuk-link\" href=\"/[experianLink]\" rel=\"noreferrer noopener\" target=\"_blank\">Experian (opens in new tab)</a>. This is because companies like Experian have access to information about interactions you’ve previously had with other organisations.</p><p class=\"govuk-body\"><a class=\"govuk-link\" href=\"/[privacyNoticeLink]\" rel=\"noreferrer noopener\" target=\"_blank\">Read our privacy notice (opens in a new tab)</a> if you’d like to know more about how your details will be used to prove your identity.</p>"
-      }
+      },
+      "buttonText": "Continue"
     },
     "confirmDetails": {
       "heading": "Confirm your details",
@@ -170,6 +171,10 @@
       "heading": "Use your saved proof of identity to continue",
       "paragraph1": "You need to prove your identity before you [doThing].",
       "paragraph2": "Your GOV.UK account will check your saved proof of identity to confirm it’s really you."
+    },
+    "checkInPerson": {
+      "heading": "Check your identity in person",
+      "paragraph1": "Here is how you can do an Idenitity check in person..."
     }
   },
   "account": {

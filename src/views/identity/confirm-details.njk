@@ -5,8 +5,6 @@
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-
-
 {% block content %}
   <h1 class="govuk-heading-xl">{{ 'identity.confirmDetails.heading' | translate }}</h1>
 
@@ -22,7 +20,7 @@
         text: 'identity.confirmDetails.summaryList.key1' | translate
       },
       value: {
-        html: "123 ChangeMe Street<br>Incorrect Town<br>London<br>SE23 6FH"
+        html: ["Flat 21<br>Hogwarts Castle<br>Near Hogsmeade<br>", postCode] | join
       },
       actions: {
         items: [
@@ -38,7 +36,7 @@
         text: 'identity.confirmDetails.summaryList.key2' | translate
       },
       value: {
-        html: "???"
+        html: startedYear
       },
       actions: {
         items: [
