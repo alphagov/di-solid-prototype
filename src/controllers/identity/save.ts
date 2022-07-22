@@ -5,6 +5,8 @@ import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node"
 import {
   NamePart,
 } from "../../components/vocabularies/CommonComponents";
+import { getClientId, getJwtSigningKey } from "../../config";
+import { default as jwt } from "jsonwebtoken";
 
 import {
   buildThing,
@@ -53,11 +55,11 @@ export async function savePost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (session != undefined && req.session) {
-    const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs/");
+    const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
     const metadataUri = `${containerUri}/vc-metadata`
     const metadataDataset = await getOrCreateDataset(session, metadataUri);
     const blobUri = `${containerUri}/vc-blob`;
-    const vcFile = new Blob([buildPassportIdentityCheck(req.session)], { type: "application/json" })
+    const vcFile = new Blob([await buildPassportCheck(req.session)], { type: "application/json" })
     await writeFileToPod(vcFile, blobUri, session)
 
     const reusableIdentityCredential = buildThing(
@@ -109,7 +111,7 @@ async function writeFileToPod(file: Blob, targetFileURL: string, session: Sessio
   }
 }
 
-function buildPassportIdentityCheck(session: CookieSessionInterfaces.CookieSessionObject): string {
+async function buildPassportCheck(session: CookieSessionInterfaces.CookieSessionObject): Promise<string> {
   const firstName: string = session.passport["first-name"]
   const middleName: string = session.passport["middle-name"]
   const surname: string = session.passport["surname"]
@@ -142,14 +144,28 @@ function buildPassportIdentityCheck(session: CookieSessionInterfaces.CookieSessi
     "expiryDate": `${eyear}-${emonth}-${eday}`
   }
 
-  const payload = passportCheckVC(
-    nameParts,
-    birthDate,
-    passportDetails,
-    evidenceSuccessful()
+  const payload = {
+    vc: passportCheckVC(
+      nameParts,
+      birthDate,
+      passportDetails,
+      evidenceSuccessful()
+    )
+  }
+
+  //Fetch user's WebID from their session
+  const solidSession = await getSessionFromStorage(session.sessionId);
+  const webId = solidSession?.info.webId
+
+  const token = jwt.sign(
+    payload,
+    getJwtSigningKey(),
+    {
+      'expiresIn': '1y',
+      'issuer': getClientId(),
+      'subject': webId
+    }
   )
 
-  // @ TODO Now take the payload and make it into a JWT... 
-
-  return JSON.stringify(payload)
+  return token
 }
