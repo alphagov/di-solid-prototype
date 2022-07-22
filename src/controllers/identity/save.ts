@@ -36,7 +36,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (session != undefined && req.session) {
-    req.session.webid = session.info.webId
+    req.session.webId = session.info.webId
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
     
     const passportArtifacts = buildPassportCheckArtifacts(req.session, containerUri);
