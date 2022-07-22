@@ -5,7 +5,7 @@ import {
 
 import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCheckCredential";
 
-export function passportCheckVC(
+export function kbvCheckVC(
   nameParts: NamePart[],
   birthDate: string,
   addressDetails: PostalAddress[],
