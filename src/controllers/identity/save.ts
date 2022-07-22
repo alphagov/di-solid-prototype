@@ -14,6 +14,7 @@ import {
   saveSolidDatasetAt,
   overwriteFile,
   getSourceUrl,
+  Thing,
  } from "@inrupt/solid-client";
 
 import {
@@ -49,33 +50,24 @@ export function saveGet(req: Request, res: Response) {
 }
 
 export async function savePost(req: Request, res: Response): Promise<void> {
-  const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
-  const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (session != undefined && req.session) {
     const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
-    const metadataUri = `${containerUri}/vc-metadata`
-    const metadataDataset = await getOrCreateDataset(session, metadataUri);
-    const blobUri = `${containerUri}/vc-blob`;
-    const vcFile = new Blob([await buildPassportCheck(req.session)], { type: "application/json" })
-    await writeFileToPod(vcFile, blobUri, session)
+    
+    const passportArtifacts = await buildPassportCheckArtifacts(req.session, containerUri)
 
-    const reusableIdentityCredential = buildThing(
-      createThing({ url: metadataUri })
-    )
-    .addUrl(RDF.type, GOV_UK_CREDENTIAL)
-    .addUrl(GOV_UK_hasCredential, blobUri)
-    .build();
+    await writeFileToPod(passportArtifacts.file, passportArtifacts.fileUri, session)
 
-    const updatedDataset = setThing(metadataDataset, reusableIdentityCredential);
-    console.log(`Saving resources (Blob [${blobUri}] and it's metadata [${metadataUri}]) to Pod in container: [${containerUri}]`);
-
+    const metadataDataset = await getOrCreateDataset(session, passportArtifacts.metadataUri);
+    const updatedDataset = setThing(metadataDataset, passportArtifacts.metadata);
     await saveSolidDatasetAt(
-      metadataUri,
+      passportArtifacts.metadataUri,
       updatedDataset,
       { fetch: session.fetch }
     )
+
+    console.log(`Saved resources (Blob [${passportArtifacts.fileUri}] and it's metadata [${passportArtifacts.metadataUri}]) to Pod in container: [${containerUri}]`);
 
     // @TODO All the above will amount to saving the passport check.
     // It needs some of the linke data GOV_UK_* updated to reflect that
@@ -154,3 +146,36 @@ async function buildPassportCheck(session: CookieSessionInterfaces.CookieSession
   return generateJWT(payload, solidSession?.info.webId || "")
 }
 
+async function buildPassportCheckArtifacts(
+  session: CookieSessionInterfaces.CookieSessionObject,
+  containerUri: string
+): Promise<CheckArtifacts> {
+  const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
+  const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
+
+  const fileUri = `${containerUri}/passport/check`;
+  const metadataUri = `${containerUri}/passport/metadata`;
+
+  const file = new Blob([await buildPassportCheck(session)], { type: "application/json" })
+
+  const metadata = buildThing(
+    createThing({ url: metadataUri })
+  )
+  .addUrl(RDF.type, GOV_UK_CREDENTIAL)
+  .addUrl(GOV_UK_hasCredential, fileUri)
+  .build();
+
+  return {
+    file: file,
+    fileUri: fileUri,
+    metadata: metadata,
+    metadataUri: metadataUri
+  }
+}
+
+interface CheckArtifacts {
+  file: Blob,
+  fileUri: string,
+  metadata: Thing,
+  metadataUri: string
+}
