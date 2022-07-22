@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import { passportCheckVC } from "../../lib/passport_check_vc";
-import { evidenceSuccessful } from "../../lib/credential_helpers";
+import { evidenceSuccessful, generateJWT } from "../../lib/credential_helpers";
 import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
 import {
   NamePart,
 } from "../../components/vocabularies/CommonComponents";
-import { getClientId, getJwtSigningKey } from "../../config";
-import { default as jwt } from "jsonwebtoken";
+
 
 import {
   buildThing,
@@ -144,28 +143,14 @@ async function buildPassportCheck(session: CookieSessionInterfaces.CookieSession
     "expiryDate": `${eyear}-${emonth}-${eday}`
   }
 
-  const payload = {
-    vc: passportCheckVC(
-      nameParts,
-      birthDate,
-      passportDetails,
-      evidenceSuccessful()
-    )
-  }
-
-  //Fetch user's WebID from their session
-  const solidSession = await getSessionFromStorage(session.sessionId);
-  const webId = solidSession?.info.webId
-
-  const token = jwt.sign(
-    payload,
-    getJwtSigningKey(),
-    {
-      'expiresIn': '1y',
-      'issuer': getClientId(),
-      'subject': webId
-    }
+  const payload = passportCheckVC(
+    nameParts,
+    birthDate,
+    passportDetails,
+    evidenceSuccessful()
   )
 
-  return token
+  const solidSession = await getSessionFromStorage(session.sessionId);
+  return generateJWT(payload, solidSession?.info.webId || "")
 }
+
