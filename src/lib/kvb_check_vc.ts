@@ -3,16 +3,14 @@ import {
   PostalAddress,
 } from "../components/vocabularies/CommonComponents";
 
-import { IdentityCheckCredential } from "../components/vocabularies/identityCheckCredentialJWT";
-
-import { IdentityCheck } from "../components/vocabularies/IdentityCheckCredential";
+import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCheckCredential";
 
 export function passportCheckVC(
   nameParts: NamePart[],
   birthDate: string,
   addressDetails: PostalAddress[],
   evidence: IdentityCheck[]
-): IdentityCheckCredential {
+): Credential {
   return {
     type: ["VerifiableCredential", "IdentityCheckCredential"],
     credentialSubject: {

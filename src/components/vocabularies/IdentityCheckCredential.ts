@@ -36,7 +36,7 @@ export type IdentityCheckCredentialType =
   | "IdentityCheckCredential"
   | "VerifiableCredential";
 
-export interface Credentials {
+export interface Credential {
   "@context"?: string[];
   credentialSubject?: Person;
   evidence?: IdentityCheck[];
