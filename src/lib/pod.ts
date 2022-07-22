@@ -11,7 +11,7 @@ import {
 } from "@inrupt/solid-client";
 import { getEssServiceURI, EssServices } from '../config';
 import { SessionError } from "../errors";
-import { CheckArtifacts } from '../controllers/identity/save';
+import { CheckArtifacts } from '../lib/credential_helpers';
 
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).
