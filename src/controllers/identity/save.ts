@@ -17,7 +17,7 @@ import {
 
 import { SessionError } from "../../errors";
 
-import { RDF } from "@inrupt/vocab-common-rdf";
+import { RDF } from "@inrupt/vocab-gds-poc-bundle-all-solidcommonvocab";
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).
 // We may also need to explicitly convert our usage of 'Blob' into a Buffer

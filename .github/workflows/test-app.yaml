@@ -13,7 +13,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18.x"
-        
+
+      # We generate our vocab bundle from all the vocabs at runtime,
+      # since normally vocab bundles are expected to be published somewhere,
+      # but in our case, we want to keep everything together for now.
+      - name: Run Artifact Generator to generate source code for vocab terms.
+        run: npx @inrupt/artifact-generator generate --vocabListFile "src/vocab/vocab-gds-poc-bundle-all.yml" --outputDirectory "./src/InruptTooling/Vocab/GdsPoc" --noPrompt --force --publish npmInstallAndBuild
+
       - name: Install packages
         run: npm ci
 

@@ -1,0 +1,73 @@
+prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+prefix xsd: <http://www.w3.org/2001/XMLSchema#>
+prefix owl: <http://www.w3.org/2002/07/owl#>
+prefix vann: <http://purl.org/vocab/vann/>
+prefix dcterms: <http://purl.org/dc/terms/>
+prefix cc: <http://creativecommons.org/ns#>
+prefix skos: <http://www.w3.org/2004/02/skos/core#>
+prefix skosxl: <http://www.w3.org/2008/05/skos-xl#>
+
+prefix inrupt_gen: <https://inrupt.com/vocab/tool/artifact_generator#>
+prefix inrupt_common: <https://inrupt.com/vocab/common#>
+
+prefix gov_uk_gds_poc: <https://vocab.gov.uk/gds/poc/>
+
+#
+# This vocabulary is use to define terms that are specific to our particular
+# application - in this case, the GDS Proof of Concept (PoC).
+#
+
+#
+# Describe our vocabulary - i.e., an English description, its version, who created it, its
+# suggested prefix, its license, etc.
+#
+<https://vocab.gov.uk/gds/poc/v/gdsMessage> a owl:Ontology, inrupt_gen:Ontology  ;
+     owl:versionInfo "0.0.1" ;
+     owl:versionIRI <https://vocab.gov.uk/gds/poc/0.0.1> ;
+     dcterms:title "Vocabulary for Inrupt's ETL Tutorial" ;
+     dcterms:description """A vocabulary for messages used across the GDS Proof of Concept"""@en ;
+     dcterms:creator <https://id.gov.uk/webid/dept/gds> ;
+     dcterms:issued "2021-08-23"^^xsd:date ;
+     vann:preferredNamespacePrefix "gds_poc_message" ;
+     vann:preferredNamespaceUri <https://vocab.gov.uk/gds/poc/> ;
+     cc:attributionURL gov_uk_gds_poc: ;
+     cc:license <https://creativecommons.org/publicdomain/zero/1.0/> .
+
+
+ gov_uk_gds_poc:msgWelcome a rdfs:Literal ;
+    skos:definition "Welcome to the GDS Proof of Concept application!"@en ;
+    skos:definition "Croeso i gais Prawf Cysyniad GDS!"@cy ;
+    skos:definition "¡Bienvenido a la aplicación de prueba de concepto de GDS!"@es .
+
+gov_uk_gds_poc:msgLoggedInAsWebId a rdfs:Literal ;
+    skos:definition "Logged in with the WebID: [{{0}}]."@en ;
+    skos:definition "Wedi mewngofnodi gyda'r WebID: [{{0}}]."@cy ;
+    skos:definition "Inicie sesión con el WebID: [{{0}}]."@es .
+
+gov_uk_gds_poc:msgAuditLastEventTimestamp a rdfs:Literal ;
+    skos:definition "Last event at: [{{0}}]."@en ;
+    skos:definition "Digwyddiad diwethaf yn: [{{0}}]."@cy ;
+    skos:definition "Último evento en: [{{0}}]."@es .
+
+gov_uk_gds_poc:msgAuditLastEventNone a rdfs:Literal ;
+    skos:definition "No previous events found."@en ;
+    skos:definition "Ni chanfuwyd unrhyw ddigwyddiadau blaenorol."@cy ;
+    skos:definition "No se encontraron eventos anteriores."@es .
+
+gov_uk_gds_poc:msgAccessLogs a rdfs:Literal ;
+    skos:definition "Access logs"@en ;
+    skos:definition "Logiau mynediad"@cy ;
+    skos:definition "Registros de acceso"@es .
+
+
+
+#
+#gov_uk_gds_poc: a rdf:Property, owl:ObjectProperty ;
+#    rdfs:isDefinedBy gov_uk_gds_poc: ;
+#    rdfs:label ""@en ;
+#    rdfs:label ""@cy ;
+#    rdfs:label ""@es ;
+#    rdfs:comment ""@en ;
+#    rdfs:comment ""@cy ;
+#    rdfs:comment ""@es .

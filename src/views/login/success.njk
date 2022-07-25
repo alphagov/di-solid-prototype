@@ -19,7 +19,14 @@
 {% endblock %}
 
 {% block content %}
-  <p class="govuk-body">Logged in with the WebID: [{{ webId }}].</p>
+  <!--
+     Now we can use vocabularies to define our messages (with lots of extra
+     metadata, including translations of descriptions, and references to
+     'seeAlso' more information, etc.), instead of hard-coding text in just
+     one language...
+     <p class="govuk-body">Logged in with the WebID: [{{ webId }}].</p>
+   -->
+  <p class="govuk-body">{{GDS_POC_MESSAGE.msgLoggedInAsWebId.messageParams(webId)}}</p>
 
   <p class="govuk-body">
     {{ govukButton({
