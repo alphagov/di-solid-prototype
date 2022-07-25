@@ -1,4 +1,4 @@
-import { Person } from "./CommonComponents";
+import { Person } from "./commonComponents";
 
 /**
  * An identifier from the OpenID Check Methods list

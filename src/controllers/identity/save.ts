@@ -5,8 +5,8 @@ import {
   writeCheckToPod,
 } from "../../lib/pod"
 
-import { buildKbvCheckArtifacts } from "../../lib/kvb_check_vc"
-import { buildPassportCheckArtifacts } from "../../lib/passport_check_vc"
+import { buildKbvCheckArtifacts } from "../../lib/kvbCheckVc"
+import { buildPassportCheckArtifacts } from "../../lib/passportCheckVc"
 
 import { SessionError } from "../../errors";
 

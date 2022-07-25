@@ -1,8 +1,8 @@
 import { randomUUID } from 'crypto'
-import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCheckCredential"
+import { Credential, IdentityCheck } from "../components/vocabularies/identityCheckCredential"
 import { getClientId, getJwtSigningKey } from "../config";
 import { default as jwt } from "jsonwebtoken";
-import { NamePart, PostalAddress } from '../components/vocabularies/CommonComponents';
+import { NamePart, PostalAddress } from '../components/vocabularies/commonComponents';
 import { Thing } from "@inrupt/solid-client";
 
 export const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";

@@ -5,7 +5,8 @@ import {
 
 import { RDF } from "@inrupt/vocab-common-rdf";
 
-import { 
+import {
+  CheckArtifacts,
   evidenceSuccessful,
   generateJWT,
   getBirthDate,
@@ -13,16 +14,14 @@ import {
   getPostalAddress,
   GOV_UK_CREDENTIAL,
   GOV_UK_hasCredential
-} from "../lib/credential_helpers";
-
-import { CheckArtifacts } from "../lib/credential_helpers";
+} from "../lib/credentials";
 
 import {
   NamePart,
   PostalAddress,
-} from "../components/vocabularies/CommonComponents";
+} from "../components/vocabularies/commonComponents";
 
-import { Credential, IdentityCheck } from "../components/vocabularies/IdentityCheckCredential";
+import { Credential, IdentityCheck } from "../components/vocabularies/identityCheckCredential";
 
 // eslint-disable-next-line no-shadow
 import { Blob } from "node:buffer";

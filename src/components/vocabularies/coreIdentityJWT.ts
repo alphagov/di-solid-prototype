@@ -1,4 +1,4 @@
-import { Person } from "./CommonComponents";
+import { Person } from "./commonComponents";
 
 export type IdentityVectorOfTrust = "P1" | "P2" | "P3" | "P4";
 
