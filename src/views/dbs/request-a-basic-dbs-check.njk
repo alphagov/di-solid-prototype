@@ -1,0 +1,114 @@
+{% extends "layouts/base.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitleName = "dbs.pages.requestBasicCheck.title" | translate %}
+{% set serviceName = "GOV.UK" %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">
+    {{ pageTitleName }}
+  </h1>
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph1" | translate }}</p>
+
+  <div class="govuk-inset-text">
+    <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.insetText1" | translate | safe  }}</p>
+  </div>
+
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph2" | translate }}</p>
+
+  <div class="govuk-inset-text">
+    <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.insetText2" | translate | safe }}</p>
+  </div>
+
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph3" | translate }}</p>
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph4" | translate }}</p>
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph5" | translate }}</p>
+
+  <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading1" | translate }}</h2>
+
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph6" | translate }}</p>
+  <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph7" | translate }}</p>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>{{ "dbs.pages.requestBasicCheck.listItem1" | translate }}</li>
+    <li>{{ "dbs.pages.requestBasicCheck.listItem2" | translate }}</li>
+    <li>{{ "dbs.pages.requestBasicCheck.listItem3" | translate }}</li>
+    <li>{{ "dbs.pages.requestBasicCheck.listItem4" | translate }}</li>
+  </ul>
+
+  <form action="" method="get">
+    <div class="govuk-form-group">
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading2" | translate }}</h2>
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph8" | translate }}</p>
+
+      <input class="govuk-input" id="service" name="service" type="hidden" value="dbs">
+
+      {{ govukButton({
+        text: "Start now",
+        href: "/dbs/apply-for-a-basic-dbs-check",
+        isStartButton: true
+      }) }}
+    </div>
+  </form>
+  <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading3" | translate }}</h2>
+    <div class="gem-c-govspeak govuk-govspeak " data-module="govspeak">
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph9" | translate | safe }}</p>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph10" | translate | safe }}</p>
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading4" | translate }}</h2>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph11" | translate | safe }}</p>
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph12" | translate  }}</p>
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph13" | translate  }}</p>
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph14" | translate }}</p>
+
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading5" | translate }}</h2>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph15" | translate }}</p>
+
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading6" | translate }}</h2>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph16" | translate | safe }}</p>
+
+
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading7" | translate }}</h2>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph17" | translate | safe }}</p>
+
+      <ul class="govuk-list govuk-list--bullet">
+        <li>{{ "dbs.pages.requestBasicCheck.listItem1" | translate }}</li>
+        <li>{{ "dbs.pages.requestBasicCheck.listItem2" | translate }}</li>
+      </ul>
+
+      <h2 class="govuk-heading-m">{{ "dbs.pages.requestBasicCheck.heading8" | translate }}</h2>
+
+      <p class="govuk-body">{{ "dbs.pages.requestBasicCheck.paragraph18" | translate | safe }}</p>
+      <div class="govuk-inset-text">
+        <h3 class="govuk-heading-s">{{ "dbs.pages.requestBasicCheck.paragraph19" | translate }}</h3>
+        <p class="govuk-body">
+          {{ "dbs.pages.requestBasicCheck.paragraph20" | translate | safe }}
+        </p>
+      </div>
+    </div>
+{% endblock %}
+{% block sideContent %}
+  <h2 class="govuk-heading-m" id="subsection-title">
+    Related content
+  </h2>
+  <nav role="navigation" aria-labelledby="subsection-title">
+    <ul class="govuk-list govuk-!-font-size-16">
+      <li>
+        <a class="govuk-link"  class="govuk-link" href="#">
+          Criminal record checks when you apply for a role
+        </a>
+      </li>
+      <li>
+        <a class="govuk-link"  class="govuk-link" href="#">
+          Find out which DBS check is right for your employee
+        </a>
+      </li>
+
+    </ul>
+  </nav>
+{% endblock %}

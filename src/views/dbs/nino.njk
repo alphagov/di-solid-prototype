@@ -1,0 +1,57 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/where-were-you-born" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% set pageTitleName = "dbs.pages.nino.title" | translate %}
+{% block content %}
+  <form action="/dbs/nino" method="post">
+    {% set ninoHtml %}
+      {{ govukInput({
+        id: "nino-input",
+        name: "nino-input",
+        type: "text",
+        spellcheck: false,
+        classes: "govuk-!-width-one-third",
+        label: {
+          text: "dbs.pages.nino.ninoInputLabel" | translate
+        },
+        hint: {
+          text: "dbs.pages.nino.ninoInputHint" | translate
+        }
+      }) }}
+    {% endset -%}
+    {{ govukRadios({
+      idPrefix: "nino",
+      name: "nino",
+      fieldset: {
+        legend: {
+          text: pageTitleName,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "yes",
+          text: "dbs.pages.nino.radioLabel1" | translate,
+          conditional: {
+            html: ninoHtml
+          }
+        },
+        {
+          value: "no",
+          text: "dbs.pages.nino.radioLabel2" | translate
+        }
+      ]
+    }) }}
+    {{ govukDetails({
+      summaryText: "dbs.pages.nino.additionalDetails.summaryText" | translate,
+      html: 'dbs.pages.nino.additionalDetails.text' | translate
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

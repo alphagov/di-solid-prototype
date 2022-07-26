@@ -1,0 +1,75 @@
+{% extends "dbs/layout.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set backLink = "/dbs/who-paying" %}
+{% set pageTitleName = "dbs.pages.checkYourDetails.title" | translate %}
+{% block content %}
+  <form action="/dbs/check-your-details" method="post">
+    <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+    <p class="govuk-body">{{ "dbs.pages.checkYourDetails.paragraph1" | translate }}</p>
+    <p class="govuk-body">{{ "dbs.pages.checkYourDetails.paragraph2" | translate }}</p>
+    <p class="govuk-body">{{ "dbs.pages.checkYourDetails.paragraph3" | translate }}</p>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "dbs.pages.checkYourDetails.mobile" | translate
+          },
+          value: {
+            text: "07111111111"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.checkYourDetails.mobile" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.checkYourDetails.email" | translate
+          },
+          value: {
+            text: "something@something.something"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.checkYourDetails.email" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.checkYourDetails.payment" | translate
+          },
+          value: {
+            html: "-"
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.checkYourDetails.payment" | translate
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+    <br>
+    <a href="#" class="govuk-link govuk-body">{{"general.printThisPage" | translate }}</a>
+  </form>
+{% endblock %}

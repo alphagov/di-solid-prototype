@@ -1,0 +1,32 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/review-your-application" %}
+{% set pageTitleName = "dbs.pages.disclaimer.title" | translate %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% block content %}
+  <form action="/dbs/disclaimer" method="post">
+    <h1 class="govuk-heading-xl">{{ pageTitleName }}</h1>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ "dbs.pages.disclaimer.listItem1" | translate }}</li>
+      <li>{{ "dbs.pages.disclaimer.listItem2" | translate }}</li>
+    </ul>
+    {{ govukWarningText({
+      text: "dbs.pages.disclaimer.warning" | translate
+    }) }}
+    {{ govukCheckboxes({
+      idPrefix: "agree-to-terms",
+      name: "agree-to-terms",
+      classes: "govuk-checkboxes--small",
+      items: [
+        {
+          value: "dbs-agree-to-terms",
+          html: "dbs.pages.disclaimer.agree" | translate
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

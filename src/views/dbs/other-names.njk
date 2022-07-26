@@ -1,0 +1,57 @@
+{% extends "dbs/layout.njk" %}
+{% set pageTitleName = "dbs.pages.otherNames.title" | translate %}
+{% from "govuk/components/table/macro.njk" import govukTable %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set backLink = "/dbs/apply-for-a-basic-dbs-check" %}
+{% block content %}
+<form action="/dbs/other-names" method="post">
+  {{ govukRadios({
+    idPrefix: "other-names",
+    name: "other-names",
+    fieldset: {
+      legend: {
+        text: pageTitleName,
+        isPageHeading: true,
+        classes: "govuk-fieldset__legend--l"
+      }
+    },
+    items: [
+      {
+        value: "yes",
+        text: "Yes"
+      },
+      {
+        value: "no",
+        text: "No"
+      }
+    ]
+  }) }}
+
+  <p class="govuk-body"> {{ "dbs.pages.otherNames.paragraph1" | translate }}</p>
+  <p class="govuk-body"> {{ "dbs.pages.otherNames.paragraph2" | translate }}</p>
+  <div class="govuk-inset-text">{{ "dbs.pages.otherNames.insetText" | translate }}</div>
+  {{ govukTable({
+    head: [
+      {
+        text: 'dbs.pages.otherNames.name' | translate
+      },
+      {
+        text: 'dbs.pages.otherNames.dates' | translate
+      }
+    ],
+    rows: [
+      [
+        {
+          text: "My Name",
+          classes: "govuk-!-width-one-half"
+        },
+        {
+          text: "01 June 0000",
+          classes: "govuk-!-width-one-half"
+        }
+      ]
+    ]
+  }) }}
+</form>
+{% endblock %}

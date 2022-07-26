@@ -1,0 +1,52 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/nino" %}
+{% set pageTitleName = "dbs.pages.drivingLicence.title" | translate %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% block content %}
+  <form action="/dbs/driving-licence" method="post">
+    {% set drivingLicenceHtml %}
+      {{ govukInput({
+        id: "driving-licence-input",
+        name: "driving-licence-input",
+        type: "text",
+        spellcheck: false,
+        classes: "govuk-!-width-one-third",
+        label: {
+          text: "dbs.pages.drivingLicence.drivingLicenceInputLabel" | translate
+        },
+        hint: {
+          text: "dbs.pages.drivingLicence.drivingLicenceInputHint" | translate
+        }
+      }) }}
+    {% endset -%}
+    <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+    <p class="govuk-body">{{ "dbs.pages.drivingLicence.paragraph" | translate }}</p>
+    <div class="govuk-inset-text">
+      {{ "dbs.pages.drivingLicence.insetText" | translate }}
+    </div>
+    {{ govukRadios({
+      idPrefix: "driving-licence",
+      name: "driving-licence",
+      items: [
+        {
+          value: "yes",
+          text: "dbs.pages.drivingLicence.radioLabel1" | translate,
+          conditional: {
+            html: drivingLicenceHtml
+          }
+        },
+        {
+          value: "no",
+          text: "dbs.pages.drivingLicence.radioLabel2" | translate
+        }
+      ]
+    }) }}
+
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}
