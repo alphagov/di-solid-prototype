@@ -1,23 +1,15 @@
 import { Request, Response } from "express";
-import { credentials } from "../../lib/credentials";
-import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node";
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 import {
-  buildThing,
-  createThing,
-  setThing,
-  saveSolidDatasetAt,
-  overwriteFile,
-  getSourceUrl,
- } from "@inrupt/solid-client";
-
-import {
-  getOrCreateDataset,
   getDatasetUri,
+  writeCheckToPod,
 } from "../../lib/pod"
+
+import { buildKbvCheckArtifacts } from "../../lib/kvbCheckVc"
+import { buildPassportCheckArtifacts } from "../../lib/passportCheckVc"
 
 import { SessionError } from "../../errors";
 
-import { RDF } from "@inrupt/vocab-common-rdf";
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).
 // We may also need to explicitly convert our usage of 'Blob' into a Buffer
@@ -35,63 +27,26 @@ import { RDF } from "@inrupt/vocab-common-rdf";
 // 'Buffer's, so always converting any 'Blob' instances we have into 'Buffer's
 // allows those functions to work safely with both Node.js and browser
 // 'Blob's.
-// eslint-disable-next-line no-shadow
-import { Blob } from "node:buffer";
 
 export function saveGet(req: Request, res: Response) {
   res.render('identity/save');
 }
 
 export async function savePost(req: Request, res: Response): Promise<void> {
-  const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
-  const GOV_UK_hasCredential = "https://vocab.account.gov.uk/hasCredential";
   const session = await getSessionFromStorage(req.session?.sessionId);
 
-  if (session != undefined) {
-    const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs/");
-    const metadataUri = `${containerUri}/vc-metadata`
-    const metadataDataset = await getOrCreateDataset(session, metadataUri);
-    const blobUri = `${containerUri}/vc-blob`;
-    const vcFile = new Blob([JSON.stringify(credentials())], { type: "application/json" })
-    await writeFileToPod(vcFile, blobUri, session)
+  if (session != undefined && req.session) {
+    req.session.webId = session.info.webId
+    const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
+    
+    const passportArtifacts = buildPassportCheckArtifacts(req.session, containerUri);
+    await writeCheckToPod(session, passportArtifacts)
 
-    const reusableIdentityCredential = buildThing(
-      createThing({ url: metadataUri })
-    )
-    .addUrl(RDF.type, GOV_UK_CREDENTIAL)
-    .addUrl(GOV_UK_hasCredential, blobUri)
-    .build();
+    const kbvArtifacts = buildKbvCheckArtifacts(req.session, containerUri)
+    await writeCheckToPod(session, kbvArtifacts)
 
-    const updatedDataset = setThing(metadataDataset, reusableIdentityCredential);
-    console.log(`Saving resources (Blob [${blobUri}] and it's metadata [${metadataUri}]) to Pod in container: [${containerUri}]`);
-
-    await saveSolidDatasetAt(
-      metadataUri,
-      updatedDataset,
-      { fetch: session.fetch }
-    )
     res.redirect('/identity/complete/saved');
   } else {
     throw new SessionError();
-  }
-}
-
-// Upload File to the targetFileURL.
-// If the targetFileURL exists, overwrite the file.
-// If the targetFileURL does not exist, create the file at the location.
-async function writeFileToPod(file: Blob, targetFileURL: string, session: Session ) {
-  try {
-    const savedFile = await overwriteFile(
-      targetFileURL,                                      // URL for the file.
-      // We need to explicitly convert our 'Blob' into a Buffer here (see
-      // detailed comment on our 'import { Blob }' code above).
-      Buffer.from(await file.arrayBuffer()),
-      // file,                                               // File
-      { contentType: file.type, fetch: session.fetch }    // mimetype if known, fetch from the authenticated session
-    );
-    console.log(`File saved at ${getSourceUrl(savedFile)}`);
-
-  } catch (error) {
-    console.error(error);
   }
 }

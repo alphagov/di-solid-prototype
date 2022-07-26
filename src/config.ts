@@ -29,6 +29,11 @@ export function getClientId(environment?: string) {
   return `${hostname}/info/id`
 }
 
+export function getJwtSigningKey() {
+  // This is a prototype, so we're not worried about the security of our key
+  return "not-a-secret-key";
+}
+
 export enum EssServices {
   Authorization = 'authorization',
   Provision = 'provision',
