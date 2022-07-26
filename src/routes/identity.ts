@@ -30,6 +30,7 @@ import {
   enterPassportPost,
   findAddressPost,
   proveIdentityLoggedOutPost,
+  proveIdentityStartGet,
   securityQuestionPost,
   checkInPersonGet,
 } from "../controllers/identity/ipv"
@@ -52,6 +53,10 @@ async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunc
 router.use((req: Request, res: Response, next: NextFunction) => {
     redirectIfNotLoggedIn(req, res, next);
 })
+
+
+/* Check if someone has stored credentials */
+router.get('/', proveIdentityStartGet)
 
 /* Begin Journey, NB not in figma? */
 router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);

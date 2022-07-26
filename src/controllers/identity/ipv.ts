@@ -1,5 +1,15 @@
 import { Request, Response } from "express";
 
+export function proveIdentityStartGet(req: Request, res: Response) {
+  const hasPreviousCredentials = false
+
+  if (hasPreviousCredentials) {
+    res.redirect("/identity/use-saved-proof-of-identity")
+  } else(
+    res.redirect("identity/prove-identity")
+  )
+}
+
 /* Prove your Identity */
 export function proveIdentityLoggedOutGet(req: Request, res: Response) {
   res.render("identity/prove-identity-logged-out");
