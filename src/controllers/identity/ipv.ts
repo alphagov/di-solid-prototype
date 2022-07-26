@@ -155,3 +155,7 @@ export function securityQuestionPost(req: Request, res: Response) {
 export function checkInPersonGet(req: Request, res: Response) {
   res.render("identity/check-in-person");
 }
+
+export function useSavedProofOfIdentityGet(req: Request, res: Response) {
+  res.render("identity/use-saved-proof-of-identity")
+}
