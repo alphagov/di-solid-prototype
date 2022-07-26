@@ -1,0 +1,31 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/certificate-address-where" %}
+{% set pageTitleName = "dbs.pages.emailAddress.title" | translate %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% block content %}
+  <form action="/dbs/email-address" method="post">
+    <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+    <p class="govuk-body">{{ "dbs.pages.emailAddress.paragraph1" | translate }}</p>
+    {{ govukInput({
+      id: "email",
+      name: "email",
+      type: "email",
+      autocomplete: "email",
+      spellcheck: false,
+      classes: "govuk-!-width-two-thirds"
+    }) }}
+    <p class="govuk-body">{{ "dbs.pages.emailAddress.paragraph2" | translate }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ "dbs.pages.emailAddress.listItem1" | translate }}</li>
+      <li>{{ "dbs.pages.emailAddress.listItem2" | translate }}</li>
+    </ul>
+    <div class="govuk-inset-text">
+      {{ "dbs.pages.emailAddress.insetText" | translate }}
+    </div>
+
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

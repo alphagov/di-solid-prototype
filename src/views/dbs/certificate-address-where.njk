@@ -1,0 +1,34 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/driving-licence" %}
+{% set pageTitleName = "dbs.pages.certificateAddressWhere.title" | translate %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% block content %}
+  <form action="/dbs/certificate-address-where" method="post">
+    <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+    <p class="govuk-body">{{ "dbs.pages.certificateAddressWhere.paragraph1" | translate }}</p>
+    <p class="govuk-body">{{ "dbs.pages.certificateAddressWhere.paragraph2" | translate }}</p>
+    <div class="govuk-inset-text">
+      {{ "dbs.pages.certificateAddressWhere.insetText" | translate }}
+    </div>
+
+    {{ govukRadios({
+      idPrefix: "certificate-address",
+      name: "certificate-address",
+      items: [
+        {
+          value: "",
+          text: "Fake address, SW1A 0AB"
+        },
+        {
+          value: "",
+          text: "dbs.pages.certificateAddressWhere.otherAddress" | translate
+        }
+      ]
+    }) }}
+
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

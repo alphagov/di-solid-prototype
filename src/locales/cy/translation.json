@@ -4,6 +4,7 @@
     "continue": "Continue",
     "change": "Change",
     "errorTitlePrefix": "Error",
+    "printThisPage": "Print this page",
     "footer": {
       "accessibilityStatement": {
         "pageTitle": "Accessibility statement",
@@ -241,6 +242,182 @@
         "paragraph2": "You will need to go through the process of proving your identity next time you use a service that requires it.",
         "buttonText": "Delete identity information",
         "cancelLink": "Do not delete your information"
+      }
+    }
+  },
+  "dbs": {
+    "serviceName": "Basic criminal record check",
+    "pages": {
+      "requestBasicCheck": {
+        "title": "Request a basic DBS check",
+        "paragraph1": "Apply for a basic Disclosure and Barring Service (DBS) check to get a copy of your criminal record. This is called ‘basic disclosure’. It costs £23. It’s available for people working in England and Wales.",
+        "insetText1": "This page is also available in Welsh (<a class=\"govuk-link\" href=\"\">Cymraeg</a>).",
+        "paragraph2": "You can also get a basic DBS check if you live in Northern Ireland or Scotland but the job you’re applying for is in England or Wales.",
+        "insetText2": "There’s a different way to apply if you’re applying for a job in <a class=\"govuk-link\"  href=\"\">Northern Ireland</a> or <a class=\"govuk-link\"  href=\"\">Scotland</a>",
+        "paragraph3": "The check will only show convictions that are not ‘spent’, for example some types of caution will disappear after 3 months.",
+        "paragraph4": "You must be 16 or over to apply.",
+        "paragraph5": "It usually takes up to 14 days for you to receive your certificate.",
+        "heading1": "What you'll need",
+        "paragraph6": "You might need to create an account and prove your identity before you can apply for a basic DBS check.",
+        "paragraph7": "You’ll also need:",
+        "listItem1": "all your addresses for the last 5 years and the dates you lived there",
+        "listItem2": "your National Insurance number",
+        "listItem3": "your passport",
+        "listItem4": "your driving licence",
+        "heading2": "Apply online",
+        "paragraph8": "The service is available from 8am to 11:30pm.",
+        "heading3": "Before you start",
+        "paragraph9": "Make sure a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check is the correct one for you. For certain roles, your employer may need to apply for a higher level of criminal record check.",
+        "paragraph10": "<a class=\"govuk-link\"  href=\"https://www.gov.uk/find-out-dbs-check\">Find out if you need a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check</a> or ask your employer if you’re not sure.",
+        "heading4": "How to pay",
+        "paragraph11": "You can pay for a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check yourself or you can get someone to pay for you - for example, an employer or relative.",
+        "paragraph12": "You can pay with a debit or credit card. You can also use Google Pay or Apple Pay.",
+        "paragraph13": "If you pay the fee yourself, you need to pay it when you apply.",
+        "paragraph14": "If someone else pays, they must pay the fee within 10 days of your application being submitted.",
+        "heading5": "Get help to use the online service",
+        "paragraph15": "If you need support to apply online, call the DBS helpline on 03000 200 190 and select option 2 and then option 1.",
+        "heading6": "Other ways to apply",
+        "paragraph16": "You can also choose to apply through other companies. <abbr title=\"Disclosure and Barring Service\">DBS</abbr> has a <a class=\"govuk-link\"  href=\"https://www.gov.uk/guidance/responsible-organisations\">list of companies</a> you can apply through.",
+        "heading7": "Requesting your police record",
+        "paragraph17": "You’ll need to <a class=\"govuk-link\"  href=\"https://www.gov.uk/copy-of-police-records\">request a police record</a> instead if:",
+        "listItem1": "you’re applying for certain visas",
+        "listItem2": "you want to see your police file without receiving a certificate - this will show up any warnings or cautions that are not on your official criminal record",
+        "heading8": "Transgender applications",
+        "paragraph18": "Contact the DBS transgender applications team if you’re a transgender applicant and you do not want to reveal details of your previous identity to a potential employer.",
+        "paragraph19": "DBS transgender applications team.",
+        "paragraph20": "<a class=\"govuk-link\"  href=\"mailto:sensitive@dbs.gov.uk\">sensitive@dbs.gov.uk</a><br>Telephone: 0151 676 1452<br>Monday to Friday, 9am to 5pm<br><a class=\"govuk-link\"  href=\"https://www.gov.uk/call-charges\">Find out about call charges</a>"
+      },
+      "proveYourIdentity": {
+        "title": "Prove your identity to continue",
+        "paragraph1": "You need to prove your identity before you can continue. You‘ll need an account to do this.",
+        "paragraph2": "This will help protect you against online identity theft.",
+        "agree": "By continuing, I agree that I have read and understood the basic DBS check online application <a class=\"govuk-link\" href=\"[privacyPolicyLink]\"  target=\"_blank\">privacy policy (opens in a new tab)</a>. I understand how the DBS will process my personal data when I'm applying online, before my application has been submitted"
+      },
+      "applyForBasicCheck": {
+        "title": "Apply for a basic DBS check",
+        "paragraph1": "This takes about 15 to 20 minutes",
+        "paragraph2": "You will be asked to provide personal information, such as:",
+        "listItem1": "all your addresses for the last 5 years and the dates you lived there",
+        "listItem2": "your National Insurance number",
+        "listItem3": "your driving licence (if you have one)",
+        "paragraph3": "Some of the information you provided as part of proving your identity may be reused so you do not have to give the same details again",
+        "agree": "By continuing, you agree that you have read and understood the <a class=\"govuk-link\" href=\"https://www.gov.uk/government/publications/basic-dbs-check-privacy-policy\" target=\"_blank\">basic DBS check privacy policy (opens in a new tab)</a>. I understand how the DBS will process my personal data when I'm applying online, before my application has been submitted"
+      },
+      "otherNames": {
+        "title": "Have you ever been known by any other names?",
+        "paragraph1": "You must tell us about all other names you’ve used, including middle names.",
+        "paragraph2": "For example, you may have changed your name through marriage or deed poll.",
+        "insetText": "Only your current name will be displayed on your online result.",
+        "name": "Name",
+        "dates": "Dates you used this name"
+      },
+      "whatIsYourSex": {
+        "title": "What is your sex?",
+        "hint": "We need to know your sex so we can check police records",
+        "f": "Female",
+        "m": "Male",
+        "m": "Male",
+        "additionalDetails": {
+          "summaryText": "What personal details will appear on my certificate?",
+          "text": "<p class=\"govuk-body\">Your sex will be printed on your paper certificate. However, it will not be displayed on your online result.</p><p class=\"govuk-body\">If you're transgender or non-binary and are concerned about completing this application, you can read our <a class=\"govuk-link\" href=\"\">guidance on transgender applications</a>. You can contact the DBS sensitive transactions team if you do not want to reveal details of your previous identity on your paper certificate.</p>"
+        }
+      },
+      "whereWereYouBorn": {
+        "title": "Where were you born?",
+        "inputLabel1": "Country",
+        "inputLabel2": "Town or city"
+      },
+      "nino": {
+        "title": "Do you have a UK National Insurance number?",
+        "hint": "If you can't provide a UK National Insurance number you can still carry on with your application, but it might take us longer to process your check.",
+        "radioLabel1": "Yes",
+        "radioLabel2": "No/I cannot provide the details right now",
+        "ninoInputLabel": "UK National Insurance number",
+        "ninoInputHint": "For example, QQ123456C.",
+        "additionalDetails": {
+          "summaryText": "I don‘t know my UK National Insurance number",
+          "text": "<p class=\"govuk-body\">You can find your National Insurance number on your payslip or letters about tax pensions or benefits.</p><p class=\"govuk-body\">Or you can find out <a class=\"govuk-link\">how to apply for a National Insurance number</a>. You can apply once you‘re in the UK.</p>"
+        }
+      },
+      "drivingLicence": {
+        "title": "Do you have a current UK driving licence?",
+        "paragraph": "If you can‘t provide driving licence details you can still carry on with your application, but it might take us longer to process your check.",
+        "insetText": "The driving licence you provide can be any current full or provisional driving licence (photocard or paper).",
+        "radioLabel1": "Yes",
+        "radioLabel2": "No/I cannot provide the details right now",
+        "drivingLicenceInputLabel": "Driving licence number",
+        "drivingLicenceInputHint": "For example, MORGA657054SM9IJ.",
+        "additionalDetails": {
+          "summaryText": "I don't know my driving licence number",
+          "text": "Your driving licence number is in section 5 of your driving licence photocard."
+        }
+      },
+      "certificateAddressWhere": {
+        "title": "Where would you like us to send your certificate?",
+        "paragraph1": "We can send your certificate to your current address, another personal address (for example a family member), or your employer.",
+        "paragraph2": "If you send your certificate to another address make sure you are able to check the information on it is correct.",
+        "insetText": "If you send your certificate to a non-UK address it could take longer to arrive in the post.",
+        "otherAddress": "To another address"
+      },
+      "emailAddress": {
+        "title": "What is your email address?",
+        "paragraph1": "The email address you provide should be your personal one. If for example, you provide a shared email address, others may be able to view the result of your check.",
+        "insetText": "You will not be able to view your result online if your check reveals a criminal record.",
+        "paragraph2": "We'll use your email address to:",
+        "listItem1": "send you general information about your application",
+        "listItem2": "send you links to track, view and share your result online"
+      },
+      "mobileNumber": {
+        "title": "Can we send you text messages about your application and codes to view your result online?",
+        "paragraph": "We'll only use your mobile number to:",
+        "listItem1": "send you progress updates about your application",
+        "listItem2": "send you a security code to let you view your result online",
+        "radioLabel1": "Yes",
+        "radioLabel2": "No",
+        "inputLabel1": "Which country is your mobile number registered in?",
+        "inputLabel2": "What is your mobile number without the country code?",
+        "warning": "If you do not provide a mobile number, you will not be able to view your result online."
+      },
+      "whoIsPaying": {
+        "title": "Who is paying for your check?",
+        "radioLabel1": "I am",
+        "radioHint1": "Payment is due as soon as your application is complete. You can pay with a debit or credit card. Google Pay or Apple Pay can also be used.",
+        "radioLabel2": "Someone else is (for example, an employer)",
+        "radioHint2": "We will send you a payment link by email, which you can forward to someone to pay on your behalf, or you can use yourself."
+      },
+      "checkYourDetails": {
+        "title": "Check your details",
+        "paragraph1": "Please check your mobile number and email address are correct.",
+        "paragraph2": "You will need a correct mobile to receive updates about the progress of your application and to receive a code that enables you to view your certificate online.",
+        "paragraph3": "You can complete payment at the end of this online application.",
+        "mobile": "Mobile number to send text updates to",
+        "email": "Email address",
+        "payment": "Payment choice"
+      },
+      "reviewYourApplication": {
+        "title": "Review your application",
+        "applicationDetails": "Application details",
+        "summaryList1": {
+          "key1": "Name",
+          "key2": "Date of birth",
+          "key3": "Sex",
+          "key4": "Place of birth",
+          "key5": "Other names",
+          "key5": "Address history"
+        },
+        "summaryList2": {
+          "key1": "UK National Insurance number",
+          "key2": "Current UK driving licence",
+          "key3": "Current passport",
+          "key4": "Payment choice"
+        }
+      },
+      "disclaimer": {
+        "title": "By continuing with your application you confirm that:",
+        "listItem1": "the information you've given is true",
+        "listItem2": "you'll pay £23 for your application",
+        "warning": "You could be prosecuted if you knowingly give false information in your application",
+        "agree": "I agree to the <a href=\"https://www.gov.uk/government/publications/terms-and-conditions-for-dbs-online-services\" class=\"govuk-link\">terms and conditions"
       }
     }
   }

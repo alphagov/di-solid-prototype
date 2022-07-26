@@ -1,0 +1,28 @@
+{% extends "dbs/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% set pageTitleName = "dbs.pages.proveYourIdentity.title" | translate %}
+{% set backLink = "/dbs/request-a-basic-dbs-check" %}
+{% block content %}
+  <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+  <p class="govuk-body"> {{ "dbs.pages.proveYourIdentity.paragraph1" | translate }}</p>
+  <p class="govuk-body"> {{ "dbs.pages.proveYourIdentity.paragraph2" | translate }}</p>
+  <form action="/dbs/prove-your-identity" method="post">
+    {{ govukCheckboxes({
+      idPrefix: "dbs-accept-privacy",
+      name: "dbs-accept-privacy",
+      classes: "govuk-checkboxes--small",
+      fieldset: {
+      },
+      items: [
+        {
+          value: "dbs-accept-privacy",
+          html: "dbs.pages.proveYourIdentity.agree" | translate
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

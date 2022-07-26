@@ -1,0 +1,39 @@
+{% extends "dbs/layout.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% set backLink = "/dbs/mobile-number" %}
+{% set pageTitleName = "dbs.pages.whoIsPaying.title" | translate %}
+{% block content %}
+  <form action="/dbs/who-paying" method="post">
+    {{ govukRadios({
+      idPrefix: "mobile",
+      name: "mobile",
+      fieldset: {
+        legend: {
+          text: pageTitleName,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "self",
+          text: "dbs.pages.whoIsPaying.radioLabel1" | translate,
+          hint: {
+            text: "dbs.pages.whoIsPaying.radioHint1" | translate
+          }
+        },
+        {
+          value: "other",
+          text: "dbs.pages.whoIsPaying.radioLabel2" | translate,
+          hint: {
+            text: "dbs.pages.whoIsPaying.radioHint2" | translate
+          }
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

@@ -1,0 +1,142 @@
+{% extends "dbs/layout.njk" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set backLink = "/dbs/check-your-details" %}
+{% set pageTitleName = "dbs.pages.reviewYourApplication.title" | translate %}
+{% block content %}
+  <form action="/review-your-application" method="post">
+    <h1 class="govuk-heading-xl">{{ pageTitleName }}</h1>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList1.key1" | translate
+          },
+          value: {
+            text: ""
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList1.key2" | translate
+          },
+          value: {
+            text: ""
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.reviewYourApplication.summaryList1.key2" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList1.key3" | translate
+          },
+          value: {
+            html: ""
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.reviewYourApplication.summaryList1.key3" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList1.key4" | translate
+          },
+          value: {
+            html: ""
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.reviewYourApplication.summaryList1.key4" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList1.key5" | translate
+          },
+          value: {
+            html: ""
+          }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-l">{{ "dbs.pages.reviewYourApplication.applicationDetails" | translate }}</h1>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList2.key1" | translate
+          },
+          value: {
+            text: ""
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.reviewYourApplication.summaryList2.key1" | translate
+              }
+            ]
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList2.key2" | translate
+          },
+          value: {
+            html: ""
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList2.key3" | translate
+          },
+          value: {
+            html: ""
+          }
+        },
+        {
+          key: {
+            text: "dbs.pages.reviewYourApplication.summaryList2.key4" | translate
+          },
+          value: {
+            html: ""
+          },
+          actions: {
+            items: [
+              {
+                href: "#",
+                text: "general.change" | translate,
+                visuallyHiddenText: "dbs.pages.reviewYourApplication.summaryList2.key4" | translate
+              }
+            ]
+          }
+        }
+      ]
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+    <br>
+    <a href="#" class="govuk-link govuk-body">{{"general.printThisPage" | translate }}</a>
+  </form>
+{% endblock %}

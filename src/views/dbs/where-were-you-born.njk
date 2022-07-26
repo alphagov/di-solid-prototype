@@ -1,0 +1,42 @@
+{% extends "dbs/layout.njk" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% set backLink = "/dbs/what-is-your-sex" %}
+{% set pageTitleName = "dbs.pages.whereWereYouBorn.title" | translate %}
+
+{% block content %}
+<form action="/dbs/where-were-you-born" method="post">
+  {% call govukFieldset({
+    legend: {
+      text: pageTitleName,
+      classes: "govuk-fieldset__legend--l",
+      isPageHeading: true
+    }
+  }) %}
+    {{ govukInput({
+      label: {
+        text: "dbs.pages.whereWereYouBorn.inputLabel1" | translate
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "country",
+      name: "country",
+      autocomplete: "country-name"
+    }) }}
+
+    {{ govukInput({
+      label: {
+        text: "dbs.pages.whereWereYouBorn.inputLabel2" | translate
+      },
+      classes: "govuk-!-width-two-thirds",
+      id: "address-town",
+      name: "address-town",
+      autocomplete: "address-level2"
+    }) }}
+  {% endcall %}
+
+  {{ govukButton({
+    text: 'general.continue' | translate
+  }) }}
+</form>
+{% endblock %}

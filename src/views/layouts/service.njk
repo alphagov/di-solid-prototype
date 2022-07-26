@@ -1,0 +1,9 @@
+{% extends "layouts/base.njk" %}
+
+{% block header %}
+  {{ govukHeader({
+     homepageUrl: '/',
+     serviceName: serviceName,
+     serviceUrl: serviceUrl
+   }) }}
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/email-address" %}
+{% set pageTitleName = "dbs.pages.mobileNumber.title" | translate %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% set mobileHtml %}
+  {{ govukInput({
+    id: "country",
+    name: "country",
+    type: "text",
+    spellcheck: false,
+    value:"United Kingdom",
+    classes: "govuk-!-width-two-thirds",
+    label: {
+      text: "dbs.pages.mobileNumber.inputLabel1" | translate
+    }
+  }) }}
+
+  {{ govukInput({
+    id: "number",
+    name: "number",
+    type: "text",
+    spellcheck: false,
+    classes: "govuk-!-width-two-thirds",
+    label: {
+      text: "dbs.pages.mobileNumber.inputLabel2" | translate
+    }
+  }) }}
+{% endset -%}
+{% block content %}
+  <form action="/dbs/mobile" method="post">
+    {{ govukRadios({
+      idPrefix: "mobile",
+      name: "mobile",
+      fieldset: {
+        legend: {
+          text: pageTitleName,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      items: [
+        {
+          value: "yes",
+          text: "dbs.pages.mobileNumber.radioLabel1" | translate,
+          conditional: {
+            html: mobileHtml
+          }
+        },
+        {
+          value: "no",
+          text: "dbs.pages.mobileNumber.radioLabel2" | translate
+        }
+      ]
+    }) }}
+    <p class="govuk-body">{{ "dbs.pages.mobileNumber.paragraph" | translate }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ "dbs.pages.mobileNumber.listItem1" | translate }}</li>
+      <li>{{ "dbs.pages.mobileNumber.listItem2" | translate }}</li>
+    </ul>
+    {{ govukWarningText({
+      text: "dbs.pages.mobileNumber.warning" | translate
+    }) }}
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "dbs/layout.njk" %}
+{% set backLink = "/dbs/other-names" %}
+{% set pageTitleName = "dbs.pages.whatIsYourSex.title" | translate %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+{% block content %}
+  <form action="/dbs/what-is-your-sex" method="post">
+    {{ govukRadios({
+      idPrefix: "your-sex",
+      name: "your-sex",
+      fieldset: {
+        legend: {
+          text: pageTitleName,
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--l"
+        }
+      },
+      hint: {
+        text: "dbs.pages.whatIsYourSex.hint" | translate
+      },
+      items: [
+        {
+          value: "f",
+          text: "dbs.pages.whatIsYourSex.f" | translate
+        },
+        {
+          value: "m",
+          text: "dbs.pages.whatIsYourSex.m" | translate
+        }
+      ]
+    }) }}
+
+    {{ govukDetails({
+      summaryText: "dbs.pages.whatIsYourSex.additionalDetails.summaryText" | translate,
+      html: 'dbs.pages.whatIsYourSex.additionalDetails.text' | translate
+    }) }}
+
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}
