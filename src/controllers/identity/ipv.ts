@@ -1,13 +1,16 @@
 import { Request, Response } from "express";
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import { hasSavedIdentityChecks } from "../../lib/pod"
 
-export function proveIdentityStartGet(req: Request, res: Response) {
-  const hasPreviousCredentials = false
-
-  if (hasPreviousCredentials) {
-    res.redirect("/identity/use-saved-proof-of-identity")
-  } else(
-    res.redirect("identity/prove-identity")
-  )
+export async function proveIdentityStartGet(req: Request, res: Response) {
+  const session = await getSessionFromStorage(req.session?.sessionId);
+  if (session) {
+    if (await hasSavedIdentityChecks(session)) {
+      res.redirect("/identity/use-saved-proof-of-identity")
+    } else(
+      res.redirect("identity/prove-identity")
+    )
+  }
 }
 
 /* Prove your Identity */
