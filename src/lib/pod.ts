@@ -115,3 +115,13 @@ async function writeFileToPod(file: Blob, targetFileURL: string, session: Sessio
     console.error(error);
   }
 }
+
+export async function hasSavedIdentityChecks(session: Session): Promise<boolean> {
+  try {
+    await getSolidDataset(await getDatasetUri(session, 'private/govuk/identity/poc/credentials-pat/vcs/kbv/metadata'), {fetch: session.fetch})
+    await getSolidDataset(await getDatasetUri(session, 'private/govuk/identity/poc/credentials-pat/vcs/passport/metadata'), {fetch: session.fetch})
+  } catch (FetchError) {
+    return false
+  }
+  return true
+}

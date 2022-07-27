@@ -30,8 +30,10 @@ import {
   enterPassportPost,
   findAddressPost,
   proveIdentityLoggedOutPost,
+  proveIdentityStartGet,
   securityQuestionPost,
   checkInPersonGet,
+  useSavedProofOfIdentityGet
 } from "../controllers/identity/ipv"
 
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
@@ -52,6 +54,10 @@ async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunc
 router.use((req: Request, res: Response, next: NextFunction) => {
     redirectIfNotLoggedIn(req, res, next);
 })
+
+
+/* Check if someone has stored credentials */
+router.get('/', proveIdentityStartGet)
 
 /* Begin Journey, NB not in figma? */
 router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);
@@ -101,5 +107,8 @@ router.get('/check-in-person', checkInPersonGet)
 /* IPV Core completion pages */
 router.get('/complete/saved', completeSavedGet);
 router.get('/complete/return', completeReturnGet);
+
+/* Re-use identity page */
+router.get('/use-saved-proof-of-identity', useSavedProofOfIdentityGet)
 
 export { router as identityRouter };

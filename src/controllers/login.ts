@@ -31,6 +31,6 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     if (response.status == 404) {
       await createProfileAndPod(session)
     }
-    res.render('identity/prove-identity-logged-out', { webId: session.info.webId })
+    res.redirect("/identity")
   }
 }
