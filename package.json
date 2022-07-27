@@ -10,7 +10,7 @@
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/public/stylesheets/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist/public/javascripts/govuk-frontend && cp node_modules/govuk-frontend/govuk/all.js dist/public/javascripts/govuk-frontend && mkdir -p dist/locales && cp -R src/locales/* dist/locales",
     "copy-views": "mkdir -p dist/views && cp -R src/views/* dist/views",
-    "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && tsc",
+    "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && npm ci && tsc",
     "test": "npm run lint && mocha src/test",
     "start": "node .",
     "dev": "npm run build && nodemon ."
