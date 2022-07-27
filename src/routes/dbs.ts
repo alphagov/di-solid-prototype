@@ -2,6 +2,7 @@ import express from "express";
 import {
   dbsContentPageGet,
   proveYourIdentityGet,
+  proveYourIdentityPost,
   applyGet,
   otherNamesGet,
   whatIsYourSexGet,
@@ -21,6 +22,7 @@ const router = express.Router();
 
 router.get('/request-a-basic-dbs-check', dbsContentPageGet);
 router.get('/prove-your-identity', proveYourIdentityGet);
+router.post('/prove-your-identity', proveYourIdentityPost);
 router.get('/apply-for-a-basic-dbs-check', applyGet);
 router.get('/other-names', otherNamesGet);
 router.get('/what-is-your-sex', whatIsYourSexGet);
