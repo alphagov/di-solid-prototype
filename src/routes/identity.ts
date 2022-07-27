@@ -36,20 +36,9 @@ import {
   useSavedProofOfIdentityGet
 } from "../controllers/identity/ipv"
 
-import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import { redirectIfNotLoggedIn } from "../lib/middleware/redirectIfNotLoggedIn"
 
 const router = express.Router();
-
-async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunction) {
-  if (req.session == undefined) { res.redirect("/login") }
-  const session = await getSessionFromStorage(req.session?.sessionId);
-
-  if (!session?.info.isLoggedIn) {
-    res.redirect("/login");
-  } else {
-    next()
-  }
-}
 
 /* Begin journey. This has to happen before we log someone in */
 router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);
