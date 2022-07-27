@@ -28,6 +28,7 @@ export async function yourProofOfIdGet(
   res: Response
 ): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
+
   if (session) {
     res.render("account/your-proof-of-identity", {
       hasSavedIdentityChecks: await hasSavedIdentityChecks(session),
