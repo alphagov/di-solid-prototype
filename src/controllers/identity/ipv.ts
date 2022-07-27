@@ -20,7 +20,7 @@ export function proveIdentityLoggedOutGet(req: Request, res: Response) {
 
 export function proveIdentityLoggedOutPost(req: Request, res: Response) {
   if (req.body["prove-identity-options"] == "account") {
-    res.redirect("/identity/prove-identity");
+    res.redirect("/identity");
   } else if (req.body["prove-identity-options"] == "in-person") {
     res.redirect("/identity/check-in-person");
   }
