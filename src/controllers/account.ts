@@ -1,4 +1,6 @@
 import { Request, Response } from "express";
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import { hasSavedIdentityChecks } from "../lib/pod";
 
 export async function accountSettingsGet(
   req: Request,
@@ -25,7 +27,12 @@ export async function yourProofOfIdGet(
   req: Request,
   res: Response
 ): Promise<void> {
-  res.render("account/your-proof-of-identity");
+  const session = await getSessionFromStorage(req.session?.sessionId);
+  if (session) {
+    res.render("account/your-proof-of-identity", {
+      hasSavedIdentityChecks: await hasSavedIdentityChecks(session),
+    });
+  }
 }
 
 export async function deleteYourProofOfIdGet(
