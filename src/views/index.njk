@@ -1,18 +1,28 @@
 {% extends "layouts/base.njk" %}
-{% set pageTitleName = 'Hello world' %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% set pageTitleName = 'Identity reuse proof of concept' %}
 {% set serviceName = 'GOV.UK account' %}
 
 {% block content %}
-<h1 class="govuk-heading-xl">Hello world</h1>
-  <h2 class="govuk-heading-m">Account</h2>
+<h1 class="govuk-heading-xl">Identity reuse proof of concept</h1>
+
+  <h2 class="govuk-heading-m">Journeys</h2>
+
+  {{ govukButton({
+      text: "Request a basic DBS check",
+      href: "/dbs/request-a-basic-dbs-check"
+  }) }}
+
+  <h2 class="govuk-heading-m">Pages</h2>
+  <h3 class="govuk-heading-s">Account</h2>
   <ul>
     <li><a href="/account" class="govuk-link">GOV.UK Account</a></li>
   </ul>
-  <h2 class="govuk-heading-m">DBS</h2>
+  <h3 class="govuk-heading-s">DBS</h2>
   <ul>
     <li><a href="/dbs/request-a-basic-dbs-check" class="govuk-link">Request a basic DBS check</a></li>
   </ul>
-  <h2 class="govuk-heading-m">Identity</h2>
+  <h3 class="govuk-heading-s">Identity</h2>
   <ul>
     <li><a href="/identity/prove-identity-logged-out" class="govuk-link">Prove your identity to continue</a></li>
     <li><a href="/identity/prove-identity" class="govuk-link">Prove your identity</a></li>
