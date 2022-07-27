@@ -36,32 +36,21 @@ import {
   useSavedProofOfIdentityGet
 } from "../controllers/identity/ipv"
 
-import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import { redirectIfNotLoggedIn } from "../lib/middleware/redirectIfNotLoggedIn"
 
 const router = express.Router();
 
-async function redirectIfNotLoggedIn(req: Request, res: Response, next: NextFunction) {
-    if (req.session == undefined) { res.redirect("/login") }
-    const session = await getSessionFromStorage(req.session?.sessionId);
+/* Begin journey. This has to happen before we log someone in */
+router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);
+router.post('/prove-identity-logged-out', proveIdentityLoggedOutPost);
 
-    if (!session?.info.isLoggedIn) {
-      res.redirect("/login");
-    } else {
-      next()
-    }
-  }
-
+/* All following routes require someone to be logged in first */
 router.use((req: Request, res: Response, next: NextFunction) => {
     redirectIfNotLoggedIn(req, res, next);
 })
 
-
 /* Check if someone has stored credentials */
 router.get('/', proveIdentityStartGet)
-
-/* Begin Journey, NB not in figma? */
-router.get('/prove-identity-logged-out', proveIdentityLoggedOutGet);
-router.post('/prove-identity-logged-out', proveIdentityLoggedOutPost);
 
 /* Prove your Identity */
 router.get('/prove-identity', proveIdentityGet);

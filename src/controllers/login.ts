@@ -5,13 +5,12 @@ import { getHostname, getClientId, getEssServiceURI, EssServices } from "../conf
 import { createProfileAndPod } from "../lib/pod";
 
 export async function loginGet(req: Request, res: Response): Promise<void> {
-  res.render('login/start');
-}
-
-export async function loginPost(req: Request, res: Response): Promise<void> {
   const session = new Session();
   if (req.session != undefined) {
     req.session.sessionId = session.info.sessionId;
+    if (req.query.returnUri) {
+      req.session.returnUri = req.query.returnUri
+    }
   }
   const redirectToSolidIdentityProvider = (url: string) => { res.redirect(url); };
   await session.login({
@@ -31,6 +30,13 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     if (response.status == 404) {
       await createProfileAndPod(session)
     }
-    res.redirect("/identity")
+
+    if (req.session && req.session.returnUri) {
+      const returnUri = req.session.returnUri
+      delete req.session.returnUri
+      res.redirect(returnUri)
+    } else {
+      res.redirect("/identity")
+    }
   }
 }

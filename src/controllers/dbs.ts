@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getHostname } from "../config";
 
 export async function dbsContentPageGet(req: Request, res: Response): Promise<void> {
   res.render('dbs/request-a-basic-dbs-check');
@@ -6,6 +7,10 @@ export async function dbsContentPageGet(req: Request, res: Response): Promise<vo
 
 export async function proveYourIdentityGet(req: Request, res: Response): Promise<void> {
   res.render('dbs/prove-your-identity');
+}
+
+export function proveYourIdentityPost(req: Request, res: Response): void {
+  res.redirect(`${getHostname()}/identity/prove-identity-logged-out`);
 }
 
 export async function applyGet(req: Request, res: Response): Promise<void> {
