@@ -5,16 +5,12 @@ import { getHostname, getClientId, getEssServiceURI, EssServices } from "../conf
 import { createProfileAndPod } from "../lib/pod";
 
 export async function loginGet(req: Request, res: Response): Promise<void> {
-  if (req.session && req.query.returnUri) {
-    req.session.returnUri = req.query.returnUri
-  }
-  res.render('login/start');
-}
-
-export async function loginPost(req: Request, res: Response): Promise<void> {
   const session = new Session();
   if (req.session != undefined) {
     req.session.sessionId = session.info.sessionId;
+    if (req.query.returnUri) {
+      req.session.returnUri = req.query.returnUri
+    }
   }
   const redirectToSolidIdentityProvider = (url: string) => { res.redirect(url); };
   await session.login({
