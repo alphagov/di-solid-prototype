@@ -5,6 +5,9 @@ import { getHostname, getClientId, getEssServiceURI, EssServices } from "../conf
 import { createProfileAndPod } from "../lib/pod";
 
 export async function loginGet(req: Request, res: Response): Promise<void> {
+  if (req.session && req.query.returnUri) {
+    req.session.returnUri = req.query.returnUri
+  }
   res.render('login/start');
 }
 
@@ -31,6 +34,11 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     if (response.status == 404) {
       await createProfileAndPod(session)
     }
-    res.redirect("/identity")
+
+    if (req.session && req.session.returnUri) {
+      res.redirect(req.session.returnUri)
+    } else {
+      res.redirect("/identity")
+    }
   }
 }
