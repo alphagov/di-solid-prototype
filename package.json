@@ -5,7 +5,8 @@
   "main": "dist/app",
   "typings": "dist/app",
   "scripts": {
-    "lint": "eslint . --max-warnings=0",
+    "lint": "eslint --ext .js,.ts .",
+    "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "clean": "rm -rf dist",
     "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/public/stylesheets/application.scss dist/public/stylesheets/application.css --style compressed",
     "copy-assets": "mkdir -p dist/public/javascripts/govuk-frontend && cp node_modules/govuk-frontend/govuk/all.js dist/public/javascripts/govuk-frontend && mkdir -p dist/locales && cp -R src/locales/* dist/locales",
