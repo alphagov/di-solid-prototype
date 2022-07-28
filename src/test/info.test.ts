@@ -17,20 +17,20 @@ describe("buildClientIdDocument", () => {
   });
 
   it("sets the client_uri to the app's hostname", () => {
-    expect(clientId["client_uri"]).to.eq(getHostname());
+    expect(clientId.client_uri).to.eq(getHostname());
   });
 
   it("sets the client_id to /info/id", () => {
-    expect(clientId["client_id"]).to.eq(getClientId());
+    expect(clientId.client_id).to.eq(getClientId());
   });
 
   it("includes the values required for a refresh token and offline access", () => {
-    expect(clientId["grant_types"]).to.include("refresh_token");
-    expect(clientId["scope"]).to.match(/offline_access/);
+    expect(clientId.grant_types).to.include("refresh_token");
+    expect(clientId.scope).to.match(/offline_access/);
   });
 
   it("has a valid format for scope", () => {
-    expect(clientId["scope"]).to.match(/[\w\s]+/);
+    expect(clientId.scope).to.match(/[\w\s]+/);
   });
 
   describe("when the app is deployed", () => {
@@ -44,7 +44,7 @@ describe("buildClientIdDocument", () => {
     });
 
     it("always includes the local callback URL in redirect_uris", () => {
-      expect(clientId["redirect_uris"]).to.include(
+      expect(clientId.redirect_uris).to.include(
         "http://localhost:3000/login/callback"
       );
     });

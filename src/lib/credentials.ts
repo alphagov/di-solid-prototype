@@ -64,7 +64,7 @@ export function generateJWT(payload: Credential, subject: string) {
     {
       expiresIn: "1y",
       issuer: getClientId(),
-      subject: subject,
+      subject,
     }
   );
   return token;
@@ -75,7 +75,7 @@ export function getNameParts(
 ): NamePart[] {
   const firstName: string = session.passport["first-name"];
   const middleName: string = session.passport["middle-name"];
-  const surname: string = session.passport["surname"];
+  const { surname } = session.passport;
 
   return [
     {
@@ -112,7 +112,7 @@ export function getPostalAddress(
       buildingName: session.address["flat-name"],
       postalCode: session.address["address-postcode"],
       streetName: session.address["street-name"],
-      validFrom: session.address["year"],
+      validFrom: session.address.year,
     },
   ];
 }

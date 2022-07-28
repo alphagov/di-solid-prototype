@@ -42,7 +42,7 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     }
 
     if (req.session && req.session.returnUri) {
-      const returnUri = req.session.returnUri;
+      const { returnUri } = req.session;
       delete req.session.returnUri;
       res.redirect(returnUri);
     } else {

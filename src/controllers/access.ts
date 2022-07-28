@@ -34,7 +34,7 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
         DCTERMS.created
       );
 
-      res.render("access/show", { created: created });
+      res.render("access/show", { created });
     } catch (fetchError) {
       res.render("access/show");
     }

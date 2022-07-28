@@ -37,7 +37,7 @@ export function passportCheckVC(
     credentialSubject: {
       name: [
         {
-          nameParts: nameParts,
+          nameParts,
         },
       ],
       birthDate: [
@@ -47,7 +47,7 @@ export function passportCheckVC(
       ],
       passport: [passportDetails],
     },
-    evidence: evidence,
+    evidence,
   };
 }
 
@@ -89,9 +89,9 @@ export function buildPassportCheckArtifacts(
     .build();
 
   return {
-    file: file,
-    fileUri: fileUri,
-    metadata: metadata,
-    metadataUri: metadataUri,
+    file,
+    fileUri,
+    metadata,
+    metadataUri,
   };
 }

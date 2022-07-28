@@ -5,6 +5,6 @@ import sinonChai from "sinon-chai";
 chai.should();
 chai.use(sinonChai);
 
-const expect = chai.expect;
+const { expect } = chai;
 
 export { expect, sinon };

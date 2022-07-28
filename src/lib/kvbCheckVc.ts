@@ -39,7 +39,7 @@ export function kbvCheckVC(
     credentialSubject: {
       name: [
         {
-          nameParts: nameParts,
+          nameParts,
         },
       ],
       birthDate: [
@@ -49,7 +49,7 @@ export function kbvCheckVC(
       ],
       address: addressDetails,
     },
-    evidence: evidence,
+    evidence,
   };
 }
 
@@ -81,9 +81,9 @@ export function buildKbvCheckArtifacts(
     .build();
 
   return {
-    file: file,
-    fileUri: fileUri,
-    metadata: metadata,
-    metadataUri: metadataUri,
+    file,
+    fileUri,
+    metadata,
+    metadataUri,
   };
 }

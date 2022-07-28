@@ -59,8 +59,8 @@ export async function createProfileAndPod(session: Session) {
           },
         },
         id: session.info.webId,
-        profile: provision["profile"],
-        storage: provision["storage"],
+        profile: provision.profile,
+        storage: provision.storage,
       }),
     });
   }
