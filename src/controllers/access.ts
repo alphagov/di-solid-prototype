@@ -20,7 +20,7 @@ const GOV_UK_AccessLogEntry = "https://vocab.account.gov.uk/AccessLogEntry";
 
 export async function accessGet(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
-  if (session != undefined) {
+  if (session) {
     const datasetUri = await getDatasetUri(
       session,
       "private/govuk/identity/poc/access-log"
@@ -43,7 +43,7 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
 
 export async function accessPost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
-  if (session != undefined) {
+  if (session) {
     const datasetUri = await getDatasetUri(
       session,
       "private/govuk/identity/poc/access-log"

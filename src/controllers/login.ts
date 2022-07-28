@@ -14,7 +14,7 @@ import { createProfileAndPod } from "../lib/pod";
 
 export function loginGet(req: Request, res: Response): void {
   const session = new Session();
-  if (req.session != undefined) {
+  if (req.session) {
     req.session.sessionId = session.info.sessionId;
     if (req.query.returnUri) {
       req.session.returnUri = req.query.returnUri;
