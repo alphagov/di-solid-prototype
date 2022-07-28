@@ -32,7 +32,6 @@ import { CheckArtifacts } from "./credentials";
 // allows those functions to work safely with both Node.js and browser
 // 'Blob's.
 // eslint-disable-next-line no-shadow
-import { Blob } from "node:buffer";
 
 export async function createProfileAndPod(session: Session) {
   if (session.info.webId) {

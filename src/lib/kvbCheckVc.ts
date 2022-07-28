@@ -26,7 +26,6 @@ import {
 } from "../components/vocabularies/identityCheckCredential";
 
 // eslint-disable-next-line no-shadow
-import { Blob } from "node:buffer";
 
 export function kbvCheckVC(
   nameParts: NamePart[],
