@@ -240,6 +240,10 @@
         "deleteInformationLink": "Delete this information from your account",
         "savedOn": "Saved on [date]"
       },
+      "noSavedIdentity": {
+        "heading": "You do not currently have saved identity credentials",
+        "paragraph1": "You will need to do a full identity check next time you use a relevant government service. Or you can do them now to save time later"
+      },
       "deleteProofOfId": {
         "title": "Delete the information you use to prove your identity",
         "paragraph1": "Confirm you want to permanently delete the information your GOV.UK account uses to prove your identity. This will not delete your account.",
