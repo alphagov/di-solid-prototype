@@ -2,13 +2,9 @@ import { Person } from "./commonComponents";
 
 export type IdentityVectorOfTrust = "P1" | "P2" | "P3" | "P4";
 
-export interface Credentials {
-  iss?: string;
-  sub?: string;
-  vc?: VerifiableIdentityCredential;
-  vot?: IdentityVectorOfTrust;
-  [k: string]: unknown;
-}
+export type VerifiableIdentityCredentialType =
+  | "VerifiableIdentityCredential"
+  | "VerifiableCredential";
 
 export interface VerifiableIdentityCredential {
   "@context"?: string[];
@@ -16,6 +12,10 @@ export interface VerifiableIdentityCredential {
   type?: VerifiableIdentityCredentialType[];
 }
 
-export type VerifiableIdentityCredentialType =
-  | "VerifiableIdentityCredential"
-  | "VerifiableCredential";
+export interface Credentials {
+  iss?: string;
+  sub?: string;
+  vc?: VerifiableIdentityCredential;
+  vot?: IdentityVectorOfTrust;
+  [k: string]: unknown;
+}

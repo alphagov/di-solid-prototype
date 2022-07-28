@@ -1,9 +1,16 @@
 import { Request, Response } from "express";
 import { getHostname, getClientId } from "../config";
 
-export function idGet(req: Request, res: Response) {
-  res.json(buildClientIdDocument());
-}
+export type ClientIdDocument = {
+  "@context": string[];
+  client_id: string;
+  client_name: string;
+  client_uri: string;
+  post_logout_redirect_uris: string[];
+  redirect_uris: string[];
+  scope: string;
+  grant_types: string[];
+};
 
 export function buildClientIdDocument(): ClientIdDocument {
   return {
@@ -21,13 +28,6 @@ export function buildClientIdDocument(): ClientIdDocument {
   };
 }
 
-export type ClientIdDocument = {
-  "@context": string[];
-  client_id: string;
-  client_name: string;
-  client_uri: string;
-  post_logout_redirect_uris: string[];
-  redirect_uris: string[];
-  scope: string;
-  grant_types: string[];
-};
+export function idGet(req: Request, res: Response) {
+  res.json(buildClientIdDocument());
+}

@@ -88,26 +88,6 @@ export async function getDatasetUri(session: Session, containerPath: string) {
   } else {
     throw new SessionError();
   }
-}
-
-export async function writeCheckToPod(
-  session: Session,
-  checkArtifacts: CheckArtifacts
-) {
-  await writeFileToPod(checkArtifacts.file, checkArtifacts.fileUri, session);
-  const metadataDataset = await getOrCreateDataset(
-    session,
-    checkArtifacts.metadataUri
-  );
-  const updatedDataset = setThing(metadataDataset, checkArtifacts.metadata);
-  await saveSolidDatasetAt(checkArtifacts.metadataUri, updatedDataset, {
-    fetch: session.fetch,
-  });
-
-  console.log(
-    `Saved resources (Blob [${checkArtifacts.fileUri}] and it's metadata [${checkArtifacts.metadataUri}]) to Pod`
-  );
-}
 
 // Upload File to the targetFileURL.
 // If the targetFileURL exists, overwrite the file.
@@ -130,6 +110,25 @@ async function writeFileToPod(
   } catch (error) {
     console.error(error);
   }
+}
+
+export async function writeCheckToPod(
+  session: Session,
+  checkArtifacts: CheckArtifacts
+) {
+  await writeFileToPod(checkArtifacts.file, checkArtifacts.fileUri, session);
+  const metadataDataset = await getOrCreateDataset(
+    session,
+    checkArtifacts.metadataUri
+  );
+  const updatedDataset = setThing(metadataDataset, checkArtifacts.metadata);
+  await saveSolidDatasetAt(checkArtifacts.metadataUri, updatedDataset, {
+    fetch: session.fetch,
+  });
+
+  console.log(
+    `Saved resources (Blob [${checkArtifacts.fileUri}] and it's metadata [${checkArtifacts.metadataUri}]) to Pod`
+  );
 }
 
 export async function hasSavedIdentityChecks(

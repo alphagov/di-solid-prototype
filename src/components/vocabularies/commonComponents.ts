@@ -1,8 +1,4 @@
-export interface Name {
-  nameParts?: NamePart[];
-  validFrom?: string;
-  validUntil?: string;
-}
+export type NamePartType = "GivenName" | "FamilyName";
 
 export interface NamePart {
   type?: NamePartType;
@@ -11,20 +7,10 @@ export interface NamePart {
   value?: string;
 }
 
-export type NamePartType = "GivenName" | "FamilyName";
-
-export interface Person {
-  address?: PostalAddress[];
-  birthDate?: BirthDate[];
-  drivingPermit?: DrivingPermitDetails[];
-  name?: Name[];
-  passport?: PassportDetails[];
-}
-
-export interface BirthDate {
+export interface Name {
+  nameParts?: NamePart[];
   validFrom?: string;
   validUntil?: string;
-  value?: string;
 }
 
 export interface PostalAddress {
@@ -45,6 +31,12 @@ export interface PostalAddress {
   validUntil?: string;
 }
 
+export interface BirthDate {
+  validFrom?: string;
+  validUntil?: string;
+  value?: string;
+}
+
 /**
  * Document Types
  */
@@ -61,4 +53,12 @@ export interface DrivingPermitDetails {
   expiryDate?: string;
   validFrom?: string;
   validUntil?: string;
+}
+
+export interface Person {
+  address?: PostalAddress[];
+  birthDate?: BirthDate[];
+  drivingPermit?: DrivingPermitDetails[];
+  name?: Name[];
+  passport?: PassportDetails[];
 }
