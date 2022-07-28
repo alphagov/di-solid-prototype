@@ -85,8 +85,8 @@ export async function getDatasetUri(session: Session, containerPath: string) {
     });
     return `${podUri[0]}${containerPath}`;
   }
-    throw new SessionError();
-  }
+  throw new SessionError();
+}
 
 // Upload File to the targetFileURL.
 // If the targetFileURL exists, overwrite the file.
