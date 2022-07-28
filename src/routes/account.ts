@@ -7,6 +7,7 @@ import {
   accountSettingsGet,
   yourProofOfIdGet,
   deleteYourProofOfIdGet,
+  deleteYourProofOfIdPost,
 } from "../controllers/account";
 
 const router = express.Router();
@@ -21,5 +22,6 @@ router.get("/settings", accountSettingsGet);
 router.get("/settings/activity", accountActivityGet);
 router.get("/settings/your-proof-of-identity", yourProofOfIdGet);
 router.get("/settings/your-proof-of-identity/delete", deleteYourProofOfIdGet);
+router.post("/settings/your-proof-of-identity/delete", deleteYourProofOfIdPost);
 
 export default router;
