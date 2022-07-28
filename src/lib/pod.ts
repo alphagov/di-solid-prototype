@@ -84,7 +84,7 @@ export async function getDatasetUri(session: Session, containerPath: string) {
       fetch: session.fetch,
     });
     return `${podUri[0]}${containerPath}`;
-  } else {
+  }
     throw new SessionError();
   }
 
