@@ -1,12 +1,9 @@
 import { Request, Response } from "express";
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
-import {
-  getDatasetUri,
-  writeCheckToPod,
-} from "../../lib/pod"
+import { getDatasetUri, writeCheckToPod } from "../../lib/pod";
 
-import { buildKbvCheckArtifacts } from "../../lib/kvbCheckVc"
-import { buildPassportCheckArtifacts } from "../../lib/passportCheckVc"
+import { buildKbvCheckArtifacts } from "../../lib/kvbCheckVc";
+import { buildPassportCheckArtifacts } from "../../lib/passportCheckVc";
 
 import { SessionError } from "../../errors";
 
@@ -29,23 +26,29 @@ import { SessionError } from "../../errors";
 // 'Blob's.
 
 export function saveGet(req: Request, res: Response) {
-  res.render('identity/save');
+  res.render("identity/save");
 }
 
 export async function savePost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (session != undefined && req.session) {
-    req.session.webId = session.info.webId
-    const containerUri = await getDatasetUri(session, "private/govuk/identity/poc/credentials-pat/vcs");
-    
-    const passportArtifacts = buildPassportCheckArtifacts(req.session, containerUri);
-    await writeCheckToPod(session, passportArtifacts)
+    req.session.webId = session.info.webId;
+    const containerUri = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/credentials-pat/vcs"
+    );
 
-    const kbvArtifacts = buildKbvCheckArtifacts(req.session, containerUri)
-    await writeCheckToPod(session, kbvArtifacts)
+    const passportArtifacts = buildPassportCheckArtifacts(
+      req.session,
+      containerUri
+    );
+    await writeCheckToPod(session, passportArtifacts);
 
-    res.redirect('/identity/complete/saved');
+    const kbvArtifacts = buildKbvCheckArtifacts(req.session, containerUri);
+    await writeCheckToPod(session, kbvArtifacts);
+
+    res.redirect("/identity/complete/saved");
   } else {
     throw new SessionError();
   }

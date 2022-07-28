@@ -1,9 +1,6 @@
 import { Request, Response } from "express";
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
-import {
-  getOrCreateDataset,
-  getDatasetUri,
-} from "../lib/pod"
+import { getOrCreateDataset, getDatasetUri } from "../lib/pod";
 
 import {
   buildThing,
@@ -24,14 +21,22 @@ const GOV_UK_AccessLogEntry = "https://vocab.account.gov.uk/AccessLogEntry";
 export async function accessGet(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session != undefined) {
-    const datasetUri = await getDatasetUri(session, "private/govuk/identity/poc/access-log");
+    const datasetUri = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/access-log"
+    );
     try {
-      const dataset = await getSolidDataset(datasetUri, {fetch: session.fetch});
-      const created = getDatetime(getThing(dataset, datasetUri) as Thing, DCTERMS.created);
+      const dataset = await getSolidDataset(datasetUri, {
+        fetch: session.fetch,
+      });
+      const created = getDatetime(
+        getThing(dataset, datasetUri) as Thing,
+        DCTERMS.created
+      );
 
-      res.render('access/show', {created: created})      
+      res.render("access/show", { created: created });
     } catch (fetchError) {
-      res.render('access/show')
+      res.render("access/show");
     }
   }
 }
@@ -39,8 +44,10 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
 export async function accessPost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session != undefined) {
-
-    const datasetUri = await getDatasetUri(session, "private/govuk/identity/poc/access-log");
+    const datasetUri = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/access-log"
+    );
     const dataset = await getOrCreateDataset(session, datasetUri);
 
     const accessLogEntry = buildThing(createThing({ url: datasetUri }))
@@ -51,12 +58,10 @@ export async function accessPost(req: Request, res: Response): Promise<void> {
     const updatedDataset = setThing(dataset, accessLogEntry);
     console.log(`Saving resource to Pod at: [${datasetUri}]`);
 
-    await saveSolidDatasetAt(
-      datasetUri,
-      updatedDataset,
-      { fetch: session.fetch}
-    )
-    res.redirect('/access-logs');
+    await saveSolidDatasetAt(datasetUri, updatedDataset, {
+      fetch: session.fetch,
+    });
+    res.redirect("/access-logs");
   } else {
     throw new SessionError();
   }

@@ -1,10 +1,9 @@
 import { Request, Response } from "express";
 
 export function completeSavedGet(req: Request, res: Response) {
-    res.render('identity/complete/saved');
-  }
+  res.render("identity/complete/saved");
+}
 
 export function completeReturnGet(req: Request, res: Response) {
-    res.render('identity/complete/return');
+  res.render("identity/complete/return");
 }
-  

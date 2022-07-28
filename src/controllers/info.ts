@@ -2,31 +2,27 @@ import { Request, Response } from "express";
 import { getHostname, getClientId } from "../config";
 
 export function idGet(req: Request, res: Response) {
-  res.json(buildClientIdDocument())
+  res.json(buildClientIdDocument());
 }
 
 export function buildClientIdDocument(): ClientIdDocument {
- return {
-    "@context": [
-      "https://www.w3.org/ns/solid/oidc-context.jsonld"
-    ],
-    "client_id": getClientId(),
-    "client_name": "GDS Solid proof of concept app",
-    "client_uri": getHostname(),
-    "post_logout_redirect_uris": [
-      getHostname()
-    ],
-    "redirect_uris": [
+  return {
+    "@context": ["https://www.w3.org/ns/solid/oidc-context.jsonld"],
+    client_id: getClientId(),
+    client_name: "GDS Solid proof of concept app",
+    client_uri: getHostname(),
+    post_logout_redirect_uris: [getHostname()],
+    redirect_uris: [
       `${getHostname()}/login/callback`,
-      "http://localhost:3000/login/callback"
+      "http://localhost:3000/login/callback",
     ],
-    "scope" : "openid profile offline_access webid",
-    "grant_types" : ["refresh_token","authorization_code"],
-  }
+    scope: "openid profile offline_access webid",
+    grant_types: ["refresh_token", "authorization_code"],
+  };
 }
 
 export type ClientIdDocument = {
-  '@context': string[];
+  "@context": string[];
   client_id: string;
   client_name: string;
   client_uri: string;
@@ -34,4 +30,4 @@ export type ClientIdDocument = {
   redirect_uris: string[];
   scope: string;
   grant_types: string[];
-}
+};

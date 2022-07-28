@@ -1,7 +1,4 @@
-import {
-  buildThing,
-  createThing,
-} from "@inrupt/solid-client";
+import { buildThing, createThing } from "@inrupt/solid-client";
 
 import { RDF } from "@inrupt/vocab-common-rdf";
 
@@ -13,7 +10,7 @@ import {
   getNameParts,
   getPostalAddress,
   GOV_UK_CREDENTIAL,
-  GOV_UK_hasCredential
+  GOV_UK_hasCredential,
 } from "../lib/credentials";
 
 import {
@@ -21,7 +18,10 @@ import {
   PostalAddress,
 } from "../components/vocabularies/commonComponents";
 
-import { Credential, IdentityCheck } from "../components/vocabularies/identityCheckCredential";
+import {
+  Credential,
+  IdentityCheck,
+} from "../components/vocabularies/identityCheckCredential";
 
 // eslint-disable-next-line no-shadow
 import { Blob } from "node:buffer";
@@ -51,15 +51,17 @@ export function kbvCheckVC(
   };
 }
 
-function buildKbvCheck(session: CookieSessionInterfaces.CookieSessionObject): string {
+function buildKbvCheck(
+  session: CookieSessionInterfaces.CookieSessionObject
+): string {
   const payload = kbvCheckVC(
     getNameParts(session),
     getBirthDate(session),
     getPostalAddress(session),
     evidenceSuccessful()
-  )
+  );
 
-  return generateJWT(payload, session.webId)
+  return generateJWT(payload, session.webId);
 }
 
 export function buildKbvCheckArtifacts(
@@ -69,19 +71,17 @@ export function buildKbvCheckArtifacts(
   const fileUri = `${containerUri}/kbv/check`;
   const metadataUri = `${containerUri}/kbv/metadata`;
 
-  const file = new Blob([buildKbvCheck(session)], { type: "application/json" })
+  const file = new Blob([buildKbvCheck(session)], { type: "application/json" });
 
-  const metadata = buildThing(
-    createThing({ url: metadataUri })
-  )
-  .addUrl(RDF.type, GOV_UK_CREDENTIAL)
-  .addUrl(GOV_UK_hasCredential, fileUri)
-  .build();
+  const metadata = buildThing(createThing({ url: metadataUri }))
+    .addUrl(RDF.type, GOV_UK_CREDENTIAL)
+    .addUrl(GOV_UK_hasCredential, fileUri)
+    .build();
 
   return {
     file: file,
     fileUri: fileUri,
     metadata: metadata,
-    metadataUri: metadataUri
-  }
+    metadataUri: metadataUri,
+  };
 }

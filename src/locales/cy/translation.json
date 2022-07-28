@@ -115,11 +115,11 @@
       "heading": "Prove your identity to continue",
       "paragraph": "You need to prove your identity before you can [doThing].",
       "optionsLegend": "How would you like to prove your identity?",
-      "optionOne":{
+      "optionOne": {
         "text": "Prove your identity online using a GOV.UK account",
         "hint": "You’ll be asked to create a GOV.UK account if you do not have one"
       },
-      "optionTwo":{
+      "optionTwo": {
         "text": "Take your identity documents to be checked in person"
       },
       "paragraph4": "You’ll be able to save your proof of identity to your GOV.UK account.",
@@ -149,7 +149,7 @@
         "paragraph1": "We’ll ask you some security questions that only you should know the answers to. This will help us stop anyone else who might have your details from pretending to be you.",
         "paragraph2": "The questions will be about things like your mobile phone contract, bank account, and any credit cards, loans or mortgages you have.",
         "paragraph3": "We will not keep your answers.",
-        "warning":"Try to answer these questions as accurately as you can. You will not be able to change the answers if you make a mistake"
+        "warning": "Try to answer these questions as accurately as you can. You will not be able to change the answers if you make a mistake"
       },
       "questionOne": {
         "heading": "How much did you borrow when you first took out your mortgage?",
