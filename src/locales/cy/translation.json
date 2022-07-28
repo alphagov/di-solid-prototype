@@ -176,6 +176,10 @@
     "identityConfirmed": {
       "heading": "Your identity has been confirmed",
       "paragraph1": "You can now continue to [doThing]."
+    },
+    "checkInPerson": {
+      "heading": "Check your identity in person",
+      "paragraph1": "Here is how you can do an Idenitity check in person..."
     }
   },
   "account": {
@@ -426,6 +430,78 @@
         "listItem2": "you'll pay £23 for your application",
         "warning": "You could be prosecuted if you knowingly give false information in your application",
         "agree": "I agree to the <a href=\"https://www.gov.uk/government/publications/terms-and-conditions-for-dbs-online-services\" class=\"govuk-link\">terms and conditions"
+      }
+    }
+  },
+  "personalTax": {
+    "serviceName": "Personal tax account",
+    "pages": {
+      "signInOrSetUp": {
+        "title": "Personal tax account: sign in or set up",
+        "paragraph1": "Use your personal tax account to check your records and manage your details with HM Revenue and Customs (HMRC).",
+        "paragraph2": "This service is also available in <a href=\"\" class=\"govuk-link\">Welsh (Cymraeg)</a>.",
+        "insetText": "There’s a different service to <a href=\"https://www.gov.uk/log-in-file-self-assessment-tax-return\" class=\"govuk-link\">file your Self Assessment tax return or <a href=\"https://www.gov.uk/capital-gains-tax/report-and-pay-capital-gains-tax\" class=\"govuk-link\">report and pay Capital Gains Tax on UK property</a>.",
+        "paragraph3": "To use personal tax account, you’ll need to prove your identity with a GOV.UK account. If you do not have a GOV.UK account you’l be able to create one.",
+        "heading2": "What you need to know",
+        "paragraph4": "You can use your personal tax account to:",
+        "listItem1": "check your Income Tax estimate and tax code",
+        "listItem2": "fill in, send and view a personal tax return",
+        "listItem3": "claim a tax refund",
+        "listItem4": "check your income from work in the previous 5 years",
+        "listItem5": "check how much Income Tax you paid in the previous 5 years",
+        "listItem6": "check and manage your tax credits",
+        "listItem7": "check your State Pension",
+        "listItem8": "track tax forms that you’ve submitted online",
+        "listItem9": "check or update your Marriage Allowance",
+        "listItem10": "tell HMRC about a change of name or address",
+        "listItem11": "check or update benefits you get from work, for example company car details and medical insurance",
+        "listItem12": "find your National Insurance number"
+      },
+      "choose": {
+        "title": "Choose how to get your legal notices, penalty notices and tax letters",
+        "paragraph1": "You can choose to get some of your tax documents and information sent through your HMRC online account instead of by post.",
+        "paragraph2": "You will need to take action when you receive some of the documents. They include:",
+        "listItem1": "Legal notices to file tax return",
+        "listItem2": "Late filing penalty notices",
+        "listItem3": "Late payment penalty notices",
+        "paragraph3": "We may also send you other messages, including information about your personal tax code, if you have one.",
+        "heading": "How do you want to get your legal notices, penalty notices and tax letters",
+        "option1": "Through my HMRC online account",
+        "option2": "By post only",
+        "paragraph4": "For more information about how HRMC uses your data, <a class=\"govuk-link\" href=\"\">read the privacy notice</a>"
+      },
+      "home": {
+        "title": "Account home",
+        "secondaryNav": {
+          "item1": "Account home",
+          "item2": "Messages",
+          "item3": "Check progress",
+          "item4": "Profile and settings",
+          "item5": "Sign out"
+        },
+        "section1": {
+          "title": "Income",
+          "heading1": "Pay As You Earn (PAYE)",
+          "paragraph1": "Check or update the employment, pension or other income intormation used to work out your PAYE Income Tax and tax codes.",
+          "heading2": "National Insurance",
+          "paragraph2": "You have a National Insurance number to make sure your National Insurance contributions and tax are recorded against your name only.",
+          "heading3": "Self assessment",
+          "paragraph3": "You cannot use this service. You may not be enrolled using Self Assessment, or you may have enrolled with another account."
+        },
+        "section2": {
+          "title": "Benefits",
+          "heading1": "Tax credits",
+          "paragraph1": "View your next payments and the people on your claim, and make changes to your claim.",
+          "heading2": "Child benefit",
+          "paragraph2": "A tax-free payment to help parents with the cost of brining up children.",
+          "heading3": "Marriage Allowance",
+          "paragraph3": "Transfer part of your Personal Allowance to your partner so they pay less tax."
+        },
+        "section3": {
+          "title": "Pensions",
+          "heading1": "State pension",
+          "paragraph1": "View your State Pension and National Insurance contributions."
+        }
       }
     }
   }

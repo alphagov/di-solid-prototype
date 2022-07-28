@@ -45,11 +45,11 @@
     {% endif %}
     {% block beforeContent %}{% endblock %}
     <main class="govuk-main-wrapper {{ mainClasses }}" id="main-content">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-two-thirds {{ rowClasses }}">
+      <div {% if not fullWidth %}class="govuk-grid-row"{% endif %}>
+        <div {% if not fullWidth %}class="govuk-grid-column-two-thirds"{% endif %}>
           {% block content %}{% endblock %}
         </div>
-        <div class="govuk-grid-column-one-third">
+        <div {% if not fullWidth %}class="govuk-grid-column-one-third"{% endif %}>
           {% block sideContent %}{% endblock %}
         </div>
       </div>

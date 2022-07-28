@@ -19,6 +19,7 @@ import accessRouter from "./routes/access";
 import identityRouter from "./routes/identity";
 import accountRouter from "./routes/account";
 import dbsRouter from "./routes/dbs";
+import personalTaxRouter from "./routes/personalTax";
 
 const app: express.Application = express();
 app.use(logger("dev"));
@@ -43,6 +44,7 @@ app.use("/access-logs", accessRouter);
 app.use("/identity", identityRouter);
 app.use("/account", accountRouter);
 app.use("/dbs", dbsRouter);
+app.use("/personal-tax", personalTaxRouter);
 
 i18next
   .use(Backend)
