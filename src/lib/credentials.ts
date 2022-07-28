@@ -14,7 +14,7 @@ import {
 } from "../components/vocabularies/commonComponents";
 
 export const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
-export const GOV_UK_hasCredential =
+export const GOV_UK_HAS_CREDENTIAL =
   "https://vocab.account.gov.uk/hasCredential";
 
 // eslint-disable-next-line no-shadow

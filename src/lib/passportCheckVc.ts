@@ -10,8 +10,8 @@ import {
   getBirthDate,
   getNameParts,
   GOV_UK_CREDENTIAL,
-  GOV_UK_hasCredential,
-} from "../lib/credentials";
+  GOV_UK_HAS_CREDENTIAL,
+} from "./credentials";
 
 import {
   NamePart,
@@ -85,7 +85,7 @@ export function buildPassportCheckArtifacts(
 
   const metadata = buildThing(createThing({ url: metadataUri }))
     .addUrl(RDF.type, GOV_UK_CREDENTIAL)
-    .addUrl(GOV_UK_hasCredential, fileUri)
+    .addUrl(GOV_UK_HAS_CREDENTIAL, fileUri)
     .build();
 
   return {

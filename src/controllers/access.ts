@@ -16,7 +16,7 @@ import { getOrCreateDataset, getDatasetUri } from "../lib/pod";
 
 import SessionError from "../errors";
 
-const GOV_UK_AccessLogEntry = "https://vocab.account.gov.uk/AccessLogEntry";
+const GOV_UK_ACCESS_LOG_ENTRY = "https://vocab.account.gov.uk/AccessLogEntry";
 
 export async function accessGet(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
@@ -52,7 +52,7 @@ export async function accessPost(req: Request, res: Response): Promise<void> {
 
     const accessLogEntry = buildThing(createThing({ url: datasetUri }))
       .addDatetime(DCTERMS.created, new Date())
-      .addUrl(RDF.type, GOV_UK_AccessLogEntry)
+      .addUrl(RDF.type, GOV_UK_ACCESS_LOG_ENTRY)
       .build();
 
     const updatedDataset = setThing(dataset, accessLogEntry);
