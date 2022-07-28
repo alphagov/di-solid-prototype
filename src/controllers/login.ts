@@ -4,7 +4,7 @@ import { getSessionFromStorage, Session } from "@inrupt/solid-client-authn-node"
 import { getHostname, getClientId, getEssServiceURI, EssServices } from "../config";
 import { createProfileAndPod } from "../lib/pod";
 
-export async function loginGet(req: Request, res: Response): Promise<void> {
+export function loginGet(req: Request, res: Response): void {
   const session = new Session();
   if (req.session != undefined) {
     req.session.sessionId = session.info.sessionId;
@@ -13,7 +13,7 @@ export async function loginGet(req: Request, res: Response): Promise<void> {
     }
   }
   const redirectToSolidIdentityProvider = (url: string) => { res.redirect(url); };
-  await session.login({
+  session.login({
     redirectUrl: `${getHostname()}/login/callback`,
     clientId: getClientId('production'),
     oidcIssuer: getEssServiceURI(EssServices.OpenId),
