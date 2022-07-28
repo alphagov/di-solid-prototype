@@ -68,12 +68,12 @@ i18next
 
 app.use(i18nextMiddleware.handle(i18next));
 
-function configureNunjucks(app: express.Application): Environment {
+function configureNunjucks(expressApp: express.Application): Environment {
   const nunjucksEnv: nunjucks.Environment = nunjucks.configure(
     ["dist/views", "node_modules/govuk-frontend/"],
     {
       autoescape: true,
-      express: app,
+      express: expressApp,
     }
   );
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
