@@ -1,5 +1,4 @@
-import express from "express";
-import { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import { saveGet, savePost } from "../controllers/identity/save";
 
 import {
@@ -33,7 +32,7 @@ import {
   useSavedProofOfIdentityGet,
 } from "../controllers/identity/ipv";
 
-import { redirectIfNotLoggedIn } from "../lib/middleware/redirectIfNotLoggedIn";
+import redirectIfNotLoggedIn from "../lib/middleware/redirectIfNotLoggedIn";
 
 const router = express.Router();
 
@@ -97,4 +96,4 @@ router.get("/complete/return", completeReturnGet);
 /* Re-use identity page */
 router.get("/use-saved-proof-of-identity", useSavedProofOfIdentityGet);
 
-export { router as identityRouter };
+export default router;

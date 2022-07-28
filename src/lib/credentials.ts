@@ -1,15 +1,17 @@
 import { randomUUID } from "crypto";
+import type CookieSessionInterfaces from "cookie-session";
+import * as jwt from "jsonwebtoken";
+import { Thing } from "@inrupt/solid-client";
+import { Blob } from "node:buffer";
 import {
   Credential,
   IdentityCheck,
 } from "../components/vocabularies/identityCheckCredential";
 import { getClientId, getJwtSigningKey } from "../config";
-import { default as jwt } from "jsonwebtoken";
 import {
   NamePart,
   PostalAddress,
 } from "../components/vocabularies/commonComponents";
-import { Thing } from "@inrupt/solid-client";
 
 export const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
 export const GOV_UK_hasCredential =

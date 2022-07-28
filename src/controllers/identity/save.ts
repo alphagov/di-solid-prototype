@@ -5,7 +5,7 @@ import { getDatasetUri, writeCheckToPod } from "../../lib/pod";
 import { buildKbvCheckArtifacts } from "../../lib/kvbCheckVc";
 import { buildPassportCheckArtifacts } from "../../lib/passportCheckVc";
 
-import { SessionError } from "../../errors";
+import SessionError from "../../errors";
 
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).

@@ -37,4 +37,4 @@ router.get("/check-your-details", checkYourDetailsGet);
 router.get("/review-your-application", reviewYourApplicationGet);
 router.get("/disclaimer", disclaimerGet);
 
-export { router as dbsRouter };
+export default router;

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
-import { getOrCreateDataset, getDatasetUri } from "../lib/pod";
 
 import {
   buildThing,
@@ -13,8 +12,9 @@ import {
   getDatetime,
 } from "@inrupt/solid-client";
 import { RDF, DCTERMS } from "@inrupt/vocab-common-rdf";
+import { getOrCreateDataset, getDatasetUri } from "../lib/pod";
 
-import { SessionError } from "../errors";
+import SessionError from "../errors";
 
 const GOV_UK_AccessLogEntry = "https://vocab.account.gov.uk/AccessLogEntry";
 

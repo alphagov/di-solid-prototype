@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.get("/id", idGet);
 
-export { router as infoRouter };
+export default router;

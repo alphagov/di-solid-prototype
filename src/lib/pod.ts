@@ -9,8 +9,9 @@ import {
   overwriteFile,
   getSourceUrl,
 } from "@inrupt/solid-client";
+import { Blob } from "node:buffer";
 import { getEssServiceURI, EssServices } from "../config";
-import { SessionError } from "../errors";
+import SessionError from "../errors";
 import { CheckArtifacts } from "../lib/credentials";
 
 // We need to explicitly import the Node.js implementation of 'Blob' here

@@ -1,7 +1,7 @@
 import { describe } from "mocha";
-import { sinon, expect } from "./utils/test";
 import { Request, Response } from "express";
-import { indexGet } from "../controllers/indexController";
+import { sinon, expect } from "./utils/test";
+import indexGet from "../controllers/indexController";
 
 describe("indexController", () => {
   let sandbox: sinon.SinonSandbox;

@@ -1,7 +1,8 @@
 import { buildThing, createThing } from "@inrupt/solid-client";
-
+import type CookieSessionInterfaces from "cookie-session";
 import { RDF } from "@inrupt/vocab-common-rdf";
 
+import { Blob } from "node:buffer";
 import {
   CheckArtifacts,
   evidenceSuccessful,

@@ -1,27 +1,24 @@
-import express from "express";
-import { RequestHandler, ErrorRequestHandler } from "express";
+import express, { RequestHandler, ErrorRequestHandler } from "express";
 import createError from "http-errors";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import http from "http";
-import nunjucks from "nunjucks";
 import cookieSession from "cookie-session";
-
-import { getPort, getSessionKeys } from "./config";
-
-import { indexRouter } from "./routes/index";
-import { loginRouter } from "./routes/login";
-import { infoRouter } from "./routes/info";
-import { accessRouter } from "./routes/access";
-import { identityRouter } from "./routes/identity";
-import { Environment } from "nunjucks";
-import { accountRouter } from "./routes/account";
-import { dbsRouter } from "./routes/dbs";
-
 import i18next from "i18next";
 import i18nextMiddleware from "i18next-http-middleware";
 import Backend from "i18next-fs-backend";
+import nunjucks, { Environment } from "nunjucks";
+
+import { getPort, getSessionKeys } from "./config";
+
+import indexRouter from "./routes/index";
+import loginRouter from "./routes/login";
+import infoRouter from "./routes/info";
+import accessRouter from "./routes/access";
+import identityRouter from "./routes/identity";
+import accountRouter from "./routes/account";
+import dbsRouter from "./routes/dbs";
 
 const app: express.Application = express();
 app.use(logger("dev"));
