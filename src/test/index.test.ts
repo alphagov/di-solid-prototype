@@ -20,6 +20,7 @@ describe("indexController", () => {
 
   it("should respond to a GET request", () => {
     indexGet(req as Request, res as Response);
+    // eslint-disable-next-line no-unused-expressions
     expect(res.render).to.have.called;
   });
 });
