@@ -9,10 +9,6 @@ import {
   overwriteFile,
   getSourceUrl,
 } from "@inrupt/solid-client";
-import { Blob } from "node:buffer";
-import { getEssServiceURI, EssServices } from "../config";
-import SessionError from "../errors";
-import { CheckArtifacts } from "./credentials";
 
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).
@@ -31,7 +27,10 @@ import { CheckArtifacts } from "./credentials";
 // 'Buffer's, so always converting any 'Blob' instances we have into 'Buffer's
 // allows those functions to work safely with both Node.js and browser
 // 'Blob's.
-// eslint-disable-next-line no-shadow
+import { Blob } from "node:buffer";
+import { getEssServiceURI, EssServices } from "../config";
+import SessionError from "../errors";
+import { CheckArtifacts } from "./credentials";
 
 export async function createProfileAndPod(session: Session) {
   if (session.info.webId) {

@@ -23,8 +23,6 @@ import {
   IdentityCheck,
 } from "../components/vocabularies/identityCheckCredential";
 
-// eslint-disable-next-line no-shadow
-
 export function passportCheckVC(
   nameParts: NamePart[],
   birthDate: string,
