@@ -77,7 +77,7 @@ function configureNunjucks(expressApp: express.Application): Environment {
     }
   );
   // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  nunjucksEnv.addFilter("translate", function (key: string, options?: any) {
+  nunjucksEnv.addFilter("translate", (key: string, options?: any) => {
     const translate = i18next.getFixedT("en");
     return translate(key, options);
   });
