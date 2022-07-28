@@ -7,7 +7,7 @@
   <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
   <p class="govuk-body"> {{ "dbs.pages.proveYourIdentity.paragraph1" | translate }}</p>
   <p class="govuk-body"> {{ "dbs.pages.proveYourIdentity.paragraph2" | translate }}</p>
-  <form action="/dbs/prove-your-identity" method="post">
+  <form action="/identity/prove-your-identity" method="post">
     {{ govukCheckboxes({
       idPrefix: "dbs-accept-privacy",
       name: "dbs-accept-privacy",

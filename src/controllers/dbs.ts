@@ -5,6 +5,12 @@ export async function dbsContentPageGet(
   req: Request,
   res: Response
 ): Promise<void> {
+  if (req.session) {
+    req.session.journey = {
+      nextPage: `${getHostname()}/dbs/apply-for-a-basic-dbs-check`,
+      title: "apply for a basic DBS check",
+    };
+  }
   res.render("dbs/request-a-basic-dbs-check");
 }
 

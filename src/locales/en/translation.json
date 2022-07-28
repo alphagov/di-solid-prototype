@@ -176,6 +176,10 @@
     "checkInPerson": {
       "heading": "Check your identity in person",
       "paragraph1": "Here is how you can do an Idenitity check in person..."
+    },
+    "identityConfirmed": {
+      "heading": "Your identity has been confirmed",
+      "paragraph1": "You can now continue to [doThing]."
     }
   },
   "account": {
