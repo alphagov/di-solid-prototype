@@ -10,21 +10,21 @@ export function getDeployedDomain() {
   return "prototype.solid.integration.account.gov.uk";
 }
 
+export function getProtocol() {
+  return process.env.NODE_ENV === "production" ? "https" : "http";
+}
+
 export function getHostname() {
   const hostname =
-    process.env.NODE_ENV == "production"
+    process.env.NODE_ENV === "production"
       ? getDeployedDomain()
       : `localhost:${getPort()}`;
   return `${getProtocol()}://${hostname}`;
 }
 
-export function getProtocol() {
-  return process.env.NODE_ENV == "production" ? "https" : "http";
-}
-
 export function getClientId(environment?: string) {
   let hostname: string;
-  if (environment && environment == "production") {
+  if (environment && environment === "production") {
     hostname = `https://${getDeployedDomain()}`;
   } else {
     hostname = getHostname();

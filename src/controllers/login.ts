@@ -37,7 +37,7 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
 
   if (session?.info.isLoggedIn && session.info.webId) {
     const response = await session.fetch(session.info.webId);
-    if (response.status == 404) {
+    if (response.status === 404) {
       await createProfileAndPod(session);
     }
 
