@@ -1,8 +1,8 @@
 import express from "express";
-import { idGet } from "../controllers/info"
+import { idGet } from "../controllers/info";
 
 const router = express.Router();
 
-router.get('/id', idGet);
+router.get("/id", idGet);
 
-export {router as infoRouter};
+export default router;

@@ -36,26 +36,6 @@ export type IdentityCheckCredentialType =
   | "IdentityCheckCredential"
   | "VerifiableCredential";
 
-export interface Credential {
-  "@context"?: string[];
-  credentialSubject?: Person;
-  evidence?: IdentityCheck[];
-  type?: IdentityCheckCredentialType[];
-  [k: string]: unknown;
-}
-
-export interface IdentityCheck {
-  activityHistoryScore?: number;
-  checkDetails?: CheckDetails[];
-  ci?: string[];
-  failedCheckDetails?: CheckDetails[];
-  identityFraudScore?: number;
-  strengthScore?: number;
-  txn?: string;
-  type?: "IdentityCheck";
-  validityScore?: number;
-  verificationScore?: number;
-}
 export interface CheckDetails {
   /**
    * The date of the earliest activity found for the user.
@@ -84,4 +64,25 @@ export interface CheckDetails {
    * A unique transaction identifier for this part of the check, if any.
    */
   txn?: string;
+}
+
+export interface IdentityCheck {
+  activityHistoryScore?: number;
+  checkDetails?: CheckDetails[];
+  ci?: string[];
+  failedCheckDetails?: CheckDetails[];
+  identityFraudScore?: number;
+  strengthScore?: number;
+  txn?: string;
+  type?: "IdentityCheck";
+  validityScore?: number;
+  verificationScore?: number;
+}
+
+export interface Credential {
+  "@context"?: string[];
+  credentialSubject?: Person;
+  evidence?: IdentityCheck[];
+  type?: IdentityCheckCredentialType[];
+  [k: string]: unknown;
 }

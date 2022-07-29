@@ -1,9 +1,9 @@
 import express from "express";
-import { callbackGet, loginGet } from "../controllers/login"
+import { callbackGet, loginGet } from "../controllers/login";
 
 const router = express.Router();
 
-router.get('/', loginGet);
-router.get('/callback', callbackGet);
+router.get("/", loginGet);
+router.get("/callback", callbackGet);
 
-export {router as loginRouter};
+export default router;

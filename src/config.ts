@@ -7,26 +7,29 @@ export function getSessionKeys() {
 }
 
 export function getDeployedDomain() {
-  return 'prototype.solid.integration.account.gov.uk'
-}
-
-export function getHostname() {
-  const hostname = process.env.NODE_ENV == 'production' ? getDeployedDomain() : `localhost:${getPort()}`
-  return `${getProtocol()}://${hostname}`;
+  return "prototype.solid.integration.account.gov.uk";
 }
 
 export function getProtocol() {
-  return process.env.NODE_ENV == 'production' ? 'https' : 'http';
+  return process.env.NODE_ENV === "production" ? "https" : "http";
+}
+
+export function getHostname() {
+  const hostname =
+    process.env.NODE_ENV === "production"
+      ? getDeployedDomain()
+      : `localhost:${getPort()}`;
+  return `${getProtocol()}://${hostname}`;
 }
 
 export function getClientId(environment?: string) {
   let hostname: string;
-  if (environment && environment == 'production') {
-    hostname = `https://${getDeployedDomain()}`
+  if (environment && environment === "production") {
+    hostname = `https://${getDeployedDomain()}`;
   } else {
     hostname = getHostname();
   }
-  return `${hostname}/info/id`
+  return `${hostname}/info/id`;
 }
 
 export function getJwtSigningKey() {
@@ -35,15 +38,15 @@ export function getJwtSigningKey() {
 }
 
 export enum EssServices {
-  Authorization = 'authorization',
-  Provision = 'provision',
-  Storage = 'storage',
-  OpenId = 'openid',
-  Id = 'id',
-  Uma = 'uma',
-  Vc = 'vc'
+  Authorization = "authorization",
+  Provision = "provision",
+  Storage = "storage",
+  OpenId = "openid",
+  Id = "id",
+  Uma = "uma",
+  Vc = "vc",
 }
 
 export function getEssServiceURI(service: EssServices) {
-  return `https://${service}.ess.solid.integration.account.gov.uk`
+  return `https://${service}.ess.solid.integration.account.gov.uk`;
 }
