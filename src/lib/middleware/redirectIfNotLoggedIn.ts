@@ -8,9 +8,6 @@ async function redirectIfNotLoggedIn(
   res: Response,
   next: NextFunction
 ) {
-  if (req.session) {
-    res.redirect("/login");
-  }
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (!session?.info.isLoggedIn) {
