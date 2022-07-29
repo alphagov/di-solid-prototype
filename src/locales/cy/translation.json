@@ -292,8 +292,8 @@
         "paragraph16": "You can also choose to apply through other companies. <abbr title=\"Disclosure and Barring Service\">DBS</abbr> has a <a class=\"govuk-link\"  href=\"https://www.gov.uk/guidance/responsible-organisations\">list of companies</a> you can apply through.",
         "heading7": "Requesting your police record",
         "paragraph17": "You’ll need to <a class=\"govuk-link\"  href=\"https://www.gov.uk/copy-of-police-records\">request a police record</a> instead if:",
-        "listItem1": "you’re applying for certain visas",
-        "listItem2": "you want to see your police file without receiving a certificate - this will show up any warnings or cautions that are not on your official criminal record",
+        "listItem5": "you’re applying for certain visas",
+        "listItem6": "you want to see your police file without receiving a certificate - this will show up any warnings or cautions that are not on your official criminal record",
         "heading8": "Transgender applications",
         "paragraph18": "Contact the DBS transgender applications team if you’re a transgender applicant and you do not want to reveal details of your previous identity to a potential employer.",
         "paragraph19": "DBS transgender applications team.",
@@ -327,7 +327,6 @@
         "title": "What is your sex?",
         "hint": "We need to know your sex so we can check police records",
         "f": "Female",
-        "m": "Male",
         "m": "Male",
         "additionalDetails": {
           "summaryText": "What personal details will appear on my certificate?",
@@ -415,7 +414,7 @@
           "key3": "Sex",
           "key4": "Place of birth",
           "key5": "Other names",
-          "key5": "Address history"
+          "key6": "Address history"
         },
         "summaryList2": {
           "key1": "UK National Insurance number",
