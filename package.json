@@ -8,7 +8,7 @@
     "lint": "eslint --ext .js,.ts . --max-warnings=0",
     "format": "prettier --ignore-path .prettierignore --write \"**/*.+(js|ts|json)\"",
     "clean": "rm -rf dist",
-    "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/public/stylesheets/application.scss dist/public/stylesheets/application.css --style compressed",
+    "build-sass": "rm -rf dist/public/stylesheets/application.css && sass --no-source-map src/public/stylesheets/application.scss dist/public/stylesheets/application.css --style compressed --quiet",
     "copy-assets": "mkdir -p dist/public/javascripts/govuk-frontend && cp node_modules/govuk-frontend/govuk/all.js dist/public/javascripts/govuk-frontend && mkdir -p dist/locales && cp -R src/locales/* dist/locales",
     "copy-views": "mkdir -p dist/views && cp -R src/views/* dist/views",
     "build": "npm run clean && npm run build-sass && npm run copy-assets && npm run copy-views && npm ci && tsc",
