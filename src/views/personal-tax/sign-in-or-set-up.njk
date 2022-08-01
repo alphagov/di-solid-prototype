@@ -1,0 +1,60 @@
+{% extends "layouts/base.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageTitleName = "personalTax.pages.signInOrSetUp.title" | translate %}
+{% set serviceName = "GOV.UK" %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">
+    {{ pageTitleName }}
+  </h1>
+  <p class="govuk-body">{{ "personalTax.pages.signInOrSetUp.paragraph1" | translate }}</p>
+  <p class="govuk-body">{{ "personalTax.pages.signInOrSetUp.paragraph2" | translate | safe }}</p>
+  <div class="govuk-inset-text">
+    <p class="govuk-body">{{ "personalTax.pages.signInOrSetUp.insetText" | translate | safe }}</p>
+  </div>
+  <p class="govuk-body">{{ "personalTax.pages.signInOrSetUp.paragraph3" | translate | safe }}</p>
+  <form class="" action="/personal-tax/sign-in-or-set-up" method="post">
+    {{ govukButton({
+      text: "Start now",
+      type: "submit",
+      isStartButton: true
+    }) }}
+  </form>
+  <h2 class="govuk-heading-m">{{ "personalTax.pages.signInOrSetUp.heading2" | translate }}</h2>
+  <p class="govuk-body">{{ "personalTax.pages.signInOrSetUp.paragraph4" | translate }}</p>
+  <ul class="govuk-list govuk-list--bullet">
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem1" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem2" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem3" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem4" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem5" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem6" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem7" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem8" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem9" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem10" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem11" | translate }}</li>
+    <li>{{ "personalTax.pages.signInOrSetUp.listItem12" | translate }}</li>
+  </ul>
+
+  <aside class="app-related-items govuk-!-margin-top-8" role="complementary" style="border-top: 2px solid	#1d70b8" lang="en">
+      <h3 class="govuk-heading-s govuk-!-padding-top-4" id="subsection-title">
+        Explore the topic
+      </h3>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <a href="#" class="govuk-!-font-weight-bold govuk-link">
+              Dealing with HMRC
+            </a>
+          </li>
+          <li>
+            <a href="#" class="govuk-!-font-weight-bold govuk-link">
+              Income Tax
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+{% endblock %}

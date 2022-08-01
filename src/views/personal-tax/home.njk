@@ -1,0 +1,94 @@
+{% extends "personal-tax/layout.njk" %}
+{% set pageTitleName = "personalTax.pages.home.title" | translate %}
+{% set fullWidth = true %}
+{% set name = "John Doe" %}
+
+{% block beforeContent %}
+<nav id="secondary-nav" class="hmrc-account-menu" aria-label="Account" data-module="govuk-header">
+  <a href="#" class="hmrc-account-menu__link hmrc-account-menu__link--home hmrc-account-menu__link--active">
+    <span class="hmrc-account-icon hmrc-account-icon--home">
+      {{ "personalTax.pages.home.secondaryNav.item1" | translate }}
+    </span>
+  </a>
+  <button type="button" class="govuk-header__menu-button govuk-js-header-toggle govuk-header__menu-button--open" aria-controls="account-menu" aria-label="Show or hide menu" aria-expanded="false">Menu</button>
+  <ul class="hmrc-account-menu__main" id="account-menu">
+    <li>
+      <a href="#" class="hmrc-account-menu__link">{{ "personalTax.pages.home.secondaryNav.item2" | translate }}</a>
+    </li>
+    <li>
+      <a href="#" class="hmrc-account-menu__link">{{ "personalTax.pages.home.secondaryNav.item3" | translate }}</a>
+    </li>
+    <li>
+      <a href="#" class="hmrc-account-menu__link">{{ "personalTax.pages.home.secondaryNav.item4" | translate }}</a>
+    </li>
+    <li>
+      <a href="#" class="hmrc-account-menu__link">{{ "personalTax.pages.home.secondaryNav.item5" | translate }}</a>
+    </li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+  <div class="govuk-!-margin-bottom-8">
+    <span class="govuk-caption-xl">
+      {{ pageTitleName }}
+    </span>
+    <h1 class="gem-c-title__text govuk-heading-xl">
+      {{ name }}
+    </h1>
+  </div>
+  <h2 class="govuk-heading-m">{{ "personalTax.pages.home.section1.title" | translate }}</h2>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <div class="pta-card-container">
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section1.heading1" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section1.paragraph1" | translate }}</p>
+      </div>
+    </div>
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section1.heading2" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section1.paragraph2" | translate }}</p>
+      </div>
+    </div>
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section1.heading3" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section1.paragraph3" | translate }}</p>
+      </div>
+    </div>
+  </div>
+  <h2 class="govuk-heading-m">{{ "personalTax.pages.home.section2.title" | translate }}</h2>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <div class="pta-card-container">
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section2.heading1" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section2.paragraph1" | translate }}</p>
+      </div>
+    </div>
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section2.heading2" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section2.paragraph2" | translate }}</p>
+      </div>
+    </div>
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section2.heading3" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section2.paragraph3" | translate }}</p>
+      </div>
+    </div>
+  </div>
+  <h2 class="govuk-heading-m">{{ "personalTax.pages.home.section3.title" | translate }}</h2>
+  <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+  <div class="pta-card-container">
+    <div class="pta-card">
+      <div class="pta-card__inner">
+        <h3 class="govuk-heading-s"><a href="#" class="govuk-link">{{ "personalTax.pages.home.section3.heading1" | translate }}</a></h3>
+        <p class="govuk-body">{{ "personalTax.pages.home.section3.paragraph1" | translate }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

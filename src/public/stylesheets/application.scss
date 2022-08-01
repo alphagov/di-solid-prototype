@@ -31,3 +31,108 @@
     }
   }
 }
+
+.pta-card-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: govuk-spacing(6);
+  @include govuk-media-query($until: tablet) {
+    display: block;
+  }
+}
+
+.pta-card {
+  margin-right: 20px;
+  flex: 33%;
+  max-width: 300px;
+  border: 2px dotted govuk-colour("light-grey");
+  @include govuk-media-query($until: tablet) {
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: govuk-spacing(3);
+  }
+}
+
+.pta-card__inner {
+  background-color: govuk-colour("light-grey");
+  padding: 10px;
+}
+
+.hmrc-account-menu {
+  font-family: "GDS Transport", arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 400;
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 1.1428571429;
+  position: relative;
+  z-index: 0;
+  margin-bottom: 0;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  border-bottom: 1px solid #b1b4b6;
+  background-color: #ffffff;
+}
+
+.hmrc-account-menu:after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.hmrc-account-menu__link {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 12px 16px 8px;
+  border-bottom: 4px solid transparent;
+  color: #4a4a4a;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.25;
+  text-decoration: none;
+  text-transform: none;
+  &:hover,
+  &:focus {
+    outline: none;
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+    color: #003078;
+    border-bottom-color: #003078;
+  }
+
+  &.hmrc-account-menu__link--active {
+    outline: none;
+    border-bottom-width: 4px;
+    border-bottom-style: solid;
+    border-bottom-color: govuk-colour("blue");
+  }
+}
+.hmrc-account-menu__main {
+  z-index: 995;
+  margin: 0;
+  float: right;
+}
+
+.hmrc-account-menu__main li {
+  display: inline-block;
+  margin-bottom: 0;
+}
+
+.hmrc-account-menu__link--home {
+  padding: 12px 18px 8px 0;
+  float: left;
+}
+
+.hmrc-account-icon--home {
+  float: left;
+  padding-left: 22px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyBkYXRhLW5hbWU9IkxheWVyIDEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWlkIj48dGl0bGU+aWNvbi1ob21lPC90aXRsZT48cGF0aCBkPSJNMTIgMkwxIDEyLjVoMy4xOXY5LjM4aDUuNDR2LTcuMTNoNC41djcuMTNoNS40NFYxMi41SDIzTDEyIDJ6Ii8+PC9zdmc+);
+  background-position: left -1px;
+  background-size: 19px;
+}
+
+.hmrc-account-icon {
+    background-repeat: no-repeat;
+}
