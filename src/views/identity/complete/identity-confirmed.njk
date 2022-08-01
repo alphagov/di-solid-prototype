@@ -1,16 +1,13 @@
 {% extends "layouts/base.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% set pageTitleName = 'identity.useSavedIdentity.heading' | translate %}
 {% set serviceName = 'GOV.UK account' %}
 
 {% block content %}
-  <h1 class="govuk-heading-xl">{{ 'identity.useSavedIdentity.heading' | translate }}</h1>
+  <h1 class="govuk-heading-xl">{{ 'identity.identityConfirmed.heading' | translate }}</h1>
 
   <p class="govuk-body">{{ 'identity.useSavedIdentity.paragraph1' | translate | replace("[doThing]", doThing) }}</p>
-
-  <p class="govuk-body">{{ 'identity.useSavedIdentity.paragraph2' | translate }}</p>
 
   <form action="{{doThingAction}}" method="get">
     {{ govukButton({

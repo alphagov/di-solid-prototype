@@ -12,7 +12,10 @@
   "rules": {
     "prettier/prettier": ["error"],
     "import/extensions": [1, "never"],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/*.test.ts", "**/test.ts"]}],
+    "import/no-extraneous-dependencies": [
+      "error",
+      { "devDependencies": ["**/*.test.ts", "**/test.ts"] }
+    ],
     "no-undef": ["error"],
     "no-shadow": "off",
     "no-unused-vars": "off",

@@ -158,5 +158,10 @@ export function checkInPersonGet(req: Request, res: Response) {
 }
 
 export function useSavedProofOfIdentityGet(req: Request, res: Response) {
-  res.render("identity/use-saved-proof-of-identity");
+  if (req.session) {
+    res.render("identity/use-saved-proof-of-identity", {
+      doThing: req.session.journey.title,
+      doThingAction: req.session.journey.nextPage,
+    });
+  }
 }

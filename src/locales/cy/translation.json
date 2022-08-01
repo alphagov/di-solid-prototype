@@ -172,6 +172,10 @@
       "heading": "Use your saved proof of identity to continue",
       "paragraph1": "You need to prove your identity before you [doThing].",
       "paragraph2": "Your GOV.UK account will check your saved proof of identity to confirm it’s really you."
+    },
+    "identityConfirmed": {
+      "heading": "Your identity has been confirmed",
+      "paragraph1": "You can now continue to [doThing]."
     }
   },
   "account": {
