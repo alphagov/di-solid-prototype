@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 export function completeSavedGet(req: Request, res: Response) {
-  res.render("identity/complete/saved");
   if (req.session) {
     res.render("identity/complete/saved", {
       doThing: req.session.journey.title,
