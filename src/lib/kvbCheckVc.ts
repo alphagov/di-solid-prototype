@@ -14,6 +14,7 @@ import {
   GOV_UK_CREDENTIAL,
   GOV_UK_HAS_CREDENTIAL,
   GOV_UK_VC_DESCRIPTION,
+  GOV_UK_VC_CREATED_AT,
 } from "./credentials";
 
 import {
@@ -80,6 +81,7 @@ export function buildKbvCheckArtifacts(
       GOV_UK_VC_DESCRIPTION,
       "Knowledge Based Verification (KBV) Identity Check"
     )
+    .addDatetime(GOV_UK_VC_CREATED_AT, new Date())
     .build();
 
   return {

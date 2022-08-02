@@ -16,9 +16,10 @@ import {
 export const GOV_UK_CREDENTIAL = "https://vocab.account.gov.uk/GovUKCredential";
 export const GOV_UK_HAS_CREDENTIAL =
   "https://vocab.account.gov.uk/hasCredential";
-
 export const GOV_UK_VC_DESCRIPTION =
   "https://vocab.account.gov.uk/VCDescription";
+export const GOV_UK_VC_CREATED_AT = "https://vocab.account.gov.uk/vcCreatedAt";
+
 export function evidenceSuccessful(): IdentityCheck[] {
   return [
     {
