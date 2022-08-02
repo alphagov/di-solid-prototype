@@ -18,20 +18,20 @@
       rows: [
         [
           {
-            text: "Passport Based Identity Check",
+            text: passportMetadata.description,
             classes: "govuk-!-width-one-half"
           },
           {
-            text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", "01 January 2022")
+            text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", passportMetadata.createdAt )
           }
         ],
         [
           {
-            text: "Knowledge Based Verification (KBV) Identity Check",
+            text: kvbMetadata.description,
             classes: "govuk-!-width-one-half"
           },
           {
-            text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", "02 January 2022")
+            text: 'account.pages.yourProofOfId.savedOn' | translate | replace("[date]", kvbMetadata.createdAt )
           }
         ]
       ]

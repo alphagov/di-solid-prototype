@@ -1,7 +1,28 @@
 import { Request, Response } from "express";
-import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import {
+  getSessionFromStorage,
+  Session,
+} from "@inrupt/solid-client-authn-node";
 import { deleteFile } from "@inrupt/solid-client";
-import { hasSavedIdentityChecks, getDatasetUri } from "../lib/pod";
+import {
+  hasSavedIdentityChecks,
+  getDatasetUri,
+  getCredentialMetadataFromPod,
+} from "../lib/pod";
+
+async function kvbRDFUri(session: Session): Promise<string> {
+  return getDatasetUri(
+    session,
+    "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
+  );
+}
+
+async function passportRDFUri(session: Session): Promise<string> {
+  return getDatasetUri(
+    session,
+    "private/govuk/identity/poc/credentials/vcs/passport/metadata"
+  );
+}
 
 export async function accountSettingsGet(
   req: Request,
@@ -25,9 +46,23 @@ export async function yourProofOfIdGet(
   const session = await getSessionFromStorage(req.session?.sessionId);
 
   if (session) {
-    res.render("account/your-proof-of-identity", {
-      hasSavedIdentityChecks: await hasSavedIdentityChecks(session),
-    });
+    const hasVcs = await hasSavedIdentityChecks(session);
+    if (hasVcs) {
+      const kvbMetadata = await getCredentialMetadataFromPod(
+        session,
+        await kvbRDFUri(session)
+      );
+      const passportMetadata = await getCredentialMetadataFromPod(
+        session,
+        await passportRDFUri(session)
+      );
+
+      res.render("account/your-proof-of-identity", {
+        hasSavedIdentityChecks: hasVcs,
+        kvbMetadata,
+        passportMetadata,
+      });
+    }
   }
 }
 
@@ -41,18 +76,12 @@ export async function deleteYourProofOfIdPost(
 ): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session) {
-    const kvbRDF = await getDatasetUri(
-      session,
-      "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
-    );
+    const kvbRDF = await kvbRDFUri(session);
     const kvbBlob = await getDatasetUri(
       session,
       "private/govuk/identity/poc/credentials/vcs/kbv/check"
     );
-    const passportRDF = await getDatasetUri(
-      session,
-      "private/govuk/identity/poc/credentials/vcs/passport/metadata"
-    );
+    const passportRDF = await passportRDFUri(session);
     const passportBlob = await getDatasetUri(
       session,
       "private/govuk/identity/poc/credentials/vcs/passport/check"

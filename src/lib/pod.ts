@@ -8,6 +8,9 @@ import {
   saveSolidDatasetAt,
   overwriteFile,
   getSourceUrl,
+  getThing,
+  getDatetime,
+  getStringWithLocale,
 } from "@inrupt/solid-client";
 
 // We need to explicitly import the Node.js implementation of 'Blob' here
@@ -151,4 +154,41 @@ export async function hasSavedIdentityChecks(
     return false;
   }
   return true;
+}
+
+interface CredentialMetadata {
+  description: string | null;
+  createdAt: Date | null;
+}
+
+export async function getCredentialMetadataFromPod(
+  session: Session,
+  credentialUri: string
+): Promise<CredentialMetadata> {
+  const credentialDataset = await getSolidDataset(credentialUri, {
+    fetch: session.fetch,
+  });
+
+  const credentialThing = getThing(credentialDataset, credentialUri);
+
+  if (credentialThing) {
+    const description = await getStringWithLocale(
+      credentialThing,
+      "https://vocab.account.gov.uk/VCDescription",
+      "en"
+    );
+    const createdAt = await getDatetime(
+      credentialThing,
+      "https://vocab.account.gov.uk/vcCreatedAt"
+    );
+
+    return {
+      description,
+      createdAt,
+    };
+  }
+  return {
+    description: null,
+    createdAt: null,
+  };
 }
