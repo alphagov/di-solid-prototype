@@ -10,17 +10,11 @@ export async function accountSettingsGet(
   res.render("account/settings");
 }
 
-export async function accountActivityGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function accountActivityGet(req: Request, res: Response): void {
   res.render("account/activity");
 }
 
-export async function accountHomeGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function accountHomeGet(req: Request, res: Response): void {
   res.render("account/home");
 }
 
@@ -37,10 +31,7 @@ export async function yourProofOfIdGet(
   }
 }
 
-export async function deleteYourProofOfIdGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function deleteYourProofOfIdGet(req: Request, res: Response): void {
   res.render("account/delete-proof-of-identity");
 }
 
