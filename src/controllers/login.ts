@@ -50,3 +50,10 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     }
   }
 }
+
+export function clearAppSessionGet(req: Request, res: Response): void {
+  if (req.session) {
+    req.session = null;
+  }
+  res.redirect("/");
+}

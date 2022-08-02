@@ -109,6 +109,9 @@ export function checkYourDetailsGet(req: Request, res: Response) {
 
 /* Security Question Flow */
 export function securityQuestionsIntroGet(req: Request, res: Response) {
+  if (req.session && req.session.kbv) {
+    delete req.session.kvb;
+  }
   res.render("identity/security-questions/intro");
 }
 
