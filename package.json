@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@inrupt/solid-client": "^1.23.1",
-    "@inrupt/solid-client-authn-node": "^1.12.1",
+    "@inrupt/solid-client-authn-node": "^1.12.2",
     "@inrupt/vocab-common-rdf": "^1.0.5",
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.0.0",
