@@ -31,7 +31,7 @@ import {
 // allows those functions to work safely with both Node.js and browser
 // 'Blob's.
 import { Blob } from "node:buffer";
-import { getEssServiceURI, EssServices } from "../config";
+import { getEssServiceURI, EssServices, getCheckStoragePath } from "../config";
 import SessionError from "../errors";
 import { CheckArtifacts } from "./credentials";
 
@@ -137,16 +137,13 @@ export async function hasSavedIdentityChecks(
 ): Promise<boolean> {
   try {
     await getSolidDataset(
-      await getDatasetUri(
-        session,
-        "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
-      ),
+      await getDatasetUri(session, `${getCheckStoragePath()}/kbv/metadata`),
       { fetch: session.fetch }
     );
     await getSolidDataset(
       await getDatasetUri(
         session,
-        "private/govuk/identity/poc/credentials/vcs/passport/metadata"
+        `${getCheckStoragePath()}/passport/metadata`
       ),
       { fetch: session.fetch }
     );
