@@ -11,6 +11,7 @@ import {
   getNameParts,
   GOV_UK_CREDENTIAL,
   GOV_UK_HAS_CREDENTIAL,
+  GOV_UK_VC_DESCRIPTION,
 } from "./credentials";
 
 import {
@@ -83,6 +84,7 @@ export function buildPassportCheckArtifacts(
   const metadata = buildThing(createThing({ url: metadataUri }))
     .addUrl(RDF.type, GOV_UK_CREDENTIAL)
     .addUrl(GOV_UK_HAS_CREDENTIAL, fileUri)
+    .addStringEnglish(GOV_UK_VC_DESCRIPTION, "Passport Based Identity Check")
     .build();
 
   return {
