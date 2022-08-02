@@ -1,10 +1,7 @@
 import { Request, Response } from "express";
 import { getHostname } from "../config";
 
-export async function dbsContentPageGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function dbsContentPageGet(req: Request, res: Response): void {
   if (req.session) {
     req.session.journey = {
       nextPage: `${getHostname()}/dbs/apply-for-a-basic-dbs-check`,
@@ -14,10 +11,7 @@ export async function dbsContentPageGet(
   res.render("dbs/request-a-basic-dbs-check");
 }
 
-export async function proveYourIdentityGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function proveYourIdentityGet(req: Request, res: Response): void {
   res.render("dbs/prove-your-identity");
 }
 
@@ -25,87 +19,129 @@ export function proveYourIdentityPost(req: Request, res: Response): void {
   res.redirect(`${getHostname()}/identity/prove-identity-logged-out`);
 }
 
-export async function applyGet(req: Request, res: Response): Promise<void> {
+export function applyGet(req: Request, res: Response): void {
   res.render("dbs/apply-for-a-basic-dbs-check");
 }
 
-export async function otherNamesGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function otherNamesGet(req: Request, res: Response): void {
   res.render("dbs/other-names");
 }
 
-export async function whatIsYourSexGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function whatIsYourSexGet(req: Request, res: Response): void {
   res.render("dbs/what-is-your-sex");
 }
 
-export async function whereWereYouBornGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function whatIsYourSexPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs = {};
+    req.session.dbs.sex = req.body;
+  }
+  res.redirect("/dbs/where-were-you-born");
+}
+
+export function whereWereYouBornGet(req: Request, res: Response): void {
   res.render("dbs/where-were-you-born");
 }
 
-export async function ninoGet(req: Request, res: Response): Promise<void> {
+export function whereWereYouBornPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.whereBorn = req.body;
+  }
+  res.redirect("/dbs/nino");
+}
+
+export function ninoGet(req: Request, res: Response): void {
   res.render("dbs/nino");
 }
 
-export async function drivingLicenceGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function ninoPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.nino = req.body;
+  }
+  res.redirect("/dbs/driving-licence");
+}
+
+export function drivingLicenceGet(req: Request, res: Response): void {
   res.render("dbs/driving-licence");
 }
 
-export async function certificateAddressWhereGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function drivingLicencePost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.drivingLicence = req.body;
+  }
+  res.redirect("/dbs/certificate-address-where");
+}
+
+export function certificateAddressWhereGet(req: Request, res: Response): void {
   res.render("dbs/certificate-address-where");
 }
 
-export async function emailAddressGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function certificateAddressWherePost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.certificateAddress = req.body;
+  }
+  res.redirect("/dbs/email-address");
+}
+
+export function emailAddressGet(req: Request, res: Response): void {
   res.render("dbs/email-address");
 }
 
-export async function mobileNumberGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function emailAddressPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.email = req.body;
+  }
+  res.redirect("/dbs/mobile-number");
+}
+
+export function mobileNumberGet(req: Request, res: Response): void {
   res.render("dbs/mobile-number");
 }
 
-export async function whoIsPayingGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function mobileNumberPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.mobile = req.body;
+  }
+  res.redirect("/dbs/who-paying");
+}
+
+export function whoIsPayingGet(req: Request, res: Response): void {
   res.render("dbs/who-paying");
 }
 
-export async function checkYourDetailsGet(
-  req: Request,
-  res: Response
-): Promise<void> {
-  res.render("dbs/check-your-details");
+export function whoIsPayingPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.dbs.paying = req.body;
+  }
+  res.redirect("/dbs/check-your-details");
 }
 
-export async function reviewYourApplicationGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function checkYourDetailsGet(req: Request, res: Response): void {
+  if (req.session) {
+    res.render("dbs/check-your-details", {
+      mobileNumber: req.session.dbs.mobile.number,
+      emailAddress: req.session.dbs.email.email,
+      whoPaying: req.session.dbs.paying.mobile,
+    });
+  }
+}
+
+export function checkYourDetailsPost(req: Request, res: Response): void {
+  res.redirect("/dbs/review-your-application");
+}
+
+export function reviewYourApplicationGet(req: Request, res: Response): void {
   res.render("dbs/review-your-application");
 }
 
-export async function disclaimerGet(
-  req: Request,
-  res: Response
-): Promise<void> {
+export function reviewYourApplicationPost(req: Request, res: Response): void {
+  res.redirect("/dbs/disclaimer");
+}
+
+export function disclaimerGet(req: Request, res: Response): void {
+  res.render("dbs/disclaimer");
+}
+
+export function disclaimerPost(req: Request, res: Response): void {
   res.render("dbs/disclaimer");
 }
