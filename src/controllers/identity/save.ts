@@ -36,7 +36,7 @@ export async function savePost(req: Request, res: Response): Promise<void> {
     req.session.webId = session.info.webId;
     const containerUri = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials-pat/vcs"
+      "private/govuk/identity/poc/credentials/vcs"
     );
 
     const passportArtifacts = buildPassportCheckArtifacts(
