@@ -144,9 +144,9 @@ export function securityQuestionPost(req: Request, res: Response) {
     };
     if (!req.session.kvb["mortgage-amount"]) {
       res.redirect("/identity/security-questions/question-1");
-    } else if (!req.session.kvb["mobile-contract-value"]) {
-      res.redirect("/identity/security-questions/question-2");
     } else if (!req.session.kvb["mobile-contract-start"]) {
+      res.redirect("/identity/security-questions/question-2");
+    } else if (!req.session.kvb["mobile-contract-value"]) {
       res.redirect("/identity/security-questions/question-3");
     } else if (!req.session.kvb.loan) {
       res.redirect("/identity/security-questions/question-4");
