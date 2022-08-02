@@ -41,24 +41,46 @@ export async function deleteYourProofOfIdPost(
 ): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
   if (session) {
-    const kvbUri = await getDatasetUri(
+    const kvbRDF = await getDatasetUri(
       session,
       "private/govuk/identity/poc/credentials-pat/vcs/kbv/metadata"
     );
-    const passportUri = await getDatasetUri(
+    const kvbBlob = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/credentials-pat/vcs/kbv/check"
+    );
+    const passportRDF = await getDatasetUri(
       session,
       "private/govuk/identity/poc/credentials-pat/vcs/passport/metadata"
     );
+    const passportBlob = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/credentials-pat/vcs/passport/check"
+    );
     try {
-      await deleteFile(kvbUri, { fetch: session.fetch });
-      console.log(`Deleted:: ${kvbUri}`);
+      await deleteFile(kvbRDF, { fetch: session.fetch });
+      console.log(`Deleted:: ${kvbRDF}`);
     } catch (err) {
       console.error(err);
     }
 
     try {
-      await deleteFile(passportUri, { fetch: session.fetch });
-      console.log(`Deleted:: ${passportUri}`);
+      await deleteFile(kvbBlob, { fetch: session.fetch });
+      console.log(`Deleted:: ${kvbBlob}`);
+    } catch (err) {
+      console.error(err);
+    }
+
+    try {
+      await deleteFile(passportRDF, { fetch: session.fetch });
+      console.log(`Deleted:: ${passportRDF}`);
+    } catch (err) {
+      console.error(err);
+    }
+
+    try {
+      await deleteFile(passportBlob, { fetch: session.fetch });
+      console.log(`Deleted:: ${passportBlob}`);
     } catch (err) {
       console.error(err);
     }
