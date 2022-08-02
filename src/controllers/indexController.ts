@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-async function indexGet(req: Request, res: Response): Promise<void> {
+function indexGet(req: Request, res: Response): void {
   res.render("index");
 }
 
