@@ -136,14 +136,14 @@ export async function hasSavedIdentityChecks(
     await getSolidDataset(
       await getDatasetUri(
         session,
-        "private/govuk/identity/poc/credentials-pat/vcs/kbv/metadata"
+        "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
       ),
       { fetch: session.fetch }
     );
     await getSolidDataset(
       await getDatasetUri(
         session,
-        "private/govuk/identity/poc/credentials-pat/vcs/passport/metadata"
+        "private/govuk/identity/poc/credentials/vcs/passport/metadata"
       ),
       { fetch: session.fetch }
     );

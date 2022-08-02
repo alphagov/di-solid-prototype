@@ -43,19 +43,19 @@ export async function deleteYourProofOfIdPost(
   if (session) {
     const kvbRDF = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials-pat/vcs/kbv/metadata"
+      "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
     );
     const kvbBlob = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials-pat/vcs/kbv/check"
+      "private/govuk/identity/poc/credentials/vcs/kbv/check"
     );
     const passportRDF = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials-pat/vcs/passport/metadata"
+      "private/govuk/identity/poc/credentials/vcs/passport/metadata"
     );
     const passportBlob = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials-pat/vcs/passport/check"
+      "private/govuk/identity/poc/credentials/vcs/passport/check"
     );
     try {
       await deleteFile(kvbRDF, { fetch: session.fetch });
