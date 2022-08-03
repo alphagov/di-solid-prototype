@@ -13,6 +13,8 @@ import {
   getPostalAddress,
   GOV_UK_CREDENTIAL,
   GOV_UK_HAS_CREDENTIAL,
+  GOV_UK_VC_DESCRIPTION,
+  GOV_UK_VC_CREATED_AT,
 } from "./credentials";
 
 import {
@@ -75,6 +77,11 @@ export function buildKbvCheckArtifacts(
   const metadata = buildThing(createThing({ url: metadataUri }))
     .addUrl(RDF.type, GOV_UK_CREDENTIAL)
     .addUrl(GOV_UK_HAS_CREDENTIAL, fileUri)
+    .addStringEnglish(
+      GOV_UK_VC_DESCRIPTION,
+      "Knowledge Based Verification (KBV) Identity Check"
+    )
+    .addDatetime(GOV_UK_VC_CREATED_AT, new Date())
     .build();
 
   return {
