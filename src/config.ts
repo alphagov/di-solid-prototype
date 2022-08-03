@@ -50,3 +50,7 @@ export enum EssServices {
 export function getEssServiceURI(service: EssServices) {
   return `https://${service}.ess.solid.integration.account.gov.uk`;
 }
+
+export function getCheckStoragePath(): string {
+  return "private/govuk/identity/poc/credentials/vcs";
+}

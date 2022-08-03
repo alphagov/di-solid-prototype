@@ -4,6 +4,8 @@ import {
   Session,
 } from "@inrupt/solid-client-authn-node";
 import { deleteFile } from "@inrupt/solid-client";
+
+import { getCheckStoragePath } from "../config";
 import {
   hasSavedIdentityChecks,
   getDatasetUri,
@@ -11,17 +13,11 @@ import {
 } from "../lib/pod";
 
 async function kvbRDFUri(session: Session): Promise<string> {
-  return getDatasetUri(
-    session,
-    "private/govuk/identity/poc/credentials/vcs/kbv/metadata"
-  );
+  return getDatasetUri(session, `${getCheckStoragePath()}/kbv/metadata`);
 }
 
 async function passportRDFUri(session: Session): Promise<string> {
-  return getDatasetUri(
-    session,
-    "private/govuk/identity/poc/credentials/vcs/passport/metadata"
-  );
+  return getDatasetUri(session, `${getCheckStoragePath()}/passport/metadata`);
 }
 
 export async function accountSettingsGet(
@@ -79,12 +75,12 @@ export async function deleteYourProofOfIdPost(
     const kvbRDF = await kvbRDFUri(session);
     const kvbBlob = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials/vcs/kbv/check"
+      `${getCheckStoragePath()}/kbv/check`
     );
     const passportRDF = await passportRDFUri(session);
     const passportBlob = await getDatasetUri(
       session,
-      "private/govuk/identity/poc/credentials/vcs/passport/check"
+      `${getCheckStoragePath()}/passport/check`
     );
     try {
       await deleteFile(kvbRDF, { fetch: session.fetch });
