@@ -143,5 +143,5 @@ export function disclaimerGet(req: Request, res: Response): void {
 }
 
 export function disclaimerPost(req: Request, res: Response): void {
-  res.render("dbs/disclaimer");
+  res.redirect("/end");
 }

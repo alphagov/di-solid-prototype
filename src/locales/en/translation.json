@@ -29,7 +29,12 @@
       "text": "This is a new service – your <a  href=\"/feedback\" class=\"govuk-link\">feedback</a> will help us to improve it."
     },
     "postcode": "Postcode",
-    "start": "Start"
+    "start": "Start",
+    "end": {
+      "heading": "End of prototype",
+      "description": "You've reached the end of this prototype. Return to the homepage to try another journey",
+      "buttonText": "Return to homepage"
+    }
   },
   "identity": {
     "checkYourDetails": {

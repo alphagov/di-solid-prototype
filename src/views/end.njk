@@ -1,0 +1,17 @@
+{% extends "layouts/base.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% set pageTitleName = 'general.end.heading' | translate %}
+{% set serviceName = 'GOV.UK account' %}
+
+{% block content %}
+  <h1 class="govuk-heading-xl">{{ 'general.end.heading' | translate }}</h1>
+
+  <p class="govuk-body">{{ 'general.end.description' | translate }}</p>
+
+  {{ govukButton({
+    text: 'general.end.buttonText' | translate,
+    href: "/"
+  }) }}
+{% endblock %}
