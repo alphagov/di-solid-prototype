@@ -515,6 +515,16 @@
       "enterYourNumber": {
         "title": "Enter your National Insurance number",
         "description": "We'll use this to match your National Insurance number to your proved identity."
+      },
+      "weveVerifiedYourNumber": {
+        "title": "We've verified your National Insurance number",
+        "paragraph1": "We've matched the National Insurance number you've provided to your proved identity.",
+        "paragraph2": "You can save your verified National Insurance number to your GOV.UK account. This will save you time when you use any service that needs your National Insurance number.",
+        "save": "Save your National Insurance number",
+        "continueWithoutSaving": "Or do not save and continue to personal tax account"
+      },
+      "youveSavedYourNumber": {
+        "title": "You've saved your National Insurance number to your GOV.UK account"
       }
     }
   }
