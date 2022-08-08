@@ -17,6 +17,9 @@ export function enterNinoGet(req: Request, res: Response): void {
 }
 
 export function enterNinoPost(req: Request, res: Response): void {
+  if (req.session) {
+    req.session.nino = req.body["ni-number"];
+  }
   res.redirect("/nino/weve-verified-your-number");
 }
 
