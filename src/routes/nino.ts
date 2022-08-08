@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import {
   continueGet,
   enterNinoGet,
@@ -8,8 +8,13 @@ import {
   verifiedNinoPost,
   savedNinoGet,
 } from "../controllers/nino";
+import redirectIfNotLoggedIn from "../lib/middleware/redirectIfNotLoggedIn";
 
 const router = express.Router();
+
+router.use((req: Request, res: Response, next: NextFunction) => {
+  redirectIfNotLoggedIn(req, res, next);
+});
 
 router.get("/", startGet);
 router.get("/enter-your-number", enterNinoGet);
