@@ -20,6 +20,9 @@ export function proveYourIdentityPost(req: Request, res: Response): void {
 }
 
 export function applyGet(req: Request, res: Response): void {
+  if (req.session) {
+    delete req.session.journey;
+  }
   res.render("dbs/apply-for-a-basic-dbs-check");
 }
 

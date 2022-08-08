@@ -20,6 +20,9 @@ export function signInOrSetUpPost(req: Request, res: Response): void {
 }
 
 export function choosePaperlessGet(req: Request, res: Response): void {
+  if (req.session) {
+    delete req.session.journey;
+  }
   res.render("personal-tax/choose-paperless");
 }
 
