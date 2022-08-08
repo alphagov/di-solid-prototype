@@ -508,5 +508,14 @@
         }
       }
     }
+  },
+  "nino": {
+    "serviceName": "National Insurance number checker",
+    "pages": {
+      "enterYourNumber": {
+        "title": "Enter your National Insurance number",
+        "description": "We'll use this to match your National Insurance number to your proved identity."
+      }
+    }
   }
 }
