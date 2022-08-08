@@ -1,5 +1,9 @@
+import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
 import { Request, Response } from "express";
 import { getHostname } from "../config";
+import SessionError from "../errors";
+import { getDatasetUri, writeCheckToPod } from "../lib/pod";
+import buildNiNumberArtifacts from "../lib/nationalInsurance";
 
 export function startGet(req: Request, res: Response): void {
   if (req.session) {
@@ -27,8 +31,26 @@ export function verifiedNinoGet(req: Request, res: Response): void {
   res.render("nino/weve-verified-your-number");
 }
 
-export function verifiedNinoPost(req: Request, res: Response): void {
-  res.redirect("/nino/youve-saved-your-number");
+export async function verifiedNinoPost(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const session = await getSessionFromStorage(req.session?.sessionId);
+
+  if (session && req.session) {
+    req.session.webId = session.info.webId;
+    const containerUri = await getDatasetUri(
+      session,
+      "private/govuk/identity/poc/credentials/vcs"
+    );
+
+    const niNumberArtifacts = buildNiNumberArtifacts(req.session, containerUri);
+    await writeCheckToPod(session, niNumberArtifacts);
+
+    res.redirect("/nino/youve-saved-your-number");
+  } else {
+    throw new SessionError();
+  }
 }
 
 export function savedNinoGet(req: Request, res: Response): void {

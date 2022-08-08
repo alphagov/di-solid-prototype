@@ -19,6 +19,8 @@ export const GOV_UK_HAS_CREDENTIAL =
 export const GOV_UK_VC_DESCRIPTION =
   "https://vocab.account.gov.uk/VCDescription";
 export const GOV_UK_VC_CREATED_AT = "https://vocab.account.gov.uk/vcCreatedAt";
+export const DWP_NATIONAL_INSURANCE_NUMBER =
+  "https://vocab.dwp.gov.uk/nationalInsuranceNumber";
 
 export function evidenceSuccessful(): IdentityCheck[] {
   return [
