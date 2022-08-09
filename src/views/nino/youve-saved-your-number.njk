@@ -1,0 +1,11 @@
+{% extends "nino/layout.njk" %}
+{% set backLink = "/nino/enter-your-number" %}
+{% set pageTitleName = "nino.pages.youveSavedYourNumber.title" | translate %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% block content %}
+  <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+  {{ govukButton({
+    text: "general.continue" | translate,
+    href: "/nino/continue"
+  }) }}
+{% endblock %}

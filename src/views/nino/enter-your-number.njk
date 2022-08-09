@@ -1,0 +1,19 @@
+{% extends "nino/layout.njk" %}
+{% set backLink = "/nino/enter-your-number" %}
+{% set pageTitleName = "nino.pages.enterYourNumber.title" | translate %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% block content %}
+  <h1 class="govuk-heading-l">{{ pageTitleName }}</h1>
+  <p class="govuk-body">{{ "nino.pages.enterYourNumber.description" | translate }}</p>
+  <form action="/nino/enter-your-number" method="post">
+    {{ govukInput({
+      id: "ni-number",
+      name: "ni-number"
+    }) }}
+
+    {{ govukButton({
+      text: 'general.continue' | translate
+    }) }}
+  </form>
+{% endblock %}
