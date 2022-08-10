@@ -115,10 +115,20 @@
   float: right;
 }
 
-.hmrc-account-menu__main li {
-  display: inline-block;
-  margin-bottom: 0;
+.hmrc-account-menu__main {
+  li {
+    display: inline-block;
+    margin-bottom: 0;
+  }
+  @include govuk-media-query($until: desktop) {
+    width: 100%;
+    background-color: govuk-colour("light-grey");
+    li {
+      display: block;
+    }
+  }
 }
+
 
 .hmrc-account-menu__link--home {
   padding: 12px 18px 8px 0;
@@ -134,5 +144,13 @@
 }
 
 .hmrc-account-icon {
-    background-repeat: no-repeat;
+  background-repeat: no-repeat;
+}
+
+.govuk-header__menu-button.govuk-header__menu-button--dark {
+  padding: 12px 16px 8px;
+  color: black;
+  font-size: 16px;
+  top: 2px;
+
 }
