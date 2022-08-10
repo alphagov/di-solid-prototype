@@ -60,6 +60,5 @@ export function getCheckStoragePath(): string {
 }
 
 export function getEssFragmentIndexerWebId() {
-  return `https://fragments-indexer.inrupt.com/id`;
-  // return `https://fragments-indexer.ess.${getGdsEssDomain()}/id`
+  return `https://fragments-indexer.ess.${getGdsEssDomain()}/id`;
 }

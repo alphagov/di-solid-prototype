@@ -77,11 +77,6 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
             resolve();
           });
         });
-
-        // const webIdProfileDocBindings: [] = await webIdProfileDocStream.toArray();
-        // webIdProfileDocBindings.forEach((binding) => {
-        //   console.log(`SPARQL: s [${(binding as Map<string, any>).get('s').value}] p [${(binding as Map<string, any>).get('p').value}] o [${(binding as Map<string, any>).get('o').value}]`);
-        // });
       } catch (error) {
         const msg = `ERROR trying query user's WebID Profile Document at [${session.info.webId}]: ${error}`;
         console.log(msg);
@@ -139,12 +134,11 @@ export async function accessGet(req: Request, res: Response): Promise<void> {
           PREFIX dcterms: <http://purl.org/dc/terms/>
           SELECT ?lastAccessLogTimestamp WHERE {
             GRAPH ?g {
-               ?s a <https://vocab.account.gov.uk/AccessLogEntry> .
-             ?s dcterms:created ?lastAccessLogTimestamp .
+              ?s a <https://vocab.account.gov.uk/AccessLogEntry> .
+              ?s dcterms:created ?lastAccessLogTimestamp .
             }
           }`,
           {
-            // sources: [{type: "hypermedia", value: qpfEndpoint}],
             sources: [qpfEndpoint],
             "@comunica/actor-http-inrupt-solid-client-authn:session": session,
             httpTimeout: 5000,
