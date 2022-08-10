@@ -6,6 +6,10 @@ export function getSessionKeys() {
   return ["key1", "key2"];
 }
 
+export function getGdsEssDomain() {
+  return "solid.integration.account.gov.uk";
+}
+
 export function getDeployedDomain() {
   return "prototype.solid.integration.account.gov.uk";
 }
@@ -53,4 +57,9 @@ export function getEssServiceURI(service: EssServices) {
 
 export function getCheckStoragePath(): string {
   return "private/govuk/identity/poc/credentials/vcs";
+}
+
+export function getEssFragmentIndexerWebId() {
+  return `https://fragments-indexer.inrupt.com/id`;
+  // return `https://fragments-indexer.ess.${getGdsEssDomain()}/id`
 }

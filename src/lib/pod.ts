@@ -11,7 +11,15 @@ import {
   getThing,
   getDatetime,
   getStringWithLocale,
+  universalAccess,
+  // eslint-disable-next-line camelcase
+  acp_ess_2,
+  asUrl,
 } from "@inrupt/solid-client";
+// eslint-disable-next-line import/no-unresolved
+import { WithAccessibleAcr } from "@inrupt/solid-client/dist/acp/acp";
+// eslint-disable-next-line import/no-unresolved
+import { AccessModes } from "@inrupt/solid-client/dist/acp/type/AccessModes";
 
 // We need to explicitly import the Node.js implementation of 'Blob' here
 // because it's not a global in Node.js (whereas it is global in the browser).
@@ -188,4 +196,143 @@ export async function getCredentialMetadataFromPod(
     description: null,
     createdAt: null,
   };
+}
+
+export const grantDefaultMemberReadAccessForResource = async (
+  session: Session,
+  resourceIri: string,
+  agentWebId: string
+): Promise<boolean | string> => {
+  if (!resourceIri || !agentWebId) {
+    const message = `Attempting to set default Read access to a resource requires *both* a resource IRI (got [${resourceIri}]) and an agent WebID (got [${agentWebId}]).`;
+    console.log(message);
+    return message;
+  }
+
+  const MATCHER_NAME = "matcher-QPFIndexer";
+  const POLICY_NAME = "defaultMemberPolicy-QPFIndexer";
+  try {
+    // 1. Fetch the SolidDataset with its Access Control Resource (ACR).
+    // eslint-disable-next-line camelcase
+    const resourceWithAcr = await acp_ess_2.getSolidDatasetWithAcr(
+      resourceIri, // Resource whose ACR to set up.
+      { fetch: session.fetch } // fetch from the authenticated session.
+    );
+
+    // 2. Initialize a new Matcher.
+    // eslint-disable-next-line camelcase
+    let matcher = acp_ess_2.createResourceMatcherFor(
+      resourceWithAcr as WithAccessibleAcr,
+      MATCHER_NAME
+    );
+
+    // 3. For the matcher, specify the agent.
+    // eslint-disable-next-line camelcase
+    matcher = acp_ess_2.addAgent(matcher, agentWebId);
+
+    // 4. Store matcher definition.
+    // eslint-disable-next-line camelcase
+    const newResourceWithAcr = acp_ess_2.setResourceMatcher(
+      resourceWithAcr as WithAccessibleAcr,
+      matcher
+    );
+
+    // 5. Create a Policy that uses the matcher.
+    // eslint-disable-next-line camelcase
+    let policy = acp_ess_2.createResourcePolicyFor(
+      newResourceWithAcr,
+      POLICY_NAME
+    );
+
+    // 6. Add the matcher to the Policy as an allOf() expression.
+    // Since using allOf() with a single Matcher, could also use anyOf() expression.
+    // eslint-disable-next-line camelcase
+    policy = acp_ess_2.addAllOfMatcherUrl(policy, matcher);
+
+    // 7. Specify Read access.
+    // eslint-disable-next-line camelcase
+    policy = acp_ess_2.setAllowModes(policy, { read: true } as AccessModes);
+
+    // 8. Add/Apply the Policy as the defaultMemberPolicy
+    // eslint-disable-next-line camelcase
+    const newResourceWithAcr2 = acp_ess_2.addMemberPolicyUrl(
+      newResourceWithAcr,
+      asUrl(policy)
+    );
+
+    // 9. Add the Policy definition to ACR.
+    // eslint-disable-next-line camelcase
+    const newResourceWithAcr3 = acp_ess_2.setResourcePolicy(
+      newResourceWithAcr2,
+      policy
+    );
+
+    // 10. Save the ACR for the Resource.
+    // eslint-disable-next-line camelcase
+    await acp_ess_2.saveAcrFor(
+      newResourceWithAcr3,
+      { fetch: session.fetch } // fetch from the authenticated session.
+    );
+    return true;
+  } catch (error) {
+    const message = `Error attempting to set default Read access to resource [${resourceIri}] to agent with WebID [${agentWebId}]. Error: ${error}`;
+    console.log(message);
+    return message;
+  }
+};
+
+export async function ensureFragmentIndexerGrantedAccess(
+  session: Session,
+  fragmentIndexerWebId: string
+) {
+  if (!session.info.webId) {
+    console.log(
+      `No session WebID when trying to ensure Fragment Indexer has been granted access to Pod root.`
+    );
+    throw new SessionError();
+  }
+
+  const podUri = await getPodUrlAll(session.info.webId, {
+    fetch: session.fetch,
+  });
+  const podRoot = podUri[0];
+  const returnedAccess = await universalAccess.getAgentAccess(
+    podRoot,
+    fragmentIndexerWebId,
+    { fetch: session.fetch }
+  );
+  if (returnedAccess === null) {
+    console.log(
+      `Could not load access details for Fragment Indexer: [${fragmentIndexerWebId}] for Pod root: [${podRoot}].`
+    );
+    throw new SessionError();
+  }
+  console.log(
+    `Returned access details for Fragment Indexer: [${fragmentIndexerWebId}] for Pod root: [${podRoot}]: ${JSON.stringify(
+      returnedAccess
+    )}.`
+  );
+
+  if (returnedAccess.read) {
+    console.log(
+      `Fragment Indexer: [${fragmentIndexerWebId}] already has 'Read' access to Pod root: [${podRoot}]`
+    );
+  } else {
+    const result = await grantDefaultMemberReadAccessForResource(
+      session,
+      podRoot,
+      fragmentIndexerWebId
+    );
+
+    if (result === true) {
+      console.log(
+        `Successfully set 'Read' access to Fragment Indexer: [${fragmentIndexerWebId}] for Pod root: [${podRoot}]`
+      );
+    } else {
+      console.log(
+        `Failed to set 'Read' access to Fragment Indexer: [${fragmentIndexerWebId}] for Pod root: [${podRoot}]. Reason: ${result}`
+      );
+      throw new SessionError();
+    }
+  }
 }

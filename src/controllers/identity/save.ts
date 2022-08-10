@@ -31,7 +31,6 @@ export function saveGet(req: Request, res: Response) {
 
 export async function savePost(req: Request, res: Response): Promise<void> {
   const session = await getSessionFromStorage(req.session?.sessionId);
-
   if (session && req.session) {
     req.session.webId = session.info.webId;
     const containerUri = await getDatasetUri(

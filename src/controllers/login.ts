@@ -9,8 +9,12 @@ import {
   getClientId,
   getEssServiceURI,
   EssServices,
+  getEssFragmentIndexerWebId,
 } from "../config";
-import { createProfileAndPod } from "../lib/pod";
+import {
+  createProfileAndPod,
+  ensureFragmentIndexerGrantedAccess,
+} from "../lib/pod";
 
 export function loginGet(req: Request, res: Response): void {
   const session = new Session();
@@ -39,6 +43,10 @@ export async function callbackGet(req: Request, res: Response): Promise<void> {
     const response = await session.fetch(session.info.webId);
     if (response.status === 404) {
       await createProfileAndPod(session);
+      await ensureFragmentIndexerGrantedAccess(
+        session,
+        getEssFragmentIndexerWebId()
+      );
     }
 
     if (req.session && req.session.returnUri) {
