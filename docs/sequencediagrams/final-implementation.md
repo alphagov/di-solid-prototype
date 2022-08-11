@@ -128,9 +128,6 @@ IPV ->> IPV: Check ID_Attributes to see if good for use
 IPV->>Citizen: Would you like to use your previous ID check?
 Citizen-->> IPV:OK
 
-IPV->>+Pod: Get Previous ID Check
-Pod-->>-IPV: Previous ID Check
-
 IPV->>DemoApp: Previous ID Check
 
 DemoApp ->> Citizen: Done!
