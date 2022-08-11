@@ -1,0 +1,118 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Description: "A stack to run Inrupt's load testing for the ESS cluster"
+
+Parameters:
+  CommonStackName:
+    Type: String
+    Default: common
+  KubernetesClusterName:
+    Type: String
+    Default: hello-node-eksCluster
+  Namespace:
+    Type: String
+    Default: performance
+  ESSBucketName:
+    Type: String
+    Default: ess.integration.performance
+
+Resources:
+  FargateProfile:
+    Type: AWS::EKS::FargateProfile
+    Properties:
+      ClusterName: !Ref KubernetesClusterName
+      PodExecutionRoleArn: !GetAtt PodExecutionRole.Arn
+      Selectors:
+        - Namespace: !Ref Namespace
+      Subnets:
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet1ID"
+        - Fn::ImportValue:
+            Fn::Sub: "${CommonStackName}-PrivateSubnet2ID"
+
+  PodExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Join ['', [!Ref Namespace, PodExecutionRole]]
+      AssumeRolePolicyDocument:
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: eks-fargate-pods.amazonaws.com
+            Action: 'sts:AssumeRole'
+          - Effect: Allow
+            Principal:
+              Federated: arn:aws:iam::626456592666:oidc-provider/oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14
+            Action: "sts:AssumeRoleWithWebIdentity"
+            Condition:
+              StringEquals:
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:aud": "sts.amazonaws.com"
+                "oidc.eks.eu-west-2.amazonaws.com/id/747AA2C8F0C130241EF27E7D78A9FE14:sub": "system:serviceaccount:ess:ess"
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonEKSFargatePodExecutionRolePolicy
+        - !Ref LoggingPolicy
+  
+  LoggingPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: "Allow resources to log to CloudWatch"
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+          - logs:CreateLogStream
+          - logs:CreateLogGroup
+          - logs:DescribeLogStreams
+          - logs:PutLogEvents
+          Resource: "*"
+
+
+  PerformanceReportS3:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Ref ESSBucketName
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'aws:kms'
+      VersioningConfiguration:
+        Status: Enabled
+      AccessControl: Private
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  S3BucketUser:
+    Type: AWS::IAM::User
+    Properties:
+      Policies:
+        - PolicyName: bucket-access
+          PolicyDocument:
+            Statement:
+            - Effect: Allow
+              Action:
+              - "s3:*"
+              Resource:
+                - !Sub arn:aws:s3:::${PerformanceReportS3}
+                - !Sub arn:aws:s3:::${PerformanceReportS3}/*
+
+  S3UserAccessKey:
+    Type: AWS::IAM::AccessKey
+    Properties:
+      UserName: !Ref S3BucketUser
+
+Outputs:
+  PerformanceReportS3:
+    Description: S3 bucket for the Enterprise Solid Server
+    Value:
+      Ref: PerformanceReportS3
+  AccessKeyID:
+    Value: !Ref S3UserAccessKey
+  SecretAccessKey:
+    Value: !GetAtt S3UserAccessKey.SecretAccessKey
+  User:
+    Value: !Ref S3BucketUser
