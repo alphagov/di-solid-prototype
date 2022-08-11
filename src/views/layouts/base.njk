@@ -34,12 +34,14 @@
 
 {% block main %}
   <div class="govuk-width-container {{ containerClasses }}">
-    {{ govukPhaseBanner({
-        tag: {
-            text: 'general.phaseBanner.tag' | translate
-        },
-        html: 'general.phaseBanner.text' | translate | replace ("[supportUrl]", authFrontEndUrl + "/contact-us?supportType=PUBLIC")
-    }) }}
+    {% if not hidePhaseBanner %}
+      {{ govukPhaseBanner({
+          tag: {
+              text: 'general.phaseBanner.tag' | translate
+          },
+          html: 'general.phaseBanner.text' | translate | replace ("[supportUrl]", authFrontEndUrl + "/contact-us?supportType=PUBLIC")
+      }) }}
+    {% endif %}
     {% if backLink %}
       <a href="{{backLink}}" class="govuk-back-link govuk-!-margin-bottom-0">{{'general.back' | translate}}</a>
     {% endif %}

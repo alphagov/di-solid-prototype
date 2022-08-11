@@ -1,8 +1,21 @@
-{% extends "layouts/base.njk" %}
+{% extends "layouts/govuk.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitleName = "personalTax.pages.signInOrSetUp.title" | translate %}
-{% set serviceName = "GOV.UK" %}
+{% set breadcrumbItems = [
+  {
+    text: "Home",
+    href: "/"
+  },
+  {
+    text: "Money and tax",
+    href: "https://www.gov.uk/browse/tax"
+  },
+  {
+    text: "Dealing with HMRC",
+    href: "https://www.gov.uk/browse/tax/dealing-with-hmrc"
+  }
+] %}
 
 {% block content %}
   <h1 class="govuk-heading-xl">
@@ -38,19 +51,19 @@
     <li>{{ "personalTax.pages.signInOrSetUp.listItem12" | translate }}</li>
   </ul>
 
-  <aside class="app-related-items govuk-!-margin-top-8" role="complementary" style="border-top: 2px solid	#1d70b8" lang="en">
+  <aside class="related-items govuk-!-margin-top-8" role="complementary" lang="en">
       <h3 class="govuk-heading-s govuk-!-padding-top-4" id="subsection-title">
         Explore the topic
       </h3>
       <nav role="navigation" aria-labelledby="subsection-title">
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
-            <a href="#" class="govuk-!-font-weight-bold govuk-link">
+            <a href="https://www.gov.uk/browse/tax/dealing-with-hmrc" class="govuk-link">
               Dealing with HMRC
             </a>
           </li>
           <li>
-            <a href="#" class="govuk-!-font-weight-bold govuk-link">
+            <a href="https://www.gov.uk/browse/tax/income-tax" class="govuk-link">
               Income Tax
             </a>
           </li>
