@@ -5,6 +5,7 @@ import {
 import {
   issueAccessRequest,
   AccessRequest,
+  redirectToAccessManagementUi,
 } from "@inrupt/solid-client-access-grants";
 import { Request, Response } from "express";
 import { getHostname } from "../config";
@@ -101,6 +102,46 @@ export function savedNinoGet(req: Request, res: Response): void {
   res.render("nino/youve-saved-your-number");
 }
 
+export async function beginAccessGrantsFlow(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const resourceOwnerSession = await getSessionFromStorage(
+    req.session?.sessionId
+  );
+
+  if (resourceOwnerSession) {
+    const resourceOwnerWebId = resourceOwnerSession.info.webId;
+    if (resourceOwnerWebId) {
+      const ninoContainerUri = await getDatasetUri(
+        resourceOwnerSession,
+        "private/govuk/identity/poc/credentials/national-insurance-number/"
+      );
+
+      const requestorSession = await fakeOIDCLogin();
+
+      const accessRequest = await requestAccessToWriteNino(
+        ninoContainerUri,
+        resourceOwnerWebId,
+        requestorSession
+      );
+
+      if (accessRequest) {
+        await redirectToAccessManagementUi(
+          accessRequest.id,
+          `${getHostname()}/nino/save-number`,
+          {
+            redirectCallback: (url) => {
+              res.redirect(url);
+            },
+            fallbackAccessManagementUi: `${getHostname()}/account/access-management`,
+            fetch: resourceOwnerSession.fetch,
+          }
+        );
+      }
+    }
+  }
+}
 export function continueGet(req: Request, res: Response): void {
   if (req.session) {
     res.redirect(req.session.ninoReturnUri);
