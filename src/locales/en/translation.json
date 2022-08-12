@@ -135,6 +135,7 @@
     "save": {
       "heading": "You’ve successfully proved your identity",
       "paragraph": "You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are.",
+      "paragraph2": "You’ll be able to see or delete your proof of identity at any time in your GOV.UK account.",
       "buttonText": "Save proof of identity to your GOV.UK account",
       "linkText": "Do not save proof of identity and continue to [service]"
     },
