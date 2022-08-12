@@ -2,12 +2,18 @@ import {
   getSessionFromStorage,
   Session,
 } from "@inrupt/solid-client-authn-node";
+import {
+  issueAccessRequest,
+  AccessRequest,
+} from "@inrupt/solid-client-access-grants";
 import { Request, Response } from "express";
 import { getHostname } from "../config";
 import SessionError from "../errors";
 import { getDatasetUri, writeCheckToPod } from "../lib/pod";
 import buildNiNumberArtifacts from "../lib/nationalInsurance";
 
+type WebId = string;
+type Uri = string;
 
 async function fakeOIDCLogin(): Promise<Session> {
   const session = new Session();
@@ -20,6 +26,29 @@ async function fakeOIDCLogin(): Promise<Session> {
     })
     .then(() => session);
 }
+
+function requestAccessToWriteNino(
+  ninoContainerUri: Uri,
+  resourceOwner: WebId,
+  requestorSession: Session
+): Promise<AccessRequest | null> {
+  // DWP sets the requested access (if granted) to expire in 5 minutes.
+  const accessExpiration = new Date(Date.now() + 5 * 60000);
+  const accessEndpoint = `https://vc.ess.solid.integration.account.gov.uk`;
+
+  // Call `issueAccessRequest` to create an access request
+  return issueAccessRequest(
+    {
+      access: { write: true },
+      resourceOwner,
+      resources: [ninoContainerUri],
+      expirationDate: accessExpiration,
+      purpose: [`${getHostname()}/purposes#write-nino`],
+    },
+    { fetch: requestorSession.fetch, accessEndpoint } // From the requestor's (i.e., DWP's) authenticated session
+  );
+}
+
 export function startGet(req: Request, res: Response): void {
   if (req.session) {
     const returnUri = req.params.returnUri
