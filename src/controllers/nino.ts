@@ -34,6 +34,8 @@ async function fakeOIDCLogin(): Promise<Session> {
       clientId: "cd68b569-0b92-42dd-9993-879909502979",
       clientSecret: "7bd94621-21bf-4703-b9a2-5691d886854d",
       oidcIssuer: "https://openid.ess.solid.integration.account.gov.uk/",
+      // Note that using a Bearer token is mandatory for the UMA access token to be valid.
+      tokenType: "Bearer",
     })
     .then(() => session);
 }
