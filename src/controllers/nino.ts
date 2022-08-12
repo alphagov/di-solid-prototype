@@ -16,6 +16,9 @@ import buildNiNumberArtifacts from "../lib/nationalInsurance";
 type WebId = string;
 type Uri = string;
 
+const ninoContainer =
+  "private/govuk/identity/poc/credentials/national-insurance-number/";
+
 async function fakeOIDCLogin(): Promise<Session> {
   const session = new Session();
   return session
@@ -115,7 +118,7 @@ export async function beginAccessGrantsFlow(
     if (resourceOwnerWebId) {
       const ninoContainerUri = await getDatasetUri(
         resourceOwnerSession,
-        "private/govuk/identity/poc/credentials/national-insurance-number/"
+        ninoContainer
       );
 
       const requestorSession = await fakeOIDCLogin();
