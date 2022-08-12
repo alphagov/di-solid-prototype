@@ -6,11 +6,18 @@ import {
   issueAccessRequest,
   AccessRequest,
   redirectToAccessManagementUi,
+  getAccessGrantFromRedirectUrl,
+  getSolidDataset,
+  saveSolidDatasetAt,
 } from "@inrupt/solid-client-access-grants";
+
+import { createSolidDataset, setThing } from "@inrupt/solid-client";
+
 import { Request, Response } from "express";
 import { getHostname } from "../config";
 import SessionError from "../errors";
-import { getDatasetUri, writeCheckToPod } from "../lib/pod";
+import { getDatasetUri } from "../lib/pod";
+
 import buildNiNumberArtifacts from "../lib/nationalInsurance";
 
 type WebId = string;
@@ -145,6 +152,57 @@ export async function beginAccessGrantsFlow(
     }
   }
 }
+
+export async function saveNinoGet(req: Request, res: Response): Promise<void> {
+  const requestorSession = await fakeOIDCLogin();
+
+  const resourceOwnerSession = await getSessionFromStorage(
+    req.session?.sessionId
+  );
+
+  const myAccessGrantVC = await getAccessGrantFromRedirectUrl(
+    `${getHostname()}/nino/${req.url}`,
+    { fetch: requestorSession.fetch } // fetch from authenticated Session
+  );
+
+  if (requestorSession && resourceOwnerSession) {
+    const containerUri = await getDatasetUri(
+      resourceOwnerSession,
+      "private/govuk/identity/poc/credentials/vcs"
+    );
+
+    const niNumberArtifacts = buildNiNumberArtifacts(
+      requestorSession,
+      containerUri
+    );
+
+    let niDataset;
+    try {
+      niDataset = await getSolidDataset(
+        niNumberArtifacts.metadataUri,
+        myAccessGrantVC,
+        { fetch: requestorSession.fetch }
+      );
+    } catch (fetchError) {
+      niDataset = createSolidDataset();
+    }
+
+    const updatedDataset = setThing(niDataset, niNumberArtifacts.metadata);
+
+    await saveSolidDatasetAt(
+      niNumberArtifacts.metadataUri,
+      updatedDataset,
+      myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+      { fetch: requestorSession.fetch } // fetch from authenticated Session
+    );
+
+
+    res.redirect("/nino/youve-saved-your-number");
+  } else {
+    throw new SessionError();
+  }
+}
+
 export function continueGet(req: Request, res: Response): void {
   if (req.session) {
     res.redirect(req.session.ninoReturnUri);
