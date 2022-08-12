@@ -3,6 +3,9 @@ import {
   getSessionFromStorage,
   Session,
 } from "@inrupt/solid-client-authn-node";
+
+import { VerifiableCredential } from "@inrupt/solid-client-vc";
+
 import { deleteFile } from "@inrupt/solid-client";
 
 import { getCheckStoragePath } from "../config";
@@ -112,4 +115,21 @@ export async function deleteYourProofOfIdPost(
   }
 
   res.redirect("/account/settings/your-proof-of-identity");
+}
+
+const isVerifiableCredential = (vc: any): vc is VerifiableCredential =>
+  typeof vc === "object" && "credentialSubject" in vc;
+
+function decodeAccessRequestVC(encodedJwt: string): VerifiableCredential {
+  if (!encodedJwt) {
+    throw new Error("no encoded token found");
+  }
+
+  const buff = Buffer.from(encodedJwt, "base64");
+  const decodedToken = JSON.parse(buff.toString("utf-8"));
+
+  if (!isVerifiableCredential(decodedToken)) {
+    throw new Error("invalid token object");
+  }
+  return decodedToken;
 }
