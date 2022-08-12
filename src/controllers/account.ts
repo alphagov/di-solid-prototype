@@ -151,3 +151,40 @@ function validateAccessRequestVC(
 
   return false;
 }
+
+export async function accessManagementGet(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const solidSession = await getSessionFromStorage(req.session?.sessionId);
+  const appSession = req.session;
+  if (solidSession && appSession) {
+    if (req.query) {
+      const { requestVc, redirectUrl, requestVcUrl } = req.query;
+      if (isString(requestVc) && isString(redirectUrl)) {
+        // Decode the request VC
+        appSession.requestVcDecoded = decodeAccessRequestVC(requestVc);
+
+        if (!appSession.requestVcDecoded) {
+          res.redirect("account/access-management/errors/vc-not-decodable");
+        }
+
+        // Validate the VC
+        if (!validateAccessRequestVC(appSession.requestVcDecoded)) {
+          res.redirect("account/access-management/errors/vc-invalid");
+        }
+
+        const { credentialSubject } = appSession.requestVcDecoded;
+
+        res.render("account/access-management", {
+          credentialSubject,
+          requestVc,
+          requestVcUrl,
+          redirectUrl,
+        });
+      }
+    } else {
+      res.redirect("account/access-management/errors/no-vc-request-found");
+    }
+  }
+}

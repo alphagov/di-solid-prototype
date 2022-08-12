@@ -8,6 +8,7 @@ import {
   yourProofOfIdGet,
   deleteYourProofOfIdGet,
   deleteYourProofOfIdPost,
+  accessManagementGet,
 } from "../controllers/account";
 
 const router = express.Router();
@@ -23,5 +24,6 @@ router.get("/settings/activity", accountActivityGet);
 router.get("/settings/your-proof-of-identity", yourProofOfIdGet);
 router.get("/settings/your-proof-of-identity/delete", deleteYourProofOfIdGet);
 router.post("/settings/your-proof-of-identity/delete", deleteYourProofOfIdPost);
+router.get("/access-management", accessManagementGet);
 
 export default router;
