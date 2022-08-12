@@ -9,9 +9,12 @@ import {
   deleteYourProofOfIdGet,
   deleteYourProofOfIdPost,
   accessManagementGet,
+  accessManagementPost,
 } from "../controllers/account";
 
 const router = express.Router();
+
+router.post("/access-management", accessManagementPost);
 
 /* All following routes require someone to be logged in first */
 router.use((req: Request, res: Response, next: NextFunction) => {

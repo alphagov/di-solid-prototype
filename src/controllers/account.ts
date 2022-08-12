@@ -6,6 +6,11 @@ import {
 
 import { VerifiableCredential } from "@inrupt/solid-client-vc";
 
+import {
+  approveAccessRequest,
+  denyAccessRequest,
+} from "@inrupt/solid-client-access-grants";
+
 import { deleteFile } from "@inrupt/solid-client";
 
 import { getCheckStoragePath } from "../config";
@@ -120,6 +125,8 @@ export async function deleteYourProofOfIdPost(
 const isVerifiableCredential = (vc: any): vc is VerifiableCredential =>
   typeof vc === "object" && "credentialSubject" in vc;
 
+const isString = (jwt: any): jwt is string => typeof jwt === "string";
+
 function decodeAccessRequestVC(encodedJwt: string): VerifiableCredential {
   if (!encodedJwt) {
     throw new Error("no encoded token found");
@@ -185,6 +192,31 @@ export async function accessManagementGet(
       }
     } else {
       res.redirect("account/access-management/errors/no-vc-request-found");
+    }
+  }
+}
+
+export async function accessManagementPost(
+  req: Request,
+  res: Response
+): Promise<void> {
+  if (req.body) {
+    const solidSession = await getSessionFromStorage(req.session?.sessionId);
+    const { requestVcUrl, redirectUrl, consent } = req.body;
+    if (solidSession && isString(redirectUrl)) {
+      if (consent === "yes") {
+        const approvedVc = await approveAccessRequest(requestVcUrl, undefined, {
+          fetch: solidSession.fetch,
+        });
+        res.redirect(`${redirectUrl}?accessGrantUrl=${approvedVc.id}`);
+      }
+
+      if (consent === "no") {
+        const deniedVC = await denyAccessRequest(requestVcUrl, {
+          fetch: solidSession.fetch,
+        });
+        res.redirect(`${redirectUrl}?accessGrantUrl=${deniedVC.id}`);
+      }
     }
   }
 }
