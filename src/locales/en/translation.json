@@ -470,19 +470,6 @@
         "listItem11": "check or update benefits you get from work, for example company car details and medical insurance",
         "listItem12": "find your National Insurance number"
       },
-      "choose": {
-        "title": "Choose how to get your legal notices, penalty notices and tax letters",
-        "paragraph1": "You can choose to get some of your tax documents and information sent through your HMRC online account instead of by post.",
-        "paragraph2": "You will need to take action when you receive some of the documents. They include:",
-        "listItem1": "Legal notices to file tax return",
-        "listItem2": "Late filing penalty notices",
-        "listItem3": "Late payment penalty notices",
-        "paragraph3": "We may also send you other messages, including information about your personal tax code, if you have one.",
-        "heading": "How do you want to get your legal notices, penalty notices and tax letters",
-        "option1": "Through my HMRC online account",
-        "option2": "By post only",
-        "paragraph4": "For more information about how HRMC uses your data, <a class=\"govuk-link\" href=\"\">read the privacy notice</a>"
-      },
       "home": {
         "title": "Account home",
         "secondaryNav": {

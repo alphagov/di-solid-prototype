@@ -3,8 +3,6 @@ import {
   signInOrSetUpGet,
   signInOrSetUpPost,
   homeGet,
-  choosePaperlessGet,
-  choosePaperlessPost,
 } from "../controllers/personalTax";
 
 import redirectIfNotLoggedIn from "../lib/middleware/redirectIfNotLoggedIn";
@@ -18,9 +16,6 @@ router.post("/sign-in-or-set-up", signInOrSetUpPost);
 router.use((req: Request, res: Response, next: NextFunction) => {
   redirectIfNotLoggedIn(req, res, next);
 });
-
-router.get("/choose-paperless", choosePaperlessGet);
-router.post("/choose-paperless", choosePaperlessPost);
 
 router.get("/home", homeGet);
 

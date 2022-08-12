@@ -8,7 +8,7 @@ export function homeGet(req: Request, res: Response): void {
 export function signInOrSetUpGet(req: Request, res: Response): void {
   if (req.session) {
     req.session.journey = {
-      nextPage: `${getHostname()}/personal-tax/choose-paperless`,
+      nextPage: `${getHostname()}/personal-tax/home`,
       title: "apply for personal tax account",
     };
   }
@@ -17,12 +17,4 @@ export function signInOrSetUpGet(req: Request, res: Response): void {
 
 export function signInOrSetUpPost(req: Request, res: Response): void {
   res.redirect("/identity");
-}
-
-export function choosePaperlessGet(req: Request, res: Response): void {
-  res.render("personal-tax/choose-paperless");
-}
-
-export function choosePaperlessPost(req: Request, res: Response): void {
-  res.redirect("/personal-tax/home");
 }
