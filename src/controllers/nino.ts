@@ -1,10 +1,25 @@
-import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import {
+  getSessionFromStorage,
+  Session,
+} from "@inrupt/solid-client-authn-node";
 import { Request, Response } from "express";
 import { getHostname } from "../config";
 import SessionError from "../errors";
 import { getDatasetUri, writeCheckToPod } from "../lib/pod";
 import buildNiNumberArtifacts from "../lib/nationalInsurance";
 
+
+async function fakeOIDCLogin(): Promise<Session> {
+  const session = new Session();
+  return session
+    .login({
+      // 2. Use the authenticated credentials to log in the session.
+      clientId: "cd68b569-0b92-42dd-9993-879909502979",
+      clientSecret: "7bd94621-21bf-4703-b9a2-5691d886854d",
+      oidcIssuer: "https://openid.ess.solid.integration.account.gov.uk/",
+    })
+    .then(() => session);
+}
 export function startGet(req: Request, res: Response): void {
   if (req.session) {
     const returnUri = req.params.returnUri
