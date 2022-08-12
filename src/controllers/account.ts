@@ -133,3 +133,21 @@ function decodeAccessRequestVC(encodedJwt: string): VerifiableCredential {
   }
   return decodedToken;
 }
+
+function validateAccessRequestVC(
+  decodedVC: VerifiableCredential
+): true | false {
+  // Not implimented but left here as a hint that this is logic we'd need for
+  // a production service, we should validate the
+  const notImplimented = true;
+
+  if (notImplimented) {
+    return true;
+  }
+
+  const err = "VC is invalid in some way";
+  console.log(err);
+  console.log(decodedVC);
+
+  return false;
+}
