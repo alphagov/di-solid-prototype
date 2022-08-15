@@ -50,7 +50,7 @@ function requestAccessToWriteNino(
   // Call `issueAccessRequest` to create an access request
   return issueAccessRequest(
     {
-      access: { write: true },
+      access: { read: true, write: true },
       resourceOwner,
       resources: [ninoContainerUri],
       expirationDate: accessExpiration,
