@@ -13,6 +13,7 @@ import {
 import {
   createSolidDataset,
   deleteFile,
+  getSolidDataset,
   saveSolidDatasetAt,
 } from "@inrupt/solid-client";
 
@@ -21,7 +22,6 @@ import {
   hasSavedIdentityChecks,
   getDatasetUri,
   getCredentialMetadataFromPod,
-  getOrCreateDataset,
 } from "../lib/pod";
 
 async function kvbRDFUri(session: Session): Promise<string> {
@@ -198,6 +198,22 @@ export async function accessManagementGet(
   }
 }
 
+async function createDatasetIfNotExists(
+  session: Session,
+  resourceUri: string
+): Promise<void> {
+  try {
+    console.log(`seeing if ${resourceUri} exists`);
+    await getSolidDataset(resourceUri, { fetch: session.fetch });
+  } catch (FetchError) {
+    console.log("it doesn't, creating it");
+    await saveSolidDatasetAt(resourceUri, createSolidDataset(), {
+      fetch: session.fetch,
+    });
+    console.log("created");
+  }
+}
+
 export async function accessManagementPost(
   req: Request,
   res: Response
@@ -211,16 +227,15 @@ export async function accessManagementPost(
       // approve and deny functions from raising a `FetchError`
 
       const accessRequest = decodeAccessRequestVC(requestVc);
-      const resourceUri =
-        accessRequest.credentialSubject.hasConsent.forPersonalData[0];
+      const resources =
+        accessRequest.credentialSubject.hasConsent.forPersonalData;
+      console.log(resources);
 
-      try {
-        await getOrCreateDataset(solidSession, resourceUri);
-      } catch (fetchError) {
-        await saveSolidDatasetAt(resourceUri, createSolidDataset(), {
-          fetch: solidSession.fetch,
-        });
+      const responses = [];
+      for (let i = 0; i < resources.length; i += 1) {
+        responses.push(createDatasetIfNotExists(solidSession, resources[i]));
       }
+      await Promise.all(responses);
 
       if (consent === "yes") {
         const approvedVc = await approveAccessRequest(requestVcUrl, undefined, {
