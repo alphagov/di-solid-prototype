@@ -24,7 +24,7 @@ type WebId = string;
 type Uri = string;
 
 const ninoContainer =
-  "private/govuk/identity/poc/credentials/national-insurance-number/";
+  "private/govuk/identity/poc/credentials/national-insurance-number";
 
 async function fakeOIDCLogin(): Promise<Session> {
   const session = new Session();
@@ -54,7 +54,7 @@ function requestAccessToWriteNino(
     {
       access: { read: true, write: true },
       resourceOwner,
-      resources: [ninoContainerUri],
+      resources: [`${ninoContainerUri}/metadata`, `${ninoContainerUri}/check`],
       expirationDate: accessExpiration,
       purpose: [`${getHostname()}/purposes#write-nino`],
     },
