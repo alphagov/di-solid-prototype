@@ -10,7 +10,11 @@ import {
   denyAccessRequest,
 } from "@inrupt/solid-client-access-grants";
 
-import { deleteFile, saveSolidDatasetAt } from "@inrupt/solid-client";
+import {
+  createSolidDataset,
+  deleteFile,
+  saveSolidDatasetAt,
+} from "@inrupt/solid-client";
 
 import { getCheckStoragePath } from "../config";
 import {
@@ -210,10 +214,13 @@ export async function accessManagementPost(
       const resourceUri =
         accessRequest.credentialSubject.hasConsent.forPersonalData[0];
 
-      const dataset = await getOrCreateDataset(solidSession, resourceUri);
-      await saveSolidDatasetAt(resourceUri, dataset, {
-        fetch: solidSession.fetch,
-      });
+      try {
+        await getOrCreateDataset(solidSession, resourceUri);
+      } catch (fetchError) {
+        await saveSolidDatasetAt(resourceUri, createSolidDataset(), {
+          fetch: solidSession.fetch,
+        });
+      }
 
       if (consent === "yes") {
         const approvedVc = await approveAccessRequest(requestVcUrl, undefined, {
