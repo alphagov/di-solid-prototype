@@ -131,7 +131,10 @@ export async function beginAccessGrantsFlow(
   }
 }
 
-export async function saveNinoGet(req: Request, res: Response): Promise<void> {
+export async function saveNinoWithAccessGrantGet(
+  req: Request,
+  res: Response
+): Promise<void> {
   const requestorSession = await fakeOIDCLogin();
 
   const resourceOwnerSession = await getSessionFromStorage(
