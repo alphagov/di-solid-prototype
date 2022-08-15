@@ -9,7 +9,7 @@ export function signInOrSetUpGet(req: Request, res: Response): void {
   if (req.session) {
     req.session.journey = {
       nextPage: `${getHostname()}/personal-tax/home`,
-      title: "apply for personal tax account",
+      title: "use personal tax account",
     };
   }
   res.render("personal-tax/sign-in-or-set-up");
