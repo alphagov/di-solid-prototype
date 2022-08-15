@@ -8,27 +8,27 @@
 {% block content %}
   <h1 class="govuk-heading-l govuk-!-margin-bottom-7">{{ 'account.pages.accessManagement.title' | translate }}</h1>
 
-  <p>
+  <p class="govuk-body">
     Who's Asking for Permission: {{ credentialSubject["id"]}}
   </p>
 
-  <p>
+  <p class="govuk-body">
     What: {{ credentialSubject["hasConsent"]["mode"] }}
   </p>
 
-  <p>
+  <p class="govuk-body">
     Status: {{ credentialSubject["hasConsent"]["hasStatus"] }}
   </p>
 
-  <p>
+  <p class="govuk-body">
     What: {{ credentialSubject["hasConsent"]["forPersonalData"] }}
   </p>
 
-  <p>
+  <p class="govuk-body">
     For what purpose: {{ credentialSubject["hasConsent"]["forPurpose"] }}
   </p>
 
-  <p>
+  <p class="govuk-body">
     Subject of the request: {{ credentialSubject["hasConsent"]["isConsentForDataSubject"] }}
   </p>
 
@@ -39,7 +39,7 @@
       fieldset: {
         legend: {
           text: 'account.pages.accessManagement.consentQuestion' | translate,
-          isPageHeading: true,
+          isPageHeading: false,
           classes: "govuk-fieldset__legend--l"
         }
         },
