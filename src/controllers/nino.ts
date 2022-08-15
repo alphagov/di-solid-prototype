@@ -141,44 +141,58 @@ export async function saveNinoWithAccessGrantGet(
     req.session?.sessionId
   );
 
-  const myAccessGrantVC = await getAccessGrantFromRedirectUrl(
-    `${getHostname()}/nino/${req.url}`,
-    { fetch: requestorSession.fetch } // fetch from authenticated Session
-  );
+  const appSession = req.session;
 
-  if (requestorSession && resourceOwnerSession) {
-    const containerUri = await getDatasetUri(
-      resourceOwnerSession,
-      "private/govuk/identity/poc/credentials/vcs"
-    );
+  if (appSession && resourceOwnerSession) {
+    appSession.webId = resourceOwnerSession.info.webId;
 
-    const niNumberArtifacts = buildNiNumberArtifacts(
-      requestorSession,
-      containerUri
-    );
-
-    let niDataset;
-    try {
-      niDataset = await getSolidDataset(
-        niNumberArtifacts.metadataUri,
-        myAccessGrantVC,
-        { fetch: requestorSession.fetch }
-      );
-    } catch (fetchError) {
-      niDataset = createSolidDataset();
-    }
-
-    const updatedDataset = setThing(niDataset, niNumberArtifacts.metadata);
-
-    await saveSolidDatasetAt(
-      niNumberArtifacts.metadataUri,
-      updatedDataset,
-      myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+    const myAccessGrantVC = await getAccessGrantFromRedirectUrl(
+      `${getHostname()}/nino/${req.url}`,
       { fetch: requestorSession.fetch } // fetch from authenticated Session
     );
 
+    if (requestorSession && resourceOwnerSession) {
+      const containerUri = await getDatasetUri(
+        resourceOwnerSession,
+        ninoContainer
+      );
 
-    res.redirect("/nino/youve-saved-your-number");
+      const niNumberArtifacts = buildNiNumberArtifacts(
+        appSession,
+        containerUri
+      );
+
+      let niDataset;
+      try {
+        niDataset = await getSolidDataset(
+          niNumberArtifacts.metadataUri,
+          myAccessGrantVC,
+          { fetch: requestorSession.fetch }
+        );
+      } catch (fetchError) {
+        niDataset = createSolidDataset();
+      }
+
+      const updatedDataset = setThing(niDataset, niNumberArtifacts.metadata);
+
+      await saveSolidDatasetAt(
+        niNumberArtifacts.metadataUri,
+        updatedDataset,
+        myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+        { fetch: requestorSession.fetch } // fetch from authenticated Session
+      );
+
+      // NB: Not clear how we write a Blob with the SDK?
+
+      // const ninoMetadata = await saveSolidDatasetAt(
+      //   niNumberArtifacts.fileUri,
+      //   niNumberArtifacts.file,
+      //   myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+      //   { fetch: requestorSession.fetch } // fetch from authenticated Session
+      // );
+
+      res.redirect("/nino/youve-saved-your-number");
+    }
   } else {
     throw new SessionError();
   }

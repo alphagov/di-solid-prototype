@@ -19,7 +19,6 @@ function buildNiNumberJWT(
   const payload = {
     nationalInsuranceNumber: session.nino,
   };
-
   return generateJWT(payload, session.webId);
 }
 
@@ -27,8 +26,8 @@ export default function buildNiNumberArtifacts(
   session: CookieSessionInterfaces.CookieSessionObject,
   containerUri: string
 ): CheckArtifacts {
-  const fileUri = `${containerUri}/ni/check`;
-  const metadataUri = `${containerUri}/ni/metadata`;
+  const fileUri = `${containerUri}/check`;
+  const metadataUri = `${containerUri}/metadata`;
 
   const file = new Blob([buildNiNumberJWT(session)], {
     type: "application/json",
