@@ -4,20 +4,20 @@ import {
   Session,
 } from "@inrupt/solid-client-authn-node";
 
-import { VerifiableCredential } from "@inrupt/solid-client-vc";
-
 import {
+  AccessRequest,
   approveAccessRequest,
   denyAccessRequest,
 } from "@inrupt/solid-client-access-grants";
 
-import { deleteFile } from "@inrupt/solid-client";
+import { deleteFile, saveSolidDatasetAt } from "@inrupt/solid-client";
 
 import { getCheckStoragePath } from "../config";
 import {
   hasSavedIdentityChecks,
   getDatasetUri,
   getCredentialMetadataFromPod,
+  getOrCreateDataset,
 } from "../lib/pod";
 
 async function kvbRDFUri(session: Session): Promise<string> {
@@ -122,12 +122,12 @@ export async function deleteYourProofOfIdPost(
   res.redirect("/account/settings/your-proof-of-identity");
 }
 
-const isVerifiableCredential = (vc: any): vc is VerifiableCredential =>
+const isAccessRequest = (vc: any): vc is AccessRequest =>
   typeof vc === "object" && "credentialSubject" in vc;
 
 const isString = (jwt: any): jwt is string => typeof jwt === "string";
 
-function decodeAccessRequestVC(encodedJwt: string): VerifiableCredential {
+function decodeAccessRequestVC(encodedJwt: string): AccessRequest {
   if (!encodedJwt) {
     throw new Error("no encoded token found");
   }
@@ -135,15 +135,13 @@ function decodeAccessRequestVC(encodedJwt: string): VerifiableCredential {
   const buff = Buffer.from(encodedJwt, "base64");
   const decodedToken = JSON.parse(buff.toString("utf-8"));
 
-  if (!isVerifiableCredential(decodedToken)) {
+  if (!isAccessRequest(decodedToken)) {
     throw new Error("invalid token object");
   }
   return decodedToken;
 }
 
-function validateAccessRequestVC(
-  decodedVC: VerifiableCredential
-): true | false {
+function validateAccessRequestVC(decodedVC: AccessRequest): true | false {
   // Not implimented but left here as a hint that this is logic we'd need for
   // a production service, we should validate the
   const notImplimented = true;
@@ -202,8 +200,21 @@ export async function accessManagementPost(
 ): Promise<void> {
   if (req.body) {
     const solidSession = await getSessionFromStorage(req.session?.sessionId);
-    const { requestVcUrl, redirectUrl, consent } = req.body;
+    const { requestVc, requestVcUrl, redirectUrl, consent } = req.body;
     if (solidSession && isString(redirectUrl)) {
+      // If the container the access grant refers to doesn't exist yet, write
+      // an empty dataset to it. This is a bit of a hack to prevent the
+      // approve and deny functions from raising a `FetchError`
+
+      const accessRequest = decodeAccessRequestVC(requestVc);
+      const resourceUri =
+        accessRequest.credentialSubject.hasConsent.forPersonalData[0];
+
+      const dataset = await getOrCreateDataset(solidSession, resourceUri);
+      await saveSolidDatasetAt(resourceUri, dataset, {
+        fetch: solidSession.fetch,
+      });
+
       if (consent === "yes") {
         const approvedVc = await approveAccessRequest(requestVcUrl, undefined, {
           fetch: solidSession.fetch,
