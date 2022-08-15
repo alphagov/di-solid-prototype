@@ -1,9 +1,66 @@
-import { getSessionFromStorage } from "@inrupt/solid-client-authn-node";
+import {
+  getSessionFromStorage,
+  Session,
+} from "@inrupt/solid-client-authn-node";
+import {
+  issueAccessRequest,
+  AccessRequest,
+  redirectToAccessManagementUi,
+  getAccessGrantFromRedirectUrl,
+  getSolidDataset,
+  saveSolidDatasetAt,
+} from "@inrupt/solid-client-access-grants";
+
+import { createSolidDataset, setThing } from "@inrupt/solid-client";
+
 import { Request, Response } from "express";
-import { getHostname } from "../config";
+import { EssServices, getEssServiceURI, getHostname } from "../config";
 import SessionError from "../errors";
-import { getDatasetUri, writeCheckToPod } from "../lib/pod";
+import { getDatasetUri } from "../lib/pod";
+
 import buildNiNumberArtifacts from "../lib/nationalInsurance";
+
+type WebId = string;
+type Uri = string;
+
+const ninoContainer =
+  "private/govuk/identity/poc/credentials/national-insurance-number";
+
+async function fakeOIDCLogin(): Promise<Session> {
+  const session = new Session();
+  return session
+    .login({
+      // 2. Use the authenticated credentials to log in the session.
+      clientId: "cd68b569-0b92-42dd-9993-879909502979",
+      clientSecret: "7bd94621-21bf-4703-b9a2-5691d886854d",
+      oidcIssuer: getEssServiceURI(EssServices.OpenId),
+      // Note that using a Bearer token is mandatory for the UMA access token to be valid.
+      tokenType: "Bearer",
+    })
+    .then(() => session);
+}
+
+function requestAccessToWriteNino(
+  ninoContainerUri: Uri,
+  resourceOwner: WebId,
+  requestorSession: Session
+): Promise<AccessRequest | null> {
+  // DWP sets the requested access (if granted) to expire in 5 minutes.
+  const accessExpiration = new Date(Date.now() + 5 * 60000);
+  const accessEndpoint = getEssServiceURI(EssServices.Vc);
+
+  // Call `issueAccessRequest` to create an access request
+  return issueAccessRequest(
+    {
+      access: { read: true, write: true },
+      resourceOwner,
+      resources: [`${ninoContainerUri}/metadata`, `${ninoContainerUri}/check`],
+      expirationDate: accessExpiration,
+      purpose: [`${getHostname()}/purposes#write-nino`],
+    },
+    { fetch: requestorSession.fetch, accessEndpoint } // From the requestor's (i.e., DWP's) authenticated session
+  );
+}
 
 export function startGet(req: Request, res: Response): void {
   if (req.session) {
@@ -31,30 +88,116 @@ export function verifiedNinoGet(req: Request, res: Response): void {
   res.render("nino/weve-verified-your-number");
 }
 
-export async function verifiedNinoPost(
+export function savedNinoGet(req: Request, res: Response): void {
+  res.render("nino/youve-saved-your-number");
+}
+
+export async function beginAccessGrantsFlow(
   req: Request,
   res: Response
 ): Promise<void> {
-  const session = await getSessionFromStorage(req.session?.sessionId);
+  const resourceOwnerSession = await getSessionFromStorage(
+    req.session?.sessionId
+  );
 
-  if (session && req.session) {
-    req.session.webId = session.info.webId;
-    const containerUri = await getDatasetUri(
-      session,
-      "private/govuk/identity/poc/credentials/vcs"
-    );
+  if (resourceOwnerSession) {
+    const resourceOwnerWebId = resourceOwnerSession.info.webId;
+    if (resourceOwnerWebId) {
+      const ninoContainerUri = await getDatasetUri(
+        resourceOwnerSession,
+        ninoContainer
+      );
 
-    const niNumberArtifacts = buildNiNumberArtifacts(req.session, containerUri);
-    await writeCheckToPod(session, niNumberArtifacts);
+      const requestorSession = await fakeOIDCLogin();
 
-    res.redirect("/nino/youve-saved-your-number");
-  } else {
-    throw new SessionError();
+      const accessRequest = await requestAccessToWriteNino(
+        ninoContainerUri,
+        resourceOwnerWebId,
+        requestorSession
+      );
+
+      if (accessRequest) {
+        await redirectToAccessManagementUi(
+          accessRequest.id,
+          `${getHostname()}/nino/save-number`,
+          {
+            redirectCallback: (url) => {
+              res.redirect(url);
+            },
+            fallbackAccessManagementUi: `${getHostname()}/account/access-management`,
+            fetch: resourceOwnerSession.fetch,
+          }
+        );
+      }
+    }
   }
 }
 
-export function savedNinoGet(req: Request, res: Response): void {
-  res.render("nino/youve-saved-your-number");
+export async function saveNinoWithAccessGrantGet(
+  req: Request,
+  res: Response
+): Promise<void> {
+  const requestorSession = await fakeOIDCLogin();
+
+  const resourceOwnerSession = await getSessionFromStorage(
+    req.session?.sessionId
+  );
+
+  const appSession = req.session;
+
+  if (appSession && resourceOwnerSession) {
+    appSession.webId = resourceOwnerSession.info.webId;
+
+    const myAccessGrantVC = await getAccessGrantFromRedirectUrl(
+      `${getHostname()}/nino/${req.url}`,
+      { fetch: requestorSession.fetch } // fetch from authenticated Session
+    );
+
+    if (requestorSession && resourceOwnerSession) {
+      const containerUri = await getDatasetUri(
+        resourceOwnerSession,
+        ninoContainer
+      );
+
+      const niNumberArtifacts = buildNiNumberArtifacts(
+        appSession,
+        containerUri
+      );
+
+      let niDataset;
+      try {
+        niDataset = await getSolidDataset(
+          niNumberArtifacts.metadataUri,
+          myAccessGrantVC,
+          { fetch: requestorSession.fetch }
+        );
+      } catch (fetchError) {
+        niDataset = createSolidDataset();
+      }
+
+      const updatedDataset = setThing(niDataset, niNumberArtifacts.metadata);
+
+      await saveSolidDatasetAt(
+        niNumberArtifacts.metadataUri,
+        updatedDataset,
+        myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+        { fetch: requestorSession.fetch } // fetch from authenticated Session
+      );
+
+      // NB: Not clear how we write a Blob with the SDK?
+
+      // const ninoMetadata = await saveSolidDatasetAt(
+      //   niNumberArtifacts.fileUri,
+      //   niNumberArtifacts.file,
+      //   myAccessGrantVC, // Access Grant (serialized as VC) that grants the user write access to save the SolidDataset
+      //   { fetch: requestorSession.fetch } // fetch from authenticated Session
+      // );
+
+      res.redirect("/nino/youve-saved-your-number");
+    }
+  } else {
+    throw new SessionError();
+  }
 }
 
 export function continueGet(req: Request, res: Response): void {

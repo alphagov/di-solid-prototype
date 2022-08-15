@@ -259,6 +259,14 @@
         "paragraph2": "You will need to go through the process of proving your identity next time you use a service that requires it.",
         "buttonText": "Delete identity information",
         "cancelLink": "Do not delete your information"
+      },
+      "accessManagement": {
+        "title": "Access Management",
+        "consentQuestion": "Do you agree?",
+        "hint": "This will authorise information moving around",
+        "affirmative": "Yes I give permission",
+        "negative": "No I deny permission",
+        "buttonText": "Submit"
       }
     }
   },

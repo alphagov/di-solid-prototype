@@ -5,8 +5,9 @@ import {
   enterNinoPost,
   startGet,
   verifiedNinoGet,
-  verifiedNinoPost,
+  beginAccessGrantsFlow,
   savedNinoGet,
+  saveNinoWithAccessGrantGet,
 } from "../controllers/nino";
 import redirectIfNotLoggedIn from "../lib/middleware/redirectIfNotLoggedIn";
 
@@ -20,7 +21,8 @@ router.get("/", startGet);
 router.get("/enter-your-number", enterNinoGet);
 router.post("/enter-your-number", enterNinoPost);
 router.get("/weve-verified-your-number", verifiedNinoGet);
-router.post("/weve-verified-your-number", verifiedNinoPost);
+router.post("/weve-verified-your-number", beginAccessGrantsFlow);
+router.get("/save-number", saveNinoWithAccessGrantGet);
 router.get("/youve-saved-your-number", savedNinoGet);
 router.get("/continue", continueGet);
 

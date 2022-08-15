@@ -1,0 +1,70 @@
+{% extends "layouts/account.njk" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% set pageTitleName = 'account.pages.accessManagement.title' | translate %}
+{% set activeNavLink = '/account/access-management' %}
+{% set hasProofOfId = true %}
+
+{% block content %}
+  <h1 class="govuk-heading-l govuk-!-margin-bottom-7">{{ 'account.pages.accessManagement.title' | translate }}</h1>
+
+  <p class="govuk-body">
+    Who's Asking for Permission: {{ credentialSubject["id"]}}
+  </p>
+
+  <p class="govuk-body">
+    What: {{ credentialSubject["hasConsent"]["mode"] }}
+  </p>
+
+  <p class="govuk-body">
+    Status: {{ credentialSubject["hasConsent"]["hasStatus"] }}
+  </p>
+
+  <p class="govuk-body">
+    What: {{ credentialSubject["hasConsent"]["forPersonalData"] }}
+  </p>
+
+  <p class="govuk-body">
+    For what purpose: {{ credentialSubject["hasConsent"]["forPurpose"] }}
+  </p>
+
+  <p class="govuk-body">
+    Subject of the request: {{ credentialSubject["hasConsent"]["isConsentForDataSubject"] }}
+  </p>
+
+  <form action="/account/access-management" method="post">
+    {{ govukRadios({
+      idPrefix: "consent",
+      name: "consent",
+      fieldset: {
+        legend: {
+          text: 'account.pages.accessManagement.consentQuestion' | translate,
+          isPageHeading: false,
+          classes: "govuk-fieldset__legend--l"
+        }
+        },
+        hint: {
+          text: 'account.pages.accessManagement.hint' | translate 
+        },
+        items: [
+          {
+          value: "yes",
+          text: 'account.pages.accessManagement.affirmative' | translate
+          },{
+          value: "no",
+          text: 'account.pages.accessManagement.negative' | translate
+          }
+        ]
+      }) 
+    }}
+
+    <input type="hidden" name="requestVc" value={{requestVc}}>
+    <input type="hidden" name="redirectUrl" value={{redirectUrl}}>
+    <input type="hidden" name="requestVcUrl" value={{requestVcUrl}}>
+    {{ govukButton({
+      text: 'account.pages.accessManagement.buttonText' | translate,
+      type: "submit"
+      }) 
+    }}
+  </form>
+{% endblock %}

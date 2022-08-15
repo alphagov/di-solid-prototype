@@ -8,9 +8,13 @@ import {
   yourProofOfIdGet,
   deleteYourProofOfIdGet,
   deleteYourProofOfIdPost,
+  accessManagementGet,
+  accessManagementPost,
 } from "../controllers/account";
 
 const router = express.Router();
+
+router.post("/access-management", accessManagementPost);
 
 /* All following routes require someone to be logged in first */
 router.use((req: Request, res: Response, next: NextFunction) => {
@@ -23,5 +27,6 @@ router.get("/settings/activity", accountActivityGet);
 router.get("/settings/your-proof-of-identity", yourProofOfIdGet);
 router.get("/settings/your-proof-of-identity/delete", deleteYourProofOfIdGet);
 router.post("/settings/your-proof-of-identity/delete", deleteYourProofOfIdPost);
+router.get("/access-management", accessManagementGet);
 
 export default router;
