@@ -14,7 +14,7 @@ import {
 import { createSolidDataset, setThing } from "@inrupt/solid-client";
 
 import { Request, Response } from "express";
-import { getHostname } from "../config";
+import { EssServices, getEssServiceURI, getHostname } from "../config";
 import SessionError from "../errors";
 import { getDatasetUri } from "../lib/pod";
 
@@ -33,7 +33,7 @@ async function fakeOIDCLogin(): Promise<Session> {
       // 2. Use the authenticated credentials to log in the session.
       clientId: "cd68b569-0b92-42dd-9993-879909502979",
       clientSecret: "7bd94621-21bf-4703-b9a2-5691d886854d",
-      oidcIssuer: "https://openid.ess.solid.integration.account.gov.uk/",
+      oidcIssuer: getEssServiceURI(EssServices.OpenId),
       // Note that using a Bearer token is mandatory for the UMA access token to be valid.
       tokenType: "Bearer",
     })
@@ -47,7 +47,7 @@ function requestAccessToWriteNino(
 ): Promise<AccessRequest | null> {
   // DWP sets the requested access (if granted) to expire in 5 minutes.
   const accessExpiration = new Date(Date.now() + 5 * 60000);
-  const accessEndpoint = `https://vc.ess.solid.integration.account.gov.uk`;
+  const accessEndpoint = getEssServiceURI(EssServices.Vc);
 
   // Call `issueAccessRequest` to create an access request
   return issueAccessRequest(
