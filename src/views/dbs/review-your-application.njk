@@ -4,7 +4,7 @@
 {% set backLink = "/dbs/check-your-details" %}
 {% set pageTitleName = "dbs.pages.reviewYourApplication.title" | translate %}
 {% block content %}
-  <form action="/review-your-application" method="post">
+  <form action="/dbs/review-your-application" method="post">
     <h1 class="govuk-heading-xl">{{ pageTitleName }}</h1>
     {{ govukSummaryList({
       rows: [
