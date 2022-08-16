@@ -7,7 +7,7 @@
 {% block content %}
   <h1 class="govuk-heading-xl">{{ 'identity.identityConfirmed.heading' | translate }}</h1>
 
-  <p class="govuk-body">{{ 'identity.useSavedIdentity.paragraph1' | translate | replace("[doThing]", doThing) }}</p>
+  <p class="govuk-body">{{ 'identity.identityConfirmed.paragraph1' | translate | replace("[doThing]", doThing) }}</p>
 
   <form action="{{doThingAction}}" method="get">
     {{ govukButton({
