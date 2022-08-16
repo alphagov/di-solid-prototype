@@ -56,10 +56,25 @@
     <li><a href="/personal-tax/choose-paperless" class="govuk-link">Choose how to get your legal notices, penalty notices and tax letters</a></li>
   </ul>
 
-  <h3 class="govuk-heading-s">Clear app session</h2>
+  <h3 class="govuk-heading-s">Logout</h2>
 
   {{ govukButton({
       text: "Clear app session",
       href: "/login/clear-session"
+  }) }}
+
+  <p class="govuk-body">To log out of the prototype you need to sign out of both Auth and the ESS Broker.</p>
+
+  {{ govukButton({
+      text: "Sign out from Auth (opens in new tab)",
+      href: "/login/logout-auth",
+      attributes: {"target": "_blank"}
+  }) }}
+
+  <p class="govuk-body"></p>
+  {{ govukButton({
+      text: "Sign out from ESS broker (opens in new tab)",
+      href: "/login/logout-ess",
+      attributes: {"target": "_blank"}
   }) }}
 {% endblock %}
