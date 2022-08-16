@@ -30,6 +30,7 @@ import {
   securityQuestionPost,
   checkInPersonGet,
   useSavedProofOfIdentityGet,
+  savedIdentityConfirmedGet,
 } from "../controllers/identity/ipv";
 
 import redirectIfNotLoggedIn from "../lib/middleware/redirectIfNotLoggedIn";
@@ -92,6 +93,7 @@ router.get("/check-in-person", checkInPersonGet);
 /* IPV Core completion pages */
 router.get("/complete/saved", completeSavedGet);
 router.get("/complete/return", completeReturnGet);
+router.get("/complete/identity-confirmed", savedIdentityConfirmedGet);
 
 /* Re-use identity page */
 router.get("/use-saved-proof-of-identity", useSavedProofOfIdentityGet);
