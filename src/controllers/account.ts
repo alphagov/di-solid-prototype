@@ -23,6 +23,7 @@ import {
   getDatasetUri,
   getCredentialMetadataFromPod,
 } from "../lib/pod";
+import AccessGrantVocabulary from "../lib/AccesGrantVocabulary";
 
 async function kvbRDFUri(session: Session): Promise<string> {
   return getDatasetUri(session, `${getCheckStoragePath()}/kbv/metadata`);
@@ -171,6 +172,7 @@ export async function accessManagementGet(
     if (req.query) {
       const { requestVc, redirectUrl, requestVcUrl } = req.query;
       if (isString(requestVc) && isString(redirectUrl)) {
+        const vocab = new AccessGrantVocabulary();
         // Decode the request VC
         appSession.requestVcDecoded = decodeAccessRequestVC(requestVc);
 
