@@ -1,0 +1,13 @@
+{% extends "layouts/base.njk" %}
+{% from "govuk/components/breadcrumbs/macro.njk" import govukBreadcrumbs %}
+{% set serviceName = "GOV.UK" %}
+{% set hidePhaseBanner = true %}
+{% set containerClasses = "govuk-!-margin-top-3" %}
+
+{% block beforeContent %}
+  <div lang="en">
+    {{ govukBreadcrumbs({
+      items: breadcrumbItems
+    }) }}
+  </div>
+{% endblock %}

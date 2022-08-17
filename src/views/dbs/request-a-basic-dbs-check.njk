@@ -1,8 +1,21 @@
-{% extends "layouts/base.njk" %}
+{% extends "layouts/govuk.njk" %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageTitleName = "dbs.pages.requestBasicCheck.title" | translate %}
-{% set serviceName = "GOV.UK" %}
+{% set breadcrumbItems = [
+  {
+    text: "Home",
+    href: "/"
+  },
+  {
+    text: "Working, jobs and pensions",
+    href: "https://www.gov.uk/browse/working"
+  },
+  {
+    text: "Finding a job",
+    href: "https://www.gov.uk/browse/working/finding-job"
+  }
+] %}
 
 {% block content %}
   <h1 class="govuk-heading-xl">
@@ -93,22 +106,23 @@
     </div>
 {% endblock %}
 {% block sideContent %}
-  <h2 class="govuk-heading-m" id="subsection-title">
-    Related content
-  </h2>
-  <nav role="navigation" aria-labelledby="subsection-title">
-    <ul class="govuk-list govuk-!-font-size-16">
-      <li>
-        <a class="govuk-link"  class="govuk-link" href="#">
-          Criminal record checks when you apply for a role
-        </a>
-      </li>
-      <li>
-        <a class="govuk-link"  class="govuk-link" href="#">
-          Find out which DBS check is right for your employee
-        </a>
-      </li>
-
-    </ul>
-  </nav>
+  <aside class="related-items" role="complementary" lang="en">
+    <h2 class="govuk-heading-s govuk-!-padding-top-4" id="subsection-title">
+      Related content
+    </h2>
+    <nav role="navigation" aria-labelledby="subsection-title">
+      <ul class="govuk-list govuk-!-font-size-16">
+        <li>
+          <a class="govuk-link"  class="govuk-link" href="https://www.gov.uk/criminal-record-checks-apply-role">
+            Criminal record checks when you apply for a role
+          </a>
+        </li>
+        <li>
+          <a class="govuk-link"  class="govuk-link" href="https://www.gov.uk/find-out-dbs-check">
+            Find out which DBS check is right for your employee
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 {% endblock %}
