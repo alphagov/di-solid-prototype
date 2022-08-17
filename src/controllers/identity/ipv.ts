@@ -164,6 +164,15 @@ export function useSavedProofOfIdentityGet(req: Request, res: Response) {
   if (req.session) {
     res.render("identity/use-saved-proof-of-identity", {
       doThing: req.session.journey.title,
+      doThingAction: "/identity/complete/identity-confirmed",
+    });
+  }
+}
+
+export function savedIdentityConfirmedGet(req: Request, res: Response): void {
+  if (req.session) {
+    res.render("identity/complete/identity-confirmed", {
+      doThing: req.session.journey.title,
       doThingAction: req.session.journey.nextPage,
     });
   }

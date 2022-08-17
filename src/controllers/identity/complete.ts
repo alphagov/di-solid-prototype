@@ -11,7 +11,11 @@ export function completeSavedGet(req: Request, res: Response) {
 }
 
 export function completeReturnGet(req: Request, res: Response) {
-  res.render("identity/complete/return");
+  if (req.session) {
+    const journeyDetails = req.session.journey;
+    delete req.session.journey;
+    res.redirect(journeyDetails.nextPage);
+  }
 }
 
 export function identityConfirmedGet(req: Request, res: Response) {
