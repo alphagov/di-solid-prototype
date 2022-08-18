@@ -123,7 +123,7 @@ export async function deleteYourProofOfIdPost(
     }
   }
 
-  res.redirect("/account/settings/your-proof-of-identity");
+  res.redirect("/account/your-proof-of-identity");
 }
 
 const isAccessRequest = (vc: any): vc is AccessRequest =>
