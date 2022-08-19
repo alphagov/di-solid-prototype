@@ -135,6 +135,7 @@
     "save": {
       "heading": "You’ve successfully proved your identity",
       "paragraph": "You can save your proof of identity to your GOV.UK account so you can skip these questions next time a service needs to check who you are.",
+      "paragraph2": "You’ll be able to see or delete your proof of identity at any time in your GOV.UK account.",
       "buttonText": "Save proof of identity to your GOV.UK account",
       "linkText": "Do not save proof of identity and continue to [service]"
     },
@@ -204,15 +205,20 @@
         "title": "Your GOV.UK account",
         "header": "Your GOV.UK account",
         "signedInStatus": "You’re signed in as",
-        "servicesHeading": "Services you’ve used with your GOV.UK account",
-
-        "IdServicesHeading": "Services that have checked your identity",
-        "IdServicesParagraph": "You’ve used your GOV.UK account to prove your identity to the following services:",
+        "servicesHeading": "Services you sign in to with your GOV.UK account",
+        "usesSavedIdentityParagraph": "This service uses your saved proof of identity",
         "aboutAccounts": {
           "heading": "About GOV.UK accounts",
           "paragraph1": "GOV.UK accounts are new. At the moment you can only use your GOV.UK account with a few services.",
           "paragraph2": "GOV.UK accounts are currently separate from other government accounts (for example Government Gateway or Universal Credit).",
           "paragraph3": "In the future, you’ll be able to use your GOV.UK account to sign in to most services on GOV.UK."
+        },
+        "yourProofOfId": {
+          "heading": "Your proof of identity",
+          "link": "See or delete your saved proof of identity",
+          "haveSavedInfo": "You’ve saved your proof of identity to your account. Your account will check it each time a service needs to confirm who you are.",
+          "haveNotSavedInfo1": "There’s no proof of identity information saved to your GOV.UK account.",
+          "haveNotSavedInfo2": "You’ll be able to prove your identity and save it next time you use a service that needs to check who you are."
         }
       },
       "settings": {
@@ -223,11 +229,6 @@
           "password": "Password",
           "phoneNumber": "Phone number",
           "changeAction": "Change"
-        },
-        "yourProofOfId": {
-          "heading": "Your proof of identity",
-          "link": "View your saved proof of identity",
-          "info": "You’ve saved your proof of identity to your account. Your account will check it each time a service needs to confirm who you are."
         },
         "yourAccountActivity": {
           "heading": "View your account activity",
@@ -246,8 +247,14 @@
         "paragraph1": "Your GOV.UK account proves your identity with information you’ve provided.",
         "paragraph2": "Your account checks this information to prove your identity every time you use a service that requires it.",
         "summaryListTitle": "Information you’ve provided to prove your identity",
-        "deleteInformationLink": "Delete this information from your account",
-        "savedOn": "Saved on [date]"
+        "deleteInformationLink": "Delete your identity information from your account",
+        "savedOn": "Saved on [date]",
+        "paragraph3": "You may need to answer some more identity  questions next time if:",
+        "listItem1": "your saved information is out of date",
+        "listItem2": "a service needs extra information to check who you are, for security reasons",
+        "servicesUsingIdHeading": "How you’ve used your saved proof of identity",
+        "servicesUsingIdParagraph": "Your GOV.UK account has confirmed your identity to the following services.",
+        "yourAccountActivityLink": "You can <a href=\"/account/settings/activity\">view all of your account activity</a>."
       },
       "noSavedIdentity": {
         "heading": "You do not currently have saved identity credentials",
@@ -290,15 +297,8 @@
         "listItem3": "your passport",
         "listItem4": "your driving licence",
         "heading2": "Apply online",
-        "paragraph8": "The service is available from 8am to 11:30pm.",
-        "heading3": "Before you start",
-        "paragraph9": "Make sure a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check is the correct one for you. For certain roles, your employer may need to apply for a higher level of criminal record check.",
-        "paragraph10": "<a class=\"govuk-link\"  href=\"https://www.gov.uk/find-out-dbs-check\">Find out if you need a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check</a> or ask your employer if you’re not sure.",
-        "heading4": "How to pay",
-        "paragraph11": "You can pay for a basic <abbr title=\"Disclosure and Barring Service\">DBS</abbr> check yourself or you can get someone to pay for you - for example, an employer or relative.",
-        "paragraph12": "You can pay with a debit or credit card. You can also use Google Pay or Apple Pay.",
-        "paragraph13": "If you pay the fee yourself, you need to pay it when you apply.",
-        "paragraph14": "If someone else pays, they must pay the fee within 10 days of your application being submitted.",
+        "paragraph8": "You’ll need a GOV.UK account to prove your identity and to apply for a basic DBS check online. If you do not have a GOV.UK account, you’ll be able to create one.",
+        "paragraph9": "The service is available from 8am to 11:30pm.",
         "heading5": "Get help to use the online service",
         "paragraph15": "If you need support to apply online, call the DBS helpline on 03000 200 190 and select option 2 and then option 1.",
         "heading6": "Other ways to apply",
@@ -468,19 +468,6 @@
         "listItem10": "tell HMRC about a change of name or address",
         "listItem11": "check or update benefits you get from work, for example company car details and medical insurance",
         "listItem12": "find your National Insurance number"
-      },
-      "choose": {
-        "title": "Choose how to get your legal notices, penalty notices and tax letters",
-        "paragraph1": "You can choose to get some of your tax documents and information sent through your HMRC online account instead of by post.",
-        "paragraph2": "You will need to take action when you receive some of the documents. They include:",
-        "listItem1": "Legal notices to file tax return",
-        "listItem2": "Late filing penalty notices",
-        "listItem3": "Late payment penalty notices",
-        "paragraph3": "We may also send you other messages, including information about your personal tax code, if you have one.",
-        "heading": "How do you want to get your legal notices, penalty notices and tax letters",
-        "option1": "Through my HMRC online account",
-        "option2": "By post only",
-        "paragraph4": "For more information about how HRMC uses your data, <a class=\"govuk-link\" href=\"\">read the privacy notice</a>"
       },
       "home": {
         "title": "Account home",

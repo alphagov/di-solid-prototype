@@ -2,16 +2,16 @@
 {% from "govuk/components/table/macro.njk" import govukTable %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% set pageTitleName = 'account.pages.yourProofOfId.title' | translate %}
-{% set activeNavLink = '/account/settings'%}
-{% set backLink =  '/account/settings' %}
+{% set activeNavLink = '/account'%}
+{% set backLink =  '/account' %}
 
 {% block content %}
   <h1 class="govuk-heading-l govuk-!-margin-bottom-7">{{ 'account.pages.yourProofOfId.title' | translate }}</h1>
+  <h2 class="govuk-heading-m">{{ 'account.pages.yourProofOfId.summaryListTitle' | translate }}</h2>
   <p class="govuk-body">{{ 'account.pages.yourProofOfId.paragraph1' | translate }}</p>
   <p class="govuk-body">{{ 'account.pages.yourProofOfId.paragraph2' | translate }}</p>
 
   {% if (hasSavedIdentityChecks) %}
-    <h2 class="govuk-heading-m">{{ 'account.pages.yourProofOfId.summaryListTitle' | translate }}</h2>
     {{ govukTable({
       firstCellIsHeader: true,
       classes: "accounts-table",
@@ -36,9 +36,47 @@
         ]
       ]
     }) }}
-
-    <a href="/account/settings/your-proof-of-identity/delete" class="govuk-link govuk-body">{{ 'account.pages.yourProofOfId.deleteInformationLink' | translate }}</a>
-    
+    <p class="govuk-body">{{ 'account.pages.yourProofOfId.paragraph3' | translate }}</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>{{ 'account.pages.yourProofOfId.listItem1' | translate }}</li>
+      <li>{{ 'account.pages.yourProofOfId.listItem2' | translate }}</li>
+    </ul>
+    <a href="/account/your-proof-of-identity/delete" class="govuk-link govuk-body">{{ 'account.pages.yourProofOfId.deleteInformationLink' | translate }}</a>
+    <hr class="govuk-section-break govuk-section-break--m">
+    <h2 class="govuk-heading-m">{{ 'account.pages.yourProofOfId.servicesUsingIdHeading' | translate }}</h2>
+    <p class="govuk-body">{{ 'account.pages.yourProofOfId.servicesUsingIdParagraph' | translate }}</p>
+    {{ govukTable({
+      classes: "accounts-table",
+      head: [
+        {
+          text: "Service"
+        },
+        {
+          text: "Last confirmed"
+        }
+      ],
+      rows: [
+        [
+          {
+            text: "Personal tax account",
+            classes: "govuk-!-width-one-half"
+          },
+          {
+            text: "20 June 2022"
+          }
+        ],
+        [
+          {
+            text: "Request a basic DBS check",
+            classes: "govuk-!-width-one-half"
+          },
+          {
+            text: "18 June 2022"
+          }
+        ]
+      ]
+    }) }}
+    <p class="govuk-body">{{ 'account.pages.yourProofOfId.yourAccountActivityLink' | translate | safe }}</p>
   {% else %}
     <h2 class="govuk-heading-m">{{ 'account.pages.noSavedIdentity.heading' | translate }}</h2>
     <p class="govuk-body">{{ 'account.pages.noSavedIdentity.paragraph1' | translate }}</p>

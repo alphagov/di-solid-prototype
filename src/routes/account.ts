@@ -24,9 +24,9 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 router.get("/", accountHomeGet);
 router.get("/settings", accountSettingsGet);
 router.get("/settings/activity", accountActivityGet);
-router.get("/settings/your-proof-of-identity", yourProofOfIdGet);
-router.get("/settings/your-proof-of-identity/delete", deleteYourProofOfIdGet);
-router.post("/settings/your-proof-of-identity/delete", deleteYourProofOfIdPost);
+router.get("/your-proof-of-identity", yourProofOfIdGet);
+router.get("/your-proof-of-identity/delete", deleteYourProofOfIdGet);
+router.post("/your-proof-of-identity/delete", deleteYourProofOfIdPost);
 router.get("/access-management", accessManagementGet);
 
 export default router;
