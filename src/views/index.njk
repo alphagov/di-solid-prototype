@@ -64,17 +64,19 @@
   }) }}
 
   <p class="govuk-body">To log out of the prototype you need to sign out of both Auth and the ESS Broker.</p>
-
+  <div>
   {{ govukButton({
       text: "Sign out from Auth (opens in new tab)",
       href: "/login/logout-auth",
       attributes: {"target": "_blank"}
   }) }}
+  </div>
 
-  <p class="govuk-body"></p>
+  <div>
   {{ govukButton({
       text: "Sign out from ESS broker (opens in new tab)",
       href: "/login/logout-ess",
       attributes: {"target": "_blank"}
   }) }}
+  </div>
 {% endblock %}
