@@ -57,3 +57,14 @@ export function clearAppSessionGet(req: Request, res: Response): void {
   }
   res.redirect("/");
 }
+
+export function logoutAuthGet(req: Request, res: Response): void {
+  if (req.session) {
+    req.session = null;
+  }
+  res.redirect("https://oidc.integration.account.gov.uk/logout");
+}
+
+export function logoutESSGet(req: Request, res: Response): void {
+  res.redirect(`${getEssServiceURI(EssServices.OpenId)}/endsession`);
+}
