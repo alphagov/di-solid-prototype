@@ -30,7 +30,7 @@
     "exit": true
   },
   "dependencies": {
-    "@inrupt/solid-client": "^1.23.1",
+    "@inrupt/solid-client": "^1.23.2",
     "@inrupt/solid-client-access-grants": "^1.0.2",
     "@inrupt/solid-client-authn-node": "^1.12.2",
     "@inrupt/solid-client-vc": "^0.5.0",
@@ -58,7 +58,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mocha": "^9.1.1",
     "@types/morgan": "^1.9.3",
-    "@types/node": "^18.7.13",
+    "@types/node": "^18.7.14",
     "@types/nunjucks": "^3.2.1",
     "@types/sinon": "^10.0.13",
     "@types/sinon-chai": "^3.2.8",
