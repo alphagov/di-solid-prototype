@@ -83,7 +83,7 @@ graph TD
     Q[Save your NI number?] -->|Request to write NI number|L
     L -->|Ok|Q
     Q -->|Redirect to|R
-    R[Can HMRC write to your account?] -->|Approve|S
+    R[Can DWP write to your account?] -->|Approve|S
     S((NI checker)) -->|Save NI number| T
     T[(User's pod)] -->|Ok| S
     S -->|Return to|U
