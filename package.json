@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@inrupt/solid-client": "^1.23.2",
-    "@inrupt/solid-client-access-grants": "^1.0.2",
+    "@inrupt/solid-client-access-grants": "^1.1.0",
     "@inrupt/solid-client-authn-node": "^1.12.2",
     "@inrupt/solid-client-vc": "^0.5.0",
     "@inrupt/vocab-common-rdf": "^1.0.5",
@@ -71,7 +71,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-react": "^7.31.1",
+    "eslint-plugin-react": "^7.31.7",
     "eslint-plugin-react-hooks": "^4.6.0",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.19",
