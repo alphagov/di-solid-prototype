@@ -31,7 +31,7 @@
   },
   "dependencies": {
     "@inrupt/solid-client": "^1.23.2",
-    "@inrupt/solid-client-access-grants": "^1.0.2",
+    "@inrupt/solid-client-access-grants": "^1.1.0",
     "@inrupt/solid-client-authn-node": "^1.12.2",
     "@inrupt/solid-client-vc": "^0.5.0",
     "@inrupt/vocab-common-rdf": "^1.0.5",
