@@ -74,7 +74,7 @@
     "eslint-plugin-react": "^7.31.8",
     "eslint-plugin-react-hooks": "^4.6.0",
     "mocha": "^10.0.0",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "sass": "^1.54.9",
     "sinon": "^14.0.0",
     "sinon-chai": "^3.7.0",
