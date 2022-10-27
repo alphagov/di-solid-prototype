@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-secrets-manager": "^3.82.0",
+    "@aws-sdk/client-secrets-manager": "^3.186.0",
     "express": "^4.17.3",
     "mongodb": "^4.5.0"
   }
